@@ -974,6 +974,59 @@
             font-size: 13px;
         }
 
+        /* Quick filter pills row */
+        #quick-filters-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        #quick-filters-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quick-filter-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #444;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .quick-filter-pill:hover {
+            background: #e5e5e5;
+        }
+
+        .quick-filter-pill.active {
+            background: #1E52BA;
+            color: white;
+        }
+
+        .quick-filter-pill svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .quick-filter-pill.active svg {
+            stroke: white;
+        }
+
         /* Hide sidebar search on mobile since top bar is primary */
         @media (max-width: 768px) {
             #search-container {
@@ -987,6 +1040,15 @@
             #top-search-input {
                 padding: 12px 44px 12px 16px;
                 font-size: 14px;
+            }
+
+            #quick-filters-row {
+                padding: 8px 16px;
+            }
+
+            .quick-filter-pill {
+                padding: 7px 12px;
+                font-size: 12px;
             }
         }
     </style>
@@ -1020,6 +1082,34 @@
             </span>
             <div id="top-search-dropdown"></div>
         </div>
+    </div>
+    <div id="quick-filters-row">
+        <button class="quick-filter-pill" id="pill-filters" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+                <circle cx="8" cy="6" r="2" fill="currentColor"></circle>
+                <circle cx="16" cy="12" r="2" fill="currentColor"></circle>
+                <circle cx="10" cy="18" r="2" fill="currentColor"></circle>
+            </svg>
+            <span data-pill-label="filters">Filters</span>
+        </button>
+        <button class="quick-filter-pill" id="pill-favorites" type="button">
+            <span style="font-size: 15px;">❤️</span>
+        </button>
+        <button class="quick-filter-pill" id="pill-cafe" data-filter-category="venueType" data-filter-value="cafe" type="button">
+            <span data-pill-label="cafe">Cafe</span>
+        </button>
+        <button class="quick-filter-pill" id="pill-baby" data-filter-category="ageRange" data-filter-value="baby" type="button">
+            <span data-pill-label="baby">Baby</span>
+        </button>
+        <button class="quick-filter-pill" id="pill-toddler" data-filter-category="ageRange" data-filter-value="toddler" type="button">
+            <span data-pill-label="toddler">Toddler</span>
+        </button>
+        <button class="quick-filter-pill" id="pill-play-area" data-filter-category="amenities" data-filter-value="play-area" type="button">
+            <span data-pill-label="play-area">Play Area</span>
+        </button>
     </div>
     <div id="sheet-backdrop"></div>
     <div id="mobile-summary-bar">
@@ -2606,12 +2696,126 @@
             if (installBanner) installBanner.classList.add('hidden');
         });
 
+        // Quick filter pills functionality
+        const pillFilters = document.getElementById('pill-filters');
+        const pillFavorites = document.getElementById('pill-favorites');
+        const quickFilterPills = document.querySelectorAll('.quick-filter-pill[data-filter-category]');
+
+        // Update quick filter pill labels based on current language
+        function updateQuickFilterLabels() {
+            document.querySelectorAll('[data-pill-label]').forEach(label => {
+                const key = label.dataset.pillLabel;
+                if (key === 'filters') {
+                    label.textContent = translate('ui.filtersLabel', 'Filters');
+                } else if (key === 'cafe') {
+                    label.textContent = translate('filters.options.venueType.cafe', 'Cafe');
+                } else if (key === 'baby') {
+                    label.textContent = translate('filters.options.ageRange.baby', 'Baby');
+                } else if (key === 'toddler') {
+                    label.textContent = translate('filters.options.ageRange.toddler', 'Toddler');
+                } else if (key === 'play-area') {
+                    label.textContent = translate('filters.options.amenities.play-area', 'Play Area');
+                }
+            });
+        }
+
+        // Sync quick filter pills with sidebar filter state
+        function syncQuickFilterPills() {
+            quickFilterPills.forEach(pill => {
+                const category = pill.dataset.filterCategory;
+                const value = pill.dataset.filterValue;
+                const isActive = activeFilters[category].includes(value);
+                pill.classList.toggle('active', isActive);
+            });
+
+            // Update favorites pill active state
+            if (pillFavorites) {
+                pillFavorites.classList.toggle('active', activeTab === 'favorites');
+            }
+        }
+
+        // Toggle a quick filter
+        function toggleQuickFilter(category, value) {
+            const index = activeFilters[category].indexOf(value);
+            if (index === -1) {
+                activeFilters[category].push(value);
+            } else {
+                activeFilters[category].splice(index, 1);
+            }
+
+            // Also update the sidebar filter button state
+            const sidebarBtn = document.querySelector(`.filter-button[data-category="${category}"][data-value="${value}"]`);
+            if (sidebarBtn) {
+                sidebarBtn.classList.toggle('active', activeFilters[category].includes(value));
+            }
+
+            updateMap();
+            updateFilterCount();
+            syncQuickFilterPills();
+        }
+
+        // Filters pill - opens sidebar/sheet
+        if (pillFilters) {
+            pillFilters.addEventListener('click', () => {
+                if (isMobile()) {
+                    if (sidebar.classList.contains('show')) {
+                        closeFilterSheet();
+                    } else {
+                        openFilterSheet();
+                    }
+                } else {
+                    // On desktop, toggle sidebar visibility or just scroll to filters
+                    sidebar.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+
+        // Favorites pill - toggles favorites view
+        if (pillFavorites) {
+            pillFavorites.addEventListener('click', () => {
+                if (activeTab === 'favorites') {
+                    // Switch back to map view
+                    setActiveView('map');
+                } else {
+                    // Switch to favorites view
+                    setActiveView('favorites');
+                }
+                syncQuickFilterPills();
+            });
+        }
+
+        // Quick filter pills - toggle their respective filters
+        quickFilterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const category = pill.dataset.filterCategory;
+                const value = pill.dataset.filterValue;
+                toggleQuickFilter(category, value);
+            });
+        });
+
+        // Extend setLanguage to also update quick filter labels
+        const originalSetLanguage = setLanguage;
+        setLanguage = function(lang, options) {
+            originalSetLanguage(lang, options);
+            updateQuickFilterLabels();
+            syncQuickFilterPills();
+        };
+
+        // Extend setActiveView to sync pills
+        const originalSetActiveView = setActiveView;
+        setActiveView = function(view) {
+            originalSetActiveView(view);
+            syncQuickFilterPills();
+        };
+
         // Initialize
         loadFavorites();
         updateFavoritesBadge();
         setLanguage(currentLang, { skipUrlUpdate: true });
         setupAccordions();
         handleResize();
+        updateQuickFilterLabels();
+        syncQuickFilterPills();
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
