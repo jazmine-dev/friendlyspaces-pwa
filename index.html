@@ -42,6 +42,27 @@
             border-bottom: 1px solid #eee;
         }
 
+        #brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1E52BA;
+            border-radius: 12px;
+            padding: 6px 10px;
+        }
+
+        #brand-logo {
+            display: block;
+            height: 24px;
+            width: auto;
+        }
+
         #app-title {
             margin: 0;
             font-size: 20px;
@@ -669,6 +690,19 @@
             #app-title {
                 font-size: 18px;
             }
+
+            #brand {
+                gap: 10px;
+            }
+
+            #brand-logo-wrap {
+                padding: 5px 8px;
+                border-radius: 10px;
+            }
+
+            #brand-logo {
+                height: 20px;
+            }
         }
 
         /* Custom scrollbar */
@@ -857,7 +891,12 @@
         <button id="install-button">Add to Home Screen</button>
     </div>
     <header id="app-header">
-        <h1 id="app-title">Friendly Spaces</h1>
+        <div id="brand">
+            <span id="brand-logo-wrap">
+                <img id="brand-logo" src="assets/FriendlySpaces_white.png" alt="Friendly Spaces">
+            </span>
+            <h1 id="app-title">Friendly Spaces</h1>
+        </div>
         <div id="language-toggle" aria-label="Language switcher">
             <button type="button" data-lang="de">DE</button>
             <button type="button" data-lang="fr">FR</button>
