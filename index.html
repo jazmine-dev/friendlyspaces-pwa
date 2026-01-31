@@ -881,11 +881,12 @@
 
         /* Top Search Bar - Always visible */
         #top-search-bar {
-            background: #1E52BA;
+            background: white;
             padding: 12px 20px;
             display: flex;
             align-items: center;
             gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         #top-search-container {
@@ -897,14 +898,19 @@
         #top-search-input {
             width: 100%;
             padding: 14px 48px 14px 20px;
-            border: none;
+            border: 1px solid #e0e0e0;
             border-radius: 28px;
             font-size: 15px;
-            background: #ffffff;
+            background: #f8f9fa;
             color: #333;
             outline: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: background 0.2s, box-shadow 0.2s;
+            transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+
+        #top-search-input:focus {
+            background: #fff;
+            border-color: #1E52BA;
+            box-shadow: 0 2px 8px rgba(30,82,186,0.15);
         }
 
         #top-search-input::placeholder {
