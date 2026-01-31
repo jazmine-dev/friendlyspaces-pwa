@@ -20,11 +20,58 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background: #f7f5f1;
         }
 
         #container {
             display: flex;
-            height: 100vh;
+            flex: 1;
+            min-height: 0;
+        }
+
+        #app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 20px;
+            background: #ffffff;
+            border-bottom: 1px solid #eee;
+        }
+
+        #app-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1c1b19;
+        }
+
+        #language-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px;
+            border-radius: 999px;
+            background: #f0ebe4;
+        }
+
+        #language-toggle button {
+            border: none;
+            background: transparent;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #4c4a45;
+            cursor: pointer;
+        }
+
+        #language-toggle button.active {
+            background: #1E52BA;
+            color: white;
         }
 
         /* Mobile summary bar */
@@ -77,6 +124,7 @@
             flex-direction: column;
             z-index: 1001;
             transition: transform 0.3s ease;
+            padding-bottom: 72px;
         }
 
         #sidebar.collapsed {
@@ -319,7 +367,202 @@
 
         #map {
             flex: 1;
-            height: 100vh;
+            height: 100%;
+            width: 100%;
+        }
+
+        #main-view {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            background: #f7f5f1;
+        }
+
+        .view-panel {
+            position: absolute;
+            inset: 0;
+        }
+
+        .view-panel.hidden {
+            display: none;
+        }
+
+        #list-view {
+            overflow-y: auto;
+            padding: 16px 16px 120px;
+        }
+
+        .venue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .venue-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #ebe7e0;
+            padding: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .venue-card-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #f0ebe4;
+        }
+
+        .venue-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .venue-card-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1c1b19;
+        }
+
+        .venue-card-meta {
+            font-size: 12px;
+            color: #6f6b65;
+            font-weight: 600;
+        }
+
+        .venue-card-address {
+            font-size: 12px;
+            color: #7b7873;
+        }
+
+        .venue-card-description {
+            font-size: 13px;
+            color: #3b3834;
+        }
+
+        .venue-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .venue-card-tag {
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #f0ebe4;
+            font-size: 11px;
+            color: #4c4a45;
+        }
+
+        .venue-card-favorite {
+            border: 1px solid #d8d4cd;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .venue-card-favorite.active {
+            background: #1E52BA;
+            border-color: #1E52BA;
+            color: #ffffff;
+        }
+
+        .list-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: #66625d;
+        }
+
+        #bottom-tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: #ffffff;
+            border-top: 1px solid #e3ded6;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1002;
+        }
+
+        .bottom-tab-button {
+            border: none;
+            background: transparent;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4c4a45;
+            cursor: pointer;
+        }
+
+        .bottom-tab-button.active {
+            color: #1E52BA;
+        }
+
+        .bottom-tab-badge {
+            background: #BA1E1E;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 2px 6px;
+            font-size: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        #detail-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1005;
+        }
+
+        #detail-modal.active {
+            display: flex;
+        }
+
+        .detail-modal-card {
+            width: min(520px, 100%);
+            background: #ffffff;
+            border-radius: 20px 20px 0 0;
+            padding: 16px;
+            max-height: 80dvh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #detail-modal-close {
+            position: sticky;
+            top: 0;
+            margin-left: auto;
+            border: none;
+            background: #1E52BA;
+            color: white;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            display: block;
         }
 
         #toggle-sidebar {
@@ -411,12 +654,20 @@
             }
 
             #map {
-                height: calc(100dvh - 60px);
+                height: 100%;
                 min-height: 50dvh;
             }
 
             #toggle-sidebar {
                 display: none !important;
+            }
+
+            #app-header {
+                padding: 12px 16px;
+            }
+
+            #app-title {
+                font-size: 18px;
             }
         }
 
@@ -605,6 +856,14 @@
         <span id="install-banner-text">Install Friendly Spaces for quick access.</span>
         <button id="install-button">Add to Home Screen</button>
     </div>
+    <header id="app-header">
+        <h1 id="app-title">Friendly Spaces</h1>
+        <div id="language-toggle" aria-label="Language switcher">
+            <button type="button" data-lang="de">DE</button>
+            <button type="button" data-lang="fr">FR</button>
+            <button type="button" data-lang="en">EN</button>
+        </div>
+    </header>
     <div id="sheet-backdrop"></div>
     <div id="mobile-summary-bar">
         <span class="count">Showing <strong id="venue-count-mobile">0</strong> venues</span>
@@ -623,13 +882,6 @@
                         </svg>
                     </span>
                     <div id="search-dropdown"></div>
-                </div>
-                <div id="favorites-tabs">
-                    <button class="tab-button active" data-tab="all" id="tab-all">All</button>
-                    <button class="tab-button" data-tab="favorites" id="tab-favorites">
-                        <span id="tab-favorites-label">Favorites</span>
-                        <span class="tab-badge" id="favorites-count">0</span>
-                    </button>
                 </div>
             </div>
 
@@ -663,9 +915,27 @@
             </div>
         </aside>
 
-        <div style="position: relative; flex: 1;">
+        <div id="main-view">
             <button id="toggle-sidebar">☰</button>
-            <div id="map"></div>
+            <div id="map" class="view-panel"></div>
+            <div id="list-view" class="view-panel hidden">
+                <div id="list-cards" class="venue-list"></div>
+                <div id="list-empty" class="list-empty" hidden>No venues found.</div>
+            </div>
+        </div>
+    </div>
+    <nav id="bottom-tabs" aria-label="Primary">
+        <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">Map</button>
+        <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">List</button>
+        <button class="bottom-tab-button" data-view="favorites" id="bottom-tab-favorites" type="button">
+            <span id="bottom-tab-favorites-label">Favorites</span>
+            <span class="bottom-tab-badge" id="bottom-favorites-count">0</span>
+        </button>
+    </nav>
+    <div id="detail-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="detail-modal-card">
+            <button id="detail-modal-close" type="button">Close</button>
+            <div id="detail-modal-content"></div>
         </div>
     </div>
 
@@ -687,6 +957,12 @@
                     clearFilters: "Alle löschen",
                     allTab: "Alle",
                     favoritesTab: "Favoriten",
+                    mapTab: "Karte",
+                    listTab: "Liste",
+                    noVenuesTitle: "Keine Orte gefunden",
+                    noVenuesBody: "Versuche andere Filter oder eine neue Suche.",
+                    noFavoritesTitle: "Noch keine Favoriten",
+                    noFavoritesBody: "Tippe auf das Herz, um Orte zu speichern.",
                     favoritesInstall: "Friendly Spaces installieren",
                     favoritesInstallCta: "Zum Homescreen",
                     favoriteAdd: "Merken",
@@ -750,6 +1026,12 @@
                     clearFilters: "Tout effacer",
                     allTab: "Tous",
                     favoritesTab: "Favoris",
+                    mapTab: "Carte",
+                    listTab: "Liste",
+                    noVenuesTitle: "Aucun lieu trouvé",
+                    noVenuesBody: "Essayez d'autres filtres ou une nouvelle recherche.",
+                    noFavoritesTitle: "Pas encore de favoris",
+                    noFavoritesBody: "Touchez le cœur pour enregistrer.",
                     favoritesInstall: "Installer Friendly Spaces",
                     favoritesInstallCta: "Ajouter à l'écran",
                     favoriteAdd: "Enregistrer",
@@ -813,6 +1095,12 @@
                     clearFilters: "Clear All",
                     allTab: "All",
                     favoritesTab: "Favorites",
+                    mapTab: "Map",
+                    listTab: "List",
+                    noVenuesTitle: "No venues found",
+                    noVenuesBody: "Try clearing filters or searching another city.",
+                    noFavoritesTitle: "No favorites yet",
+                    noFavoritesBody: "Tap the heart to save places.",
                     favoritesInstall: "Install Friendly Spaces",
                     favoritesInstallCta: "Add to Home Screen",
                     favoriteAdd: "Save",
@@ -866,12 +1154,22 @@
             }
         };
 
+        const languageKey = 'friendlyspaces_lang';
         let currentLang = getPreferredLanguage();
 
         function getPreferredLanguage() {
             const params = new URLSearchParams(window.location.search);
             const fromQuery = params.get('lang')?.toLowerCase();
             if (fromQuery && supportedLanguages.includes(fromQuery)) return fromQuery;
+
+            try {
+                const stored = localStorage.getItem(languageKey);
+                if (stored && supportedLanguages.includes(stored)) {
+                    return stored;
+                }
+            } catch (err) {
+                // Ignore storage issues and fall back to browser language.
+            }
 
             const browser = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
             if (supportedLanguages.includes(browser)) return browser;
@@ -1236,12 +1534,19 @@
         };
         let searchQuery = '';
         let isInitialLoad = true;
-        let activeTab = 'all';
+        let activeTab = 'map';
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
         const sidebar = document.getElementById('sidebar');
         const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
         const sheetBackdrop = document.getElementById('sheet-backdrop');
+        const mapPanel = document.getElementById('map');
+        const listPanel = document.getElementById('list-view');
+        const listCards = document.getElementById('list-cards');
+        const listEmpty = document.getElementById('list-empty');
+        const bottomTabs = document.querySelectorAll('#bottom-tabs .bottom-tab-button');
+        const detailModal = document.getElementById('detail-modal');
+        const detailModalContent = document.getElementById('detail-modal-content');
 
         // City coordinates for zoom
         const cityCoordinates = {
@@ -1278,11 +1583,12 @@
             saveFavorites();
             updateFavoritesBadge();
             updateMap();
+            updateListView();
         }
 
         function updateFavoritesBadge() {
-            const badge = document.getElementById('favorites-count');
-            if (badge) badge.textContent = favorites.size;
+            const bottomBadge = document.getElementById('bottom-favorites-count');
+            if (bottomBadge) bottomBadge.textContent = favorites.size;
         }
 
         function renderCountWrappers() {
@@ -1302,6 +1608,8 @@
 
         function applyTranslations() {
             document.title = translate('ui.title', document.title);
+            const appTitle = document.getElementById('app-title');
+            if (appTitle) appTitle.textContent = translate('ui.title', appTitle.textContent);
             const sidebarTitle = document.getElementById('sidebar-title');
             if (sidebarTitle) sidebarTitle.textContent = translate('ui.sidebarTitle', sidebarTitle.textContent);
 
@@ -1314,11 +1622,14 @@
             const clearBtn = document.getElementById('clear-filters');
             if (clearBtn) clearBtn.textContent = translate('ui.clearFilters', clearBtn.textContent);
 
-            const tabAll = document.getElementById('tab-all');
-            if (tabAll) tabAll.textContent = translate('ui.allTab', tabAll.textContent);
+            const mapTab = document.getElementById('bottom-tab-map');
+            if (mapTab) mapTab.textContent = translate('ui.mapTab', mapTab.textContent);
 
-            const tabFavoritesLabel = document.getElementById('tab-favorites-label');
-            if (tabFavoritesLabel) tabFavoritesLabel.textContent = translate('ui.favoritesTab', tabFavoritesLabel.textContent);
+            const listTab = document.getElementById('bottom-tab-list');
+            if (listTab) listTab.textContent = translate('ui.listTab', listTab.textContent);
+
+            const favoritesTab = document.getElementById('bottom-tab-favorites-label');
+            if (favoritesTab) favoritesTab.textContent = translate('ui.favoritesTab', favoritesTab.textContent);
 
             const installBannerText = document.getElementById('install-banner-text');
             if (installBannerText) installBannerText.textContent = translate('ui.favoritesInstall', installBannerText.textContent);
@@ -1345,6 +1656,11 @@
             if (!supportedLanguages.includes(lang)) return;
             currentLang = lang;
             document.documentElement.lang = lang;
+            try {
+                localStorage.setItem(languageKey, lang);
+            } catch (err) {
+                // Ignore storage errors.
+            }
 
             if (!skipUrlUpdate) {
                 const url = new URL(window.location.href);
@@ -1353,9 +1669,11 @@
             }
 
             applyTranslations();
+            updateLanguageToggleActive();
             createFilterButtons();
             updateFilterCount();
             updateMap();
+            updateListView();
         }
 
         function openFilterSheet() {
@@ -1401,6 +1719,9 @@
                 document.body.style.overflow = 'hidden';
             } else {
                 document.body.style.overflow = 'auto';
+            }
+            if (mapPanel && !mapPanel.classList.contains('hidden')) {
+                setTimeout(() => map.invalidateSize(), 100);
             }
         }
 
@@ -1679,6 +2000,10 @@
             return true;
         }
 
+        function getVisibleVenues() {
+            return venues.filter(venueMatchesFilters);
+        }
+
         // Color scheme for filter categories
         const categoryColors = {
             venueType: '#3b82f6',      // Blue
@@ -1777,37 +2102,39 @@
 
             const bounds = L.latLngBounds([]);
             let visibleCount = 0;
+            const visibleVenues = getVisibleVenues();
 
             // Add markers for matching venues
-            venues.forEach(venue => {
-                if (venueMatchesFilters(venue)) {
-                    const coords = venue.fallbackCoords;
-                    const marker = L.marker(coords, { icon: markerIcon });
-                    marker.bindPopup(createPopup(venue), {
-                        className: 'custom-popup',
-                        maxWidth: 340,
-                        minWidth: 240,
-                        autoPanPaddingTopLeft: [40, 40],
-                        autoPanPaddingBottomRight: [40, 40]
-                    });
-                    marker.on('popupopen', (e) => {
-                        const target = e.popup.getLatLng();
-                        map.panTo(target, { animate: true });
-                        // Nudge popup fully into view; try a stronger upward pan
-                        setTimeout(() => map.panBy([0, -140], { animate: true }), 150);
-
-                        const sliderEl = e.popup.getElement()?.querySelector('.slider-container');
-                        attachSliderScrollSync(sliderEl);
-                        attachFavoriteHandlers(e.popup.getElement());
-                    });
-
-                    // Add marker to cluster group instead of directly to map
-                    markerClusterGroup.addLayer(marker);
-
-                    markers.push({ venue, marker, coords });
-                    bounds.extend(coords);
-                    visibleCount++;
+            visibleVenues.forEach(venue => {
+                if (!Array.isArray(venue.fallbackCoords) || venue.fallbackCoords.length < 2) {
+                    return;
                 }
+                const coords = venue.fallbackCoords;
+                const marker = L.marker(coords, { icon: markerIcon });
+                marker.bindPopup(createPopup(venue), {
+                    className: 'custom-popup',
+                    maxWidth: 340,
+                    minWidth: 240,
+                    autoPanPaddingTopLeft: [40, 40],
+                    autoPanPaddingBottomRight: [40, 40]
+                });
+                marker.on('popupopen', (e) => {
+                    const target = e.popup.getLatLng();
+                    map.panTo(target, { animate: true });
+                    // Nudge popup fully into view; try a stronger upward pan
+                    setTimeout(() => map.panBy([0, -140], { animate: true }), 150);
+
+                    const sliderEl = e.popup.getElement()?.querySelector('.slider-container');
+                    attachSliderScrollSync(sliderEl);
+                    attachFavoriteHandlers(e.popup.getElement());
+                });
+
+                // Add marker to cluster group instead of directly to map
+                markerClusterGroup.addLayer(marker);
+
+                markers.push({ venue, marker, coords });
+                bounds.extend(coords);
+                visibleCount++;
             });
 
             // Update count
@@ -1826,6 +2153,87 @@
                 }
                 isInitialLoad = false;
             }
+            updateListView();
+        }
+
+        function renderVenueCard(venue) {
+            const description = getVenueText(venue, 'description');
+            const image = venue.images && venue.images.length > 0 ? venue.images[0] : '';
+            const isFav = isFavorite(venue.name);
+            const tags = venue.filters?.venueType || [];
+            const tagHtml = tags.map(tag => {
+                const def = filterDefinitions.venueType.find(item => item.id === tag);
+                const translated = translate(`filters.options.venueType.${tag}`, def?.label || tag);
+                const label = typeof translated === 'function' ? translated() : translated;
+                return `<span class="venue-card-tag">${label}</span>`;
+            }).join('');
+
+            return `
+                <article class="venue-card" data-venue="${venue.name}">
+                    ${image
+                        ? `<img class="venue-card-image" src="${image}" alt="${venue.name}" loading="lazy" decoding="async">`
+                        : `<div class="venue-card-image" aria-hidden="true"></div>`}
+                    <div class="venue-card-header">
+                        <h3 class="venue-card-title">${venue.name}</h3>
+                        <button class="venue-card-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button">
+                            <span>${isFav ? '★' : '☆'}</span>
+                        </button>
+                    </div>
+                    <div class="venue-card-meta">${venue.city}</div>
+                    <div class="venue-card-address">${venue.address}</div>
+                    <div class="venue-card-description">${description}</div>
+                    <div class="venue-card-tags">${tagHtml}</div>
+                </article>
+            `;
+        }
+
+        function updateListView() {
+            if (!listCards || !listEmpty) return;
+            const visibleVenues = getVisibleVenues();
+            listCards.innerHTML = visibleVenues.map(renderVenueCard).join('');
+
+            const emptyTitle = activeTab === 'favorites'
+                ? translate('ui.noFavoritesTitle', 'No favorites yet')
+                : translate('ui.noVenuesTitle', 'No venues found');
+            const emptyBody = activeTab === 'favorites'
+                ? translate('ui.noFavoritesBody', 'Tap the heart to save places.')
+                : translate('ui.noVenuesBody', 'Try clearing filters or searching another city.');
+
+            listEmpty.hidden = visibleVenues.length > 0;
+            listCards.hidden = visibleVenues.length === 0;
+            listEmpty.innerHTML = `<strong style="display:block; margin-bottom:6px;">${emptyTitle}</strong>${emptyBody}`;
+        }
+
+        function openDetailModal(venue) {
+            if (!detailModal || !detailModalContent) return;
+            detailModalContent.innerHTML = createPopup(venue);
+            detailModal.classList.add('active');
+            detailModal.setAttribute('aria-hidden', 'false');
+            attachFavoriteHandlers(detailModalContent);
+            const sliderEl = detailModalContent.querySelector('.slider-container');
+            attachSliderScrollSync(sliderEl);
+        }
+
+        function closeDetailModal() {
+            if (!detailModal) return;
+            detailModal.classList.remove('active');
+            detailModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function setActiveView(view) {
+            activeTab = view;
+            bottomTabs.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === view);
+            });
+            const showMap = view === 'map';
+            if (mapPanel) mapPanel.classList.toggle('hidden', !showMap);
+            if (listPanel) listPanel.classList.toggle('hidden', showMap);
+            if (showMap) {
+                setTimeout(() => map.invalidateSize(), 100);
+            }
+            closeDetailModal();
+            updateMap();
+            updateListView();
         }
 
         if (mobileFilterToggle) {
@@ -1914,14 +2322,56 @@
             });
         }
 
-        const tabButtons = document.querySelectorAll('#favorites-tabs .tab-button');
-        tabButtons.forEach(btn => {
+        bottomTabs.forEach(btn => {
             btn.addEventListener('click', () => {
-                tabButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                activeTab = btn.dataset.tab || 'all';
-                updateMap();
+                setActiveView(btn.dataset.view || 'map');
             });
+        });
+
+        const languageButtons = document.querySelectorAll('#language-toggle button');
+        languageButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        if (listCards) {
+            listCards.addEventListener('click', (event) => {
+                const favoriteButton = event.target.closest('.venue-card-favorite');
+                if (favoriteButton) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const venueName = favoriteButton.dataset.venue;
+                    toggleFavorite(venueName);
+                    return;
+                }
+
+                const card = event.target.closest('.venue-card');
+                if (!card) return;
+                const venueName = card.dataset.venue;
+                const venue = venues.find(v => v.name === venueName);
+                if (venue) openDetailModal(venue);
+            });
+        }
+
+        const modalClose = document.getElementById('detail-modal-close');
+        if (modalClose) {
+            modalClose.addEventListener('click', closeDetailModal);
+        }
+
+        if (detailModal) {
+            detailModal.addEventListener('click', (event) => {
+                if (event.target === detailModal) {
+                    closeDetailModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeDetailModal();
+            }
         });
 
         // Install prompt banner
