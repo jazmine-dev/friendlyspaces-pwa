@@ -282,30 +282,12 @@
             color: #333;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-
-        .filter-category h3::after {
-            content: '▾';
-            font-size: 12px;
-            color: #1E52BA;
         }
 
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-        }
-
-        .filter-category.collapsed .filter-buttons {
-            display: none;
-        }
-
-        .filter-category.collapsed h3::after {
-            content: '▸';
         }
 
         .filter-button {
@@ -1940,30 +1922,7 @@
             document.body.style.overflow = isMobile() ? 'auto' : 'hidden';
         }
 
-        function setupAccordions() {
-            document.querySelectorAll('.filter-category h3').forEach(header => {
-                header.addEventListener('click', () => {
-                    if (!isMobile()) return;
-                    header.parentElement.classList.toggle('collapsed');
-                });
-            });
-        }
-
-        function collapseFiltersForMobile() {
-            const categories = document.querySelectorAll('.filter-category');
-
-            if (!isMobile()) {
-                categories.forEach(cat => cat.classList.remove('collapsed'));
-                return;
-            }
-
-            categories.forEach((cat, index) => {
-                cat.classList.toggle('collapsed', index !== 0);
-            });
-        }
-
         function handleResize() {
-            collapseFiltersForMobile();
             if (!isMobile()) {
                 closeFilterSheet(true);
                 document.body.style.overflow = 'hidden';
@@ -2812,7 +2771,6 @@
         loadFavorites();
         updateFavoritesBadge();
         setLanguage(currentLang, { skipUrlUpdate: true });
-        setupAccordions();
         handleResize();
         updateQuickFilterLabels();
         syncQuickFilterPills();
