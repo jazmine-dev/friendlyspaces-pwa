@@ -10,7 +10,26 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
     <style>
+        :root {
+            --brand: #1E52BA;
+            --brand-ink: #0d2f77;
+            --brand-soft: rgba(30, 82, 186, 0.12);
+            --ink: #1c1b19;
+            --ink-muted: #5e5a54;
+            --surface: #ffffff;
+            --surface-2: #f7f4ef;
+            --surface-3: #f0ebe4;
+            --border: #e3ded6;
+            --shadow-soft: 0 10px 24px rgba(15, 20, 35, 0.08);
+            --shadow-lift: 0 16px 34px rgba(15, 20, 35, 0.12);
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-pill: 999px;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -18,12 +37,26 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             min-height: 100dvh;
             display: flex;
             flex-direction: column;
-            background: #f7f5f1;
+            color: var(--ink);
+            background: radial-gradient(circle at top left, #f7f3e8 0%, #f5f2ee 35%, #f7f5f1 70%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(30, 82, 186, 0.08) 0, rgba(30, 82, 186, 0.0) 42%),
+                radial-gradient(circle at 90% 10%, rgba(255, 160, 90, 0.12) 0, rgba(255, 160, 90, 0.0) 38%),
+                radial-gradient(circle at 80% 80%, rgba(30, 82, 186, 0.06) 0, rgba(30, 82, 186, 0.0) 45%);
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: -1;
         }
 
         #container {
@@ -38,15 +71,34 @@
             justify-content: space-between;
             gap: 16px;
             padding: 16px 20px;
-            background: #ffffff;
-            border-bottom: 1px solid #eee;
+            background: linear-gradient(120deg, #ffffff 0%, #f7f5f1 60%, #eef3ff 100%);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
         }
 
         #app-title {
             margin: 0;
-            font-size: 20px;
+            font-family: 'Fraunces', 'Space Grotesk', sans-serif;
+            font-size: 22px;
             font-weight: 700;
-            color: #1c1b19;
+            color: var(--ink);
+            letter-spacing: -0.2px;
+        }
+
+        .app-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            box-shadow: 0 6px 14px rgba(15, 20, 35, 0.18);
+            object-fit: cover;
+            background: white;
+            border: 1px solid rgba(30, 82, 186, 0.18);
         }
 
         #language-toggle {
@@ -54,24 +106,28 @@
             align-items: center;
             gap: 6px;
             padding: 4px;
-            border-radius: 999px;
-            background: #f0ebe4;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(30, 82, 186, 0.1);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
         }
 
         #language-toggle button {
             border: none;
             background: transparent;
             padding: 6px 10px;
-            border-radius: 999px;
+            border-radius: var(--radius-pill);
             font-size: 11px;
             font-weight: 700;
-            color: #4c4a45;
+            color: var(--ink-muted);
             cursor: pointer;
+            letter-spacing: 0.3px;
         }
 
         #language-toggle button.active {
-            background: #1E52BA;
+            background: var(--brand);
             color: white;
+            box-shadow: 0 6px 12px rgba(30, 82, 186, 0.25);
         }
 
         /* Mobile summary bar */
@@ -81,11 +137,12 @@
             justify-content: space-between;
             gap: 10px;
             padding: 12px 16px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 22px rgba(10, 15, 30, 0.12);
             position: sticky;
             top: 0;
             z-index: 1002;
+            backdrop-filter: blur(10px);
         }
 
         #mobile-summary-bar .count {
@@ -94,14 +151,14 @@
         }
 
         #mobile-filter-toggle {
-            background: #1E52BA;
+            background: var(--brand);
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: var(--radius-pill);
             padding: 8px 14px;
             font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 18px rgba(30, 82, 186, 0.28);
         }
 
         #sheet-backdrop {
@@ -118,13 +175,14 @@
 
         #sidebar {
             width: 350px;
-            background: #ffffff;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: var(--shadow-soft);
             display: flex;
             flex-direction: column;
             z-index: 1001;
             transition: transform 0.3s ease;
             padding-bottom: 72px;
+            border-right: 1px solid var(--border);
         }
 
         #sidebar.collapsed {
@@ -133,7 +191,7 @@
 
         #sidebar-header {
             padding: 20px;
-            background: #1E52BA;
+            background: linear-gradient(135deg, #1E52BA 0%, #2a6ad9 60%, #4c8bff 100%);
             color: white;
             display: flex;
             flex-direction: column;
@@ -142,6 +200,7 @@
 
         #sidebar-header h2 {
             margin: 0 0 10px 0;
+            font-family: 'Fraunces', 'Space Grotesk', sans-serif;
             font-size: 20px;
         }
 
@@ -157,10 +216,10 @@
             width: 100%;
             padding: 12px 40px 12px 15px;
             border: none;
-            border-radius: 25px;
+            border-radius: var(--radius-pill);
             font-size: 14px;
             outline: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 16px rgba(12, 16, 30, 0.18);
         }
 
         #search-icon {
@@ -177,8 +236,8 @@
             left: 0;
             right: 0;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.15);
             margin-top: 8px;
             max-height: 200px;
             overflow-y: auto;
@@ -217,7 +276,7 @@
         .tab-button {
             flex: 1;
             border: none;
-            border-radius: 18px;
+            border-radius: var(--radius-pill);
             padding: 8px 10px;
             font-size: 13px;
             cursor: pointer;
@@ -254,16 +313,17 @@
 
         .filter-category {
             margin-bottom: 25px;
-            border-radius: 12px;
-            border: 1px solid #eee;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(30, 82, 186, 0.1);
             padding: 12px;
-            background: #fafbff;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 245, 239, 0.95) 100%);
+            box-shadow: 0 8px 16px rgba(15, 20, 35, 0.06);
         }
 
         .filter-category h3 {
             margin: 0 0 12px 0;
             font-size: 14px;
-            color: #333;
+            color: #2a2a2a;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: flex;
@@ -297,9 +357,9 @@
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 20px;
+            background: #f8f7f5;
+            border: 2px solid rgba(30, 82, 186, 0.08);
+            border-radius: var(--radius-pill);
             cursor: pointer;
             font-size: 13px;
             color: #495057;
@@ -313,9 +373,10 @@
         }
 
         .filter-button.active {
-            background: #1E52BA;
-            border-color: #1E52BA;
+            background: var(--brand);
+            border-color: var(--brand);
             color: white;
+            box-shadow: 0 8px 16px rgba(30, 82, 186, 0.24);
         }
 
         .filter-button .count {
@@ -332,7 +393,7 @@
 
         #active-filters {
             padding: 15px 20px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -340,16 +401,16 @@
 
         #filter-count {
             font-size: 14px;
-            color: #1E52BA;
+            color: var(--brand);
             font-weight: 600;
         }
 
         #clear-filters {
             background: none;
-            border: 1px solid #1E52BA;
-            color: #1E52BA;
+            border: 1px solid var(--brand);
+            color: var(--brand);
             padding: 6px 15px;
-            border-radius: 20px;
+            border-radius: var(--radius-pill);
             cursor: pointer;
             font-size: 12px;
             transition: all 0.2s;
@@ -375,7 +436,7 @@
             position: relative;
             flex: 1;
             min-height: 0;
-            background: #f7f5f1;
+            background: transparent;
         }
 
         .view-panel {
@@ -400,20 +461,27 @@
 
         .venue-card {
             background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid #ebe7e0;
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(30, 82, 186, 0.08);
             padding: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            box-shadow: var(--shadow-soft);
             display: flex;
             flex-direction: column;
             gap: 10px;
             cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: float-in 0.45s ease both;
+        }
+
+        .venue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lift);
         }
 
         .venue-card-image {
             width: 100%;
             height: 150px;
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             object-fit: cover;
             background: #f0ebe4;
         }
@@ -429,7 +497,7 @@
             margin: 0;
             font-size: 16px;
             font-weight: 700;
-            color: #1c1b19;
+            color: var(--ink);
         }
 
         .venue-card-meta {
@@ -456,7 +524,7 @@
 
         .venue-card-tag {
             padding: 4px 8px;
-            border-radius: 999px;
+            border-radius: var(--radius-pill);
             background: #f0ebe4;
             font-size: 11px;
             color: #4c4a45;
@@ -465,7 +533,7 @@
         .venue-card-favorite {
             border: 1px solid #d8d4cd;
             background: #ffffff;
-            border-radius: 999px;
+            border-radius: var(--radius-pill);
             padding: 6px 10px;
             font-size: 12px;
             cursor: pointer;
@@ -475,8 +543,8 @@
         }
 
         .venue-card-favorite.active {
-            background: #1E52BA;
-            border-color: #1E52BA;
+            background: var(--brand);
+            border-color: var(--brand);
             color: #ffffff;
         }
 
@@ -492,12 +560,14 @@
             left: 0;
             right: 0;
             height: 64px;
-            background: #ffffff;
-            border-top: 1px solid #e3ded6;
+            background: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid rgba(30, 82, 186, 0.12);
             display: flex;
             align-items: center;
             justify-content: space-around;
             z-index: 1002;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 -8px 24px rgba(12, 16, 30, 0.1);
         }
 
         .bottom-tab-button {
@@ -513,8 +583,15 @@
             cursor: pointer;
         }
 
+        .bottom-tab-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 1;
+        }
+
         .bottom-tab-button.active {
-            color: #1E52BA;
+            color: var(--brand);
         }
 
         .bottom-tab-badge {
@@ -544,7 +621,7 @@
         .detail-modal-card {
             width: min(520px, 100%);
             background: #ffffff;
-            border-radius: 20px 20px 0 0;
+            border-radius: 24px 24px 0 0;
             padding: 16px;
             max-height: 80dvh;
             overflow-y: auto;
@@ -556,9 +633,9 @@
             top: 0;
             margin-left: auto;
             border: none;
-            background: #1E52BA;
+            background: var(--brand);
             color: white;
-            border-radius: 999px;
+            border-radius: var(--radius-pill);
             padding: 6px 12px;
             font-size: 12px;
             cursor: pointer;
@@ -583,7 +660,7 @@
         #result-count {
             padding: 10px 20px;
             background: #f8f9fa;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border);
             font-size: 13px;
             color: #666;
         }
@@ -603,7 +680,7 @@
         .venue-tag {
             background: #e9ecef;
             padding: 3px 10px;
-            border-radius: 12px;
+            border-radius: var(--radius-pill);
             font-size: 11px;
             color: #495057;
         }
@@ -802,8 +879,8 @@
         .favorite-toggle {
             border: none;
             background: #f2f4fb;
-            color: #1E52BA;
-            border-radius: 18px;
+            color: var(--brand);
+            border-radius: var(--radius-pill);
             padding: 6px 10px;
             font-size: 12px;
             cursor: pointer;
@@ -813,7 +890,7 @@
         }
 
         .favorite-toggle.active {
-            background: #1E52BA;
+            background: var(--brand);
             color: white;
         }
 
@@ -831,9 +908,10 @@
             justify-content: space-between;
             gap: 12px;
             padding: 10px 16px;
-            background: #1E52BA;
+            background: linear-gradient(135deg, #1E52BA 0%, #3d7cff 100%);
             color: white;
             font-size: 13px;
+            box-shadow: 0 10px 20px rgba(30, 82, 186, 0.22);
         }
 
         .install-banner.hidden {
@@ -842,12 +920,23 @@
 
         .install-banner button {
             background: white;
-            color: #1E52BA;
+            color: var(--brand);
             border: none;
-            border-radius: 16px;
+            border-radius: var(--radius-pill);
             padding: 6px 12px;
             font-size: 12px;
             cursor: pointer;
+        }
+
+        @keyframes float-in {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -857,7 +946,10 @@
         <button id="install-button">Add to Home Screen</button>
     </div>
     <header id="app-header">
-        <h1 id="app-title">Friendly Spaces</h1>
+        <div class="app-brand">
+            <img class="app-logo" src="icons/icon-192.png" alt="Friendly Spaces logo">
+            <h1 id="app-title">Friendly Spaces</h1>
+        </div>
         <div id="language-toggle" aria-label="Language switcher">
             <button type="button" data-lang="de">DE</button>
             <button type="button" data-lang="fr">FR</button>
@@ -925,11 +1017,17 @@
         </div>
     </div>
     <nav id="bottom-tabs" aria-label="Primary">
-        <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">Map</button>
-        <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">List</button>
+        <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">
+            <span class="bottom-tab-label">Map</span>
+        </button>
+        <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">
+            <span class="bottom-tab-label">List</span>
+        </button>
         <button class="bottom-tab-button" data-view="favorites" id="bottom-tab-favorites" type="button">
-            <span id="bottom-tab-favorites-label">Favorites</span>
-            <span class="bottom-tab-badge" id="bottom-favorites-count">0</span>
+            <span class="bottom-tab-label" id="bottom-tab-favorites-label">
+                Favorites
+                <span class="bottom-tab-badge" id="bottom-favorites-count">0</span>
+            </span>
         </button>
     </nav>
     <div id="detail-modal" role="dialog" aria-modal="true" aria-hidden="true">
