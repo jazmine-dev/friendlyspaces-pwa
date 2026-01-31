@@ -878,6 +878,110 @@
             font-size: 12px;
             cursor: pointer;
         }
+
+        /* Top Search Bar - Always visible */
+        #top-search-bar {
+            background: #2a2a2a;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #top-search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        #top-search-input {
+            width: 100%;
+            padding: 14px 48px 14px 20px;
+            border: none;
+            border-radius: 28px;
+            font-size: 15px;
+            background: #3d3d3d;
+            color: #fff;
+            outline: none;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        #top-search-input::placeholder {
+            color: #999;
+        }
+
+        #top-search-input:focus {
+            background: #4a4a4a;
+            box-shadow: 0 0 0 2px rgba(30, 82, 186, 0.5);
+        }
+
+        #top-search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            pointer-events: none;
+        }
+
+        #top-search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            max-height: 280px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1010;
+        }
+
+        #top-search-dropdown.show {
+            display: block;
+        }
+
+        .top-search-dropdown-item {
+            padding: 14px 18px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .top-search-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .top-search-dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .top-search-dropdown-item strong {
+            color: #1E52BA;
+        }
+
+        .top-search-dropdown-item .city-label {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* Hide sidebar search on mobile since top bar is primary */
+        @media (max-width: 768px) {
+            #search-container {
+                display: none;
+            }
+
+            #top-search-bar {
+                padding: 10px 16px;
+            }
+
+            #top-search-input {
+                padding: 12px 44px 12px 16px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -898,6 +1002,18 @@
             <button type="button" data-lang="en">EN</button>
         </div>
     </header>
+    <div id="top-search-bar">
+        <div id="top-search-container">
+            <input type="text" id="top-search-input" placeholder="Search by name, city, or address...">
+            <span id="top-search-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+                </svg>
+            </span>
+            <div id="top-search-dropdown"></div>
+        </div>
+    </div>
     <div id="sheet-backdrop"></div>
     <div id="mobile-summary-bar">
         <span class="count">Showing <strong id="venue-count-mobile">0</strong> venues</span>
@@ -1650,6 +1766,9 @@
             const searchInputEl = document.getElementById('search-input');
             if (searchInputEl) searchInputEl.placeholder = translate('ui.searchPlaceholder', searchInputEl.placeholder);
 
+            const topSearchInputEl = document.getElementById('top-search-input');
+            if (topSearchInputEl) topSearchInputEl.placeholder = translate('ui.searchPlaceholder', topSearchInputEl.placeholder);
+
             const mobileToggle = document.getElementById('mobile-filter-toggle');
             if (mobileToggle) mobileToggle.textContent = translate('ui.filtersLabel', mobileToggle.textContent);
 
@@ -1822,10 +1941,16 @@
         // Search functionality with dropdown
         const searchInput = document.getElementById('search-input');
         const searchDropdown = document.getElementById('search-dropdown');
+        const topSearchInput = document.getElementById('top-search-input');
+        const topSearchDropdown = document.getElementById('top-search-dropdown');
 
-        function updateSearchDropdown(query) {
+        function updateSearchDropdown(query, dropdownEl) {
+            const targetDropdown = dropdownEl || searchDropdown;
+            const isTopSearch = targetDropdown === topSearchDropdown;
+            const itemClass = isTopSearch ? 'top-search-dropdown-item' : 'search-dropdown-item';
+
             if (!query || query.length < 2) {
-                searchDropdown.classList.remove('show');
+                targetDropdown.classList.remove('show');
                 return;
             }
 
@@ -1858,46 +1983,49 @@
             });
 
             if (suggestions.length === 0) {
-                searchDropdown.classList.remove('show');
+                targetDropdown.classList.remove('show');
                 return;
             }
 
             // Limit to 5 suggestions
             const limitedSuggestions = suggestions.slice(0, 5);
 
-            searchDropdown.innerHTML = limitedSuggestions.map(s => {
+            targetDropdown.innerHTML = limitedSuggestions.map(s => {
                 if (s.type === 'city') {
-                    return `<div class="search-dropdown-item" data-type="city" data-city="${s.name.toLowerCase()}">
+                    return `<div class="${itemClass}" data-type="city" data-city="${s.name.toLowerCase()}">
                         <strong>📍 ${s.name}</strong> - ${s.count}
                     </div>`;
                 } else {
-                    return `<div class="search-dropdown-item" data-type="venue" data-venue="${s.name}">
-                        ${s.name} <span style="color: #999;">- ${s.city}</span>
+                    return `<div class="${itemClass}" data-type="venue" data-venue="${s.name}">
+                        ${s.name} <span class="city-label">- ${s.city}</span>
                     </div>`;
                 }
             }).join('');
 
-            searchDropdown.classList.add('show');
+            targetDropdown.classList.add('show');
 
             // Add click handlers
-            searchDropdown.querySelectorAll('.search-dropdown-item').forEach(item => {
+            targetDropdown.querySelectorAll(`.${itemClass}`).forEach(item => {
                 item.addEventListener('click', () => {
                     const type = item.dataset.type;
                     if (type === 'city') {
                         const city = item.dataset.city;
-                        handleCitySearch(city);
+                        handleCitySearch(city, isTopSearch);
                     } else {
                         const venueName = item.dataset.venue;
-                        handleVenueSearch(venueName);
+                        handleVenueSearch(venueName, isTopSearch);
                     }
                 });
             });
         }
 
-        function handleCitySearch(city) {
-            searchInput.value = city.charAt(0).toUpperCase() + city.slice(1);
+        function handleCitySearch(city, fromTopSearch = false) {
+            const displayCity = city.charAt(0).toUpperCase() + city.slice(1);
+            searchInput.value = displayCity;
+            topSearchInput.value = displayCity;
             searchQuery = city.toLowerCase();
             searchDropdown.classList.remove('show');
+            topSearchDropdown.classList.remove('show');
 
             // Zoom to city
             const coords = cityCoordinates[city.toLowerCase()];
@@ -1908,12 +2036,14 @@
             updateMap();
         }
 
-        function handleVenueSearch(venueName) {
+        function handleVenueSearch(venueName, fromTopSearch = false) {
             const venue = venues.find(v => v.name === venueName);
             if (venue) {
                 searchInput.value = venue.name;
+                topSearchInput.value = venue.name;
                 searchQuery = venue.name.toLowerCase();
                 searchDropdown.classList.remove('show');
+                topSearchDropdown.classList.remove('show');
 
                 // Zoom to venue
                 map.setView(venue.fallbackCoords, 15);
@@ -1930,15 +2060,32 @@
             }
         }
 
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.toLowerCase();
-            updateSearchDropdown(searchQuery);
+        // Sync both search inputs
+        function syncSearchInputs(sourceInput, sourceDropdown) {
+            searchQuery = sourceInput.value.toLowerCase();
+
+            // Sync the other input
+            if (sourceInput === searchInput) {
+                topSearchInput.value = sourceInput.value;
+                updateSearchDropdown(searchQuery, searchDropdown);
+            } else {
+                searchInput.value = sourceInput.value;
+                updateSearchDropdown(searchQuery, topSearchDropdown);
+            }
+
             updateMap();
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            syncSearchInputs(searchInput, searchDropdown);
+        });
+
+        topSearchInput.addEventListener('input', (e) => {
+            syncSearchInputs(topSearchInput, topSearchDropdown);
         });
 
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && searchQuery) {
-                // Check if it's a city name
                 const cityMatch = Object.keys(cityCoordinates).find(city =>
                     city === searchQuery ||
                     searchQuery.includes(city)
@@ -1952,10 +2099,28 @@
             }
         });
 
-        // Close dropdown when clicking outside
+        topSearchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && searchQuery) {
+                const cityMatch = Object.keys(cityCoordinates).find(city =>
+                    city === searchQuery ||
+                    searchQuery.includes(city)
+                );
+
+                if (cityMatch) {
+                    handleCitySearch(cityMatch, true);
+                } else {
+                    topSearchDropdown.classList.remove('show');
+                }
+            }
+        });
+
+        // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
             if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
                 searchDropdown.classList.remove('show');
+            }
+            if (!topSearchInput.contains(e.target) && !topSearchDropdown.contains(e.target)) {
+                topSearchDropdown.classList.remove('show');
             }
         });
 
@@ -1973,6 +2138,7 @@
 
             // Clear search
             document.getElementById('search-input').value = '';
+            document.getElementById('top-search-input').value = '';
             searchQuery = '';
 
             // Reset map view to show all venues
