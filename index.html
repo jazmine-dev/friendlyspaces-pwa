@@ -712,6 +712,11 @@
             cursor: pointer;
         }
 
+        .bottom-tab-icon {
+            width: 18px;
+            height: 18px;
+        }
+
         .bottom-tab-button.active {
             color: #1E52BA;
         }
@@ -1837,11 +1842,30 @@
         </div>
     </section>
     <nav id="bottom-tabs" aria-label="Primary">
-        <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">Map</button>
-        <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">List</button>
+        <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">
+            <svg class="bottom-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="1 6 8 3 16 6 23 3 23 18 16 21 8 18 1 21"></polygon>
+                <line x1="8" y1="3" x2="8" y2="18"></line>
+                <line x1="16" y1="6" x2="16" y2="21"></line>
+            </svg>
+            Map
+        </button>
+        <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">
+            <svg class="bottom-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <circle cx="4" cy="6" r="1"></circle>
+                <circle cx="4" cy="12" r="1"></circle>
+                <circle cx="4" cy="18" r="1"></circle>
+            </svg>
+            List
+        </button>
         <button class="bottom-tab-button" data-view="favorites" id="bottom-tab-favorites" type="button">
+            <svg class="bottom-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+            </svg>
             <span id="bottom-tab-favorites-label">Favorites</span>
-            <span class="bottom-tab-badge" id="bottom-favorites-count">0</span>
         </button>
     </nav>
     <div id="detail-modal" role="dialog" aria-modal="true" aria-hidden="true">
