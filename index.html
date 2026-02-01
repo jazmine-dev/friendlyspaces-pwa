@@ -65,13 +65,116 @@
             display: none;
         }
 
+        #menu-toggle {
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        #menu-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        #menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 1004;
+        }
+
+        #menu-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #menu-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(300px, 84vw);
+            height: 100%;
+            background: #ffffff;
+            box-shadow: -8px 0 24px rgba(0,0,0,0.15);
+            transform: translateX(100%);
+            transition: transform 0.25s ease;
+            z-index: 1005;
+            display: flex;
+            flex-direction: column;
+            padding: 18px;
+            gap: 16px;
+        }
+
+        #menu-drawer.open {
+            transform: translateX(0);
+        }
+
+        #menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        #menu-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1c1b19;
+        }
+
+        #menu-close {
+            border: none;
+            background: #f0ebe4;
+            color: #3b3834;
+            padding: 6px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .menu-button {
+            width: 100%;
+            border: 1px solid #e8e3dc;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1c1b19;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .menu-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #7b7873;
+            margin: 0;
+        }
+
         #language-toggle {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             padding: 4px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.2);
+            background: #f0ebe4;
         }
 
         #language-toggle button {
@@ -81,13 +184,122 @@
             border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.8);
+            color: #4c4a45;
             cursor: pointer;
         }
 
         #language-toggle button.active {
-            background: white;
-            color: #1E52BA;
+            background: #1E52BA;
+            color: white;
+        }
+
+        .fullscreen-panel {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 1006;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.25s ease;
+        }
+
+        .fullscreen-panel.open {
+            transform: translateY(0);
+        }
+
+        .fullscreen-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            border-bottom: 1px solid #eee;
+            background: #ffffff;
+        }
+
+        .fullscreen-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1c1b19;
+        }
+
+        .fullscreen-close {
+            border: none;
+            background: #f0ebe4;
+            color: #3b3834;
+            padding: 6px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .fullscreen-body {
+            padding: 18px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .suggest-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .suggest-toggle button {
+            border: 2px solid #e9ecef;
+            background: #f8f9fa;
+            border-radius: 14px;
+            padding: 12px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #3b3834;
+        }
+
+        .suggest-toggle button.active {
+            background: #1E52BA;
+            border-color: #1E52BA;
+            color: #ffffff;
+        }
+
+        .suggest-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .suggest-form label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4c4a45;
+        }
+
+        .suggest-form input,
+        .suggest-form textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #e6e1da;
+            font-size: 14px;
+        }
+
+        .suggest-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .suggest-submit {
+            border: none;
+            background: #1E52BA;
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         #sheet-backdrop {
@@ -1000,12 +1212,6 @@
                 max-width: 100%;
             }
 
-            #language-toggle {
-                position: absolute;
-                right: 16px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
         }
 
         /* Custom scrollbar */
@@ -1373,11 +1579,13 @@
             </span>
             <h1 id="app-title">Friendly Spaces</h1>
         </div>
-        <div id="language-toggle" aria-label="Language switcher">
-            <button type="button" data-lang="de">DE</button>
-            <button type="button" data-lang="fr">FR</button>
-            <button type="button" data-lang="en">EN</button>
-        </div>
+        <button id="menu-toggle" type="button" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+        </button>
     </header>
     <div id="top-search-bar">
         <div id="top-search-container">
@@ -1476,6 +1684,82 @@
             </div>
         </div>
     </div>
+    <div id="menu-backdrop" aria-hidden="true"></div>
+    <aside id="menu-drawer" aria-label="App menu">
+        <div id="menu-header">
+            <h2 id="menu-title">Menu</h2>
+            <button id="menu-close" type="button" aria-label="Close menu">Close</button>
+        </div>
+        <button class="menu-button" id="menu-suggest" type="button">
+            Suggest a venue
+            <span aria-hidden="true">›</span>
+        </button>
+        <button class="menu-button" id="menu-share" type="button">
+            Share the app
+            <span aria-hidden="true">↗</span>
+        </button>
+        <button class="menu-button" id="menu-about" type="button">
+            About us
+            <span aria-hidden="true">›</span>
+        </button>
+        <p class="menu-section-title">Language</p>
+        <div id="language-toggle" aria-label="Language switcher">
+            <button type="button" data-lang="de">DE</button>
+            <button type="button" data-lang="fr">FR</button>
+            <button type="button" data-lang="en">EN</button>
+        </div>
+    </aside>
+    <section id="suggest-view" class="fullscreen-panel" aria-hidden="true">
+        <div class="fullscreen-header">
+            <h2 class="fullscreen-title">Suggest a venue</h2>
+            <button class="fullscreen-close" type="button" id="suggest-close">Close</button>
+        </div>
+        <div class="fullscreen-body">
+            <div class="suggest-toggle" role="group" aria-label="Your role">
+                <button type="button" class="active" data-suggest-role="owner">I am a venue owner</button>
+                <button type="button" data-suggest-role="fan">I am a Friendly Spaces enthusiast</button>
+            </div>
+            <form id="suggest-form" class="suggest-form">
+                <div>
+                    <label for="venue-name">Venue name</label>
+                    <input id="venue-name" name="venueName" required>
+                </div>
+                <div>
+                    <label for="venue-city">City</label>
+                    <input id="venue-city" name="venueCity" required>
+                </div>
+                <div>
+                    <label for="venue-why">Why is it friendly? (optional)</label>
+                    <textarea id="venue-why" name="venueWhy"></textarea>
+                </div>
+                <div id="owner-fields">
+                    <div>
+                        <label for="owner-name">Your name</label>
+                        <input id="owner-name" name="ownerName">
+                    </div>
+                    <div>
+                        <label for="owner-email">Your email</label>
+                        <input id="owner-email" name="ownerEmail" type="email">
+                    </div>
+                    <div>
+                        <label for="owner-phone">Phone (optional)</label>
+                        <input id="owner-phone" name="ownerPhone" type="tel">
+                    </div>
+                </div>
+                <button class="suggest-submit" type="submit">Send suggestion</button>
+            </form>
+        </div>
+    </section>
+    <section id="about-view" class="fullscreen-panel" aria-hidden="true">
+        <div class="fullscreen-header">
+            <h2 class="fullscreen-title">About us</h2>
+            <button class="fullscreen-close" type="button" id="about-close">Close</button>
+        </div>
+        <div class="fullscreen-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </section>
     <nav id="bottom-tabs" aria-label="Primary">
         <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">Map</button>
         <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">List</button>
@@ -2108,6 +2392,20 @@
         const bottomTabs = document.querySelectorAll('#bottom-tabs .bottom-tab-button');
         const detailModal = document.getElementById('detail-modal');
         const detailModalContent = document.getElementById('detail-modal-content');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+        const menuDrawer = document.getElementById('menu-drawer');
+        const menuClose = document.getElementById('menu-close');
+        const menuSuggest = document.getElementById('menu-suggest');
+        const menuShare = document.getElementById('menu-share');
+        const menuAbout = document.getElementById('menu-about');
+        const suggestView = document.getElementById('suggest-view');
+        const aboutView = document.getElementById('about-view');
+        const suggestClose = document.getElementById('suggest-close');
+        const aboutClose = document.getElementById('about-close');
+        const suggestForm = document.getElementById('suggest-form');
+        const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
+        const ownerFields = document.getElementById('owner-fields');
 
         // City coordinates for zoom
         const cityCoordinates = {
@@ -2198,6 +2496,44 @@
             });
 
             renderCountWrappers();
+        }
+
+        function openMenu() {
+            if (!menuDrawer || !menuBackdrop) return;
+            menuDrawer.classList.add('open');
+            menuBackdrop.classList.add('visible');
+        }
+
+        function closeMenu() {
+            if (!menuDrawer || !menuBackdrop) return;
+            menuDrawer.classList.remove('open');
+            menuBackdrop.classList.remove('visible');
+        }
+
+        function openPanel(panel) {
+            if (!panel) return;
+            panel.classList.add('open');
+            panel.setAttribute('aria-hidden', 'false');
+        }
+
+        function closePanel(panel) {
+            if (!panel) return;
+            panel.classList.remove('open');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+
+        function setSuggestRole(role) {
+            suggestRoleButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.suggestRole === role);
+            });
+            if (ownerFields) {
+                const isOwner = role === 'owner';
+                ownerFields.style.display = isOwner ? 'block' : 'none';
+                const ownerName = document.getElementById('owner-name');
+                const ownerEmail = document.getElementById('owner-email');
+                if (ownerName) ownerName.required = isOwner;
+                if (ownerEmail) ownerEmail.required = isOwner;
+            }
         }
 
         function updateLanguageToggleActive() {
@@ -3073,6 +3409,88 @@
             });
         });
 
+        if (menuToggle) {
+            menuToggle.addEventListener('click', openMenu);
+        }
+        if (menuClose) {
+            menuClose.addEventListener('click', closeMenu);
+        }
+        if (menuBackdrop) {
+            menuBackdrop.addEventListener('click', closeMenu);
+        }
+        if (menuSuggest) {
+            menuSuggest.addEventListener('click', () => {
+                closeMenu();
+                openPanel(suggestView);
+            });
+        }
+        if (menuAbout) {
+            menuAbout.addEventListener('click', () => {
+                closeMenu();
+                openPanel(aboutView);
+            });
+        }
+        if (menuShare) {
+            menuShare.addEventListener('click', async () => {
+                const shareUrl = `${window.location.origin}${window.location.pathname}`;
+                const shareData = {
+                    title: 'Friendly Spaces',
+                    text: 'Find family-friendly venues in Switzerland.',
+                    url: shareUrl
+                };
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else if (navigator.clipboard) {
+                        await navigator.clipboard.writeText(shareUrl);
+                        alert('Link copied to clipboard.');
+                    } else {
+                        prompt('Copy this link:', shareUrl);
+                    }
+                } catch (err) {
+                    // Ignore cancelled share.
+                }
+            });
+        }
+        if (suggestClose) {
+            suggestClose.addEventListener('click', () => closePanel(suggestView));
+        }
+        if (aboutClose) {
+            aboutClose.addEventListener('click', () => closePanel(aboutView));
+        }
+        suggestRoleButtons.forEach(btn => {
+            btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
+        });
+        if (suggestForm) {
+            suggestForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'owner';
+                const venueName = document.getElementById('venue-name')?.value || '';
+                const venueCity = document.getElementById('venue-city')?.value || '';
+                const venueWhy = document.getElementById('venue-why')?.value || '';
+                const ownerName = document.getElementById('owner-name')?.value || '';
+                const ownerEmail = document.getElementById('owner-email')?.value || '';
+                const ownerPhone = document.getElementById('owner-phone')?.value || '';
+
+                const lines = [
+                    `Role: ${role === 'owner' ? 'Venue owner' : 'Friendly Spaces enthusiast'}`,
+                    `Venue name: ${venueName}`,
+                    `City: ${venueCity}`
+                ];
+                if (venueWhy) lines.push(`Why friendly: ${venueWhy}`);
+                if (role === 'owner') {
+                    if (ownerName) lines.push(`Owner name: ${ownerName}`);
+                    if (ownerEmail) lines.push(`Owner email: ${ownerEmail}`);
+                    if (ownerPhone) lines.push(`Owner phone: ${ownerPhone}`);
+                }
+
+                const subject = encodeURIComponent('Friendly Spaces venue suggestion');
+                const body = encodeURIComponent(lines.join('\n'));
+                const to = 'hello@friendlyspaces.com';
+                window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+            });
+        }
+
         if (listCards) {
             listCards.addEventListener('click', (event) => {
                 const favoriteButton = event.target.closest('.venue-card-favorite');
@@ -3314,6 +3732,7 @@
         handleResize();
         updateQuickFilterLabels();
         syncQuickFilterPills();
+        setSuggestRole('owner');
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
