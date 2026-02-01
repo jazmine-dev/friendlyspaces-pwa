@@ -335,7 +335,7 @@
 
         #sidebar {
             width: 350px;
-            background: #ffffff;
+            background: #1E52BA;
             box-shadow: 2px 0 8px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
@@ -503,20 +503,21 @@
             flex: 1;
             overflow-y: auto;
             padding: 20px;
+            color: #ffffff;
         }
 
         .filter-category {
             margin-bottom: 25px;
             border-radius: 12px;
-            border: 1px solid #eee;
+            border: 1px solid rgba(255,255,255,0.25);
             padding: 12px;
-            background: #fafbff;
+            background: rgba(255,255,255,0.08);
         }
 
         .filter-category h3 {
             margin: 0 0 12px 0;
             font-size: 14px;
-            color: #333;
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -532,57 +533,58 @@
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
+            background: rgba(255,255,255,0.18);
+            border: 2px solid rgba(255,255,255,0.2);
             border-radius: 20px;
             cursor: pointer;
             font-size: 13px;
-            color: #495057;
+            color: #ffffff;
             transition: all 0.2s;
             user-select: none;
         }
 
         .filter-button:hover {
-            background: #e9ecef;
-            border-color: #dee2e6;
+            background: rgba(255,255,255,0.28);
+            border-color: rgba(255,255,255,0.35);
         }
 
         .filter-button.active {
-            background: #1E52BA;
-            border-color: #1E52BA;
-            color: white;
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #1E52BA;
         }
 
         .filter-button .count {
             font-size: 11px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255,255,255,0.2);
             padding: 2px 6px;
             border-radius: 10px;
         }
 
         .filter-button.active .count {
-            background: #F8F5EF;
+            background: rgba(30, 82, 186, 0.1);
             color: #1E52BA;
         }
 
         #active-filters {
             padding: 15px 20px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid rgba(255,255,255,0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #ffffff;
         }
 
         #filter-count {
             font-size: 14px;
-            color: #1E52BA;
+            color: #ffffff;
             font-weight: 600;
         }
 
         #clear-filters {
-            background: none;
-            border: 1px solid #1E52BA;
-            color: #1E52BA;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #ffffff;
             padding: 6px 15px;
             border-radius: 20px;
             cursor: pointer;
@@ -591,7 +593,7 @@
         }
 
         #clear-filters:hover {
-            background: #1E52BA;
+            background: rgba(255,255,255,0.25);
             color: white;
         }
 
@@ -1221,9 +1223,10 @@
                 position: fixed;
                 left: 0;
                 right: 0;
+                top: 156px;
                 bottom: 0;
                 width: 100%;
-                max-height: 70dvh;
+                max-height: none;
                 transform: translateY(100%);
                 box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
                 border-radius: 16px 16px 0 0;
@@ -1237,14 +1240,14 @@
             }
 
             #filters-container {
-                max-height: 50dvh;
+                max-height: none;
                 padding-top: 10px;
             }
 
             #active-filters {
                 position: sticky;
                 bottom: 0;
-                background: white;
+                background: #1E52BA;
             }
 
             #map {
@@ -3506,6 +3509,49 @@
 
         if (sheetBackdrop) {
             sheetBackdrop.addEventListener('click', () => closeFilterSheet());
+        }
+
+        // Swipe down to close filters sheet on mobile
+        let sheetTouchStartY = 0;
+        let sheetTouchStartX = 0;
+        let isSheetSwiping = false;
+
+        if (sidebar) {
+            sidebar.addEventListener('touchstart', (e) => {
+                if (!isMobile()) return;
+                const touch = e.touches[0];
+                sheetTouchStartY = touch.clientY;
+                sheetTouchStartX = touch.clientX;
+                isSheetSwiping = false;
+            }, { passive: true });
+
+            sidebar.addEventListener('touchmove', (e) => {
+                if (!isMobile() || !sheetTouchStartY) return;
+                const touch = e.touches[0];
+                const diffY = touch.clientY - sheetTouchStartY;
+                const diffX = Math.abs(touch.clientX - sheetTouchStartX);
+
+                if (diffY > 20 && diffY > diffX * 1.4) {
+                    isSheetSwiping = true;
+                    sidebar.style.transform = `translateY(${diffY}px)`;
+                }
+            }, { passive: true });
+
+            sidebar.addEventListener('touchend', () => {
+                if (!isMobile()) return;
+                if (isSheetSwiping) {
+                    const currentTransform = parseFloat(sidebar.style.transform.replace(/[^0-9.-]/g, '')) || 0;
+                    if (currentTransform > 120) {
+                        sidebar.style.transform = '';
+                        closeFilterSheet(true);
+                    } else {
+                        sidebar.style.transform = '';
+                    }
+                }
+                sheetTouchStartY = 0;
+                sheetTouchStartX = 0;
+                isSheetSwiping = false;
+            }, { passive: true });
         }
 
         window.addEventListener('resize', handleResize);
