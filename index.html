@@ -3037,8 +3037,11 @@
             updateListView();
         }
 
-        // Clear filters
-        document.getElementById('clear-filters').addEventListener('click', resetAllFilters);
+        // Clear filters (legacy button removed; keep safe guard)
+        const legacyClearBtn = document.getElementById('clear-filters');
+        if (legacyClearBtn) {
+            legacyClearBtn.addEventListener('click', resetAllFilters);
+        }
 
         // Update filter count display
         function updateFilterCount() {
