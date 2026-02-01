@@ -362,6 +362,27 @@
             font-size: 20px;
         }
 
+        #sidebar-favorites {
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+        }
+
+        #sidebar-favorites.active {
+            background: #ffffff;
+            color: #1E52BA;
+            border-color: #ffffff;
+        }
+
         .language-toggle {
             display: none;
         }
@@ -1750,6 +1771,12 @@
             <div id="drag-handle"></div>
             <div id="sidebar-header">
                 <h2 id="sidebar-title">Find Venues</h2>
+                <button id="sidebar-favorites" type="button">
+                    <svg class="favorite-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                    </svg>
+                    <span id="sidebar-favorites-label">Favorites</span>
+                </button>
                 <div id="search-container">
                     <input type="text" id="search-input" placeholder="Search by name, city, or address...">
                     <span id="search-icon" aria-hidden="true">
@@ -2522,6 +2549,8 @@
         const bottomTabs = document.querySelectorAll('#bottom-tabs .bottom-tab-button');
         const detailModal = document.getElementById('detail-modal');
         const detailModalContent = document.getElementById('detail-modal-content');
+        const sidebarFavorites = document.getElementById('sidebar-favorites');
+        const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
         const menuToggle = document.getElementById('menu-toggle');
         const menuBackdrop = document.getElementById('menu-backdrop');
         const menuDrawer = document.getElementById('menu-drawer');
@@ -2614,6 +2643,9 @@
 
             const favoritesTab = document.getElementById('bottom-tab-favorites-label');
             if (favoritesTab) favoritesTab.textContent = translate('ui.favoritesTab', favoritesTab.textContent);
+            if (sidebarFavoritesLabel) {
+                sidebarFavoritesLabel.textContent = translate('ui.favoritesTab', sidebarFavoritesLabel.textContent);
+            }
 
             const installBannerText = document.getElementById('install-banner-text');
             if (installBannerText) installBannerText.textContent = translate('ui.favoritesInstall', installBannerText.textContent);
@@ -3445,6 +3477,9 @@
             bottomTabs.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
             });
+            if (sidebarFavorites) {
+                sidebarFavorites.classList.toggle('active', view === 'favorites');
+            }
             const showMap = view === 'map';
             if (mapPanel) mapPanel.classList.toggle('hidden', !showMap);
             if (listPanel) listPanel.classList.toggle('hidden', showMap);
@@ -3537,6 +3572,16 @@
                 setActiveView(btn.dataset.view || 'map');
             });
         });
+
+        if (sidebarFavorites) {
+            sidebarFavorites.addEventListener('click', () => {
+                if (activeTab === 'favorites') {
+                    setActiveView('map');
+                } else {
+                    setActiveView('favorites');
+                }
+            });
+        }
 
         const languageButtons = document.querySelectorAll('#language-toggle button');
         languageButtons.forEach(btn => {
