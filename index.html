@@ -936,6 +936,11 @@
             padding: 20px;
             background: #ffffff;
             -webkit-overflow-scrolling: touch;
+            border-radius: 24px 24px 0 0;
+            margin-top: -18px;
+            box-shadow: 0 -12px 24px rgba(0,0,0,0.12);
+            position: relative;
+            z-index: 1;
         }
 
         .detail-section {
@@ -3664,52 +3669,6 @@
                 closeDetailModal();
             }
         });
-
-        // Swipe-to-close gesture for detail modal on mobile
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let isSwiping = false;
-
-        if (detailModal) {
-            detailModal.addEventListener('touchstart', (e) => {
-                const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                isSwiping = false;
-            }, { passive: true });
-
-            detailModal.addEventListener('touchmove', (e) => {
-                if (!touchStartX) return;
-                const touch = e.touches[0];
-                const diffX = touch.clientX - touchStartX;
-                const diffY = Math.abs(touch.clientY - touchStartY);
-
-                // Only trigger swipe if horizontal movement is significant and greater than vertical
-                if (diffX > 30 && diffX > diffY * 1.5) {
-                    isSwiping = true;
-                    // Visual feedback - move modal with finger
-                    const translateX = Math.max(0, diffX);
-                    detailModal.style.transform = `translateX(${translateX}px)`;
-                }
-            }, { passive: true });
-
-            detailModal.addEventListener('touchend', (e) => {
-                if (isSwiping) {
-                    const touch = e.changedTouches[0];
-                    const diffX = touch.clientX - touchStartX;
-                    // If swiped more than 100px to the right, close
-                    if (diffX > 100) {
-                        closeDetailModal();
-                    } else {
-                        // Snap back
-                        detailModal.style.transform = '';
-                    }
-                }
-                touchStartX = 0;
-                touchStartY = 0;
-                isSwiping = false;
-            }, { passive: true });
-        }
 
         // Global function to open venue profile from popup
         window.openVenueProfile = function(venueName) {
