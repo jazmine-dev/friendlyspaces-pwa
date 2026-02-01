@@ -3476,6 +3476,15 @@
             sidebar.addEventListener('touchstart', (e) => {
                 if (!isMobile()) return;
                 const touch = e.touches[0];
+                const sidebarTop = sidebar.getBoundingClientRect().top;
+                const startInHandleZone = touch.clientY <= sidebarTop + 48;
+                const atTop = sidebar.scrollTop <= 0;
+                if (!startInHandleZone || !atTop) {
+                    sheetTouchStartY = 0;
+                    sheetTouchStartX = 0;
+                    isSheetSwiping = false;
+                    return;
+                }
                 sheetTouchStartY = touch.clientY;
                 sheetTouchStartX = touch.clientX;
                 isSheetSwiping = false;
