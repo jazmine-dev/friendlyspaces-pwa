@@ -315,7 +315,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            z-index: 1005;
         }
 
         #sheet-backdrop.visible {
@@ -557,33 +557,38 @@
             justify-content: space-between;
             align-items: center;
             color: #ffffff;
+            gap: 10px;
+            position: sticky;
+            bottom: 0;
+            background: #1E52BA;
         }
 
-        #filter-count {
-            font-size: 14px;
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        #clear-filters {
+        #reset-filters,
+        #apply-filters {
+            flex: 1;
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.4);
             color: #ffffff;
-            padding: 6px 15px;
-            border-radius: 20px;
+            padding: 10px 12px;
+            border-radius: 18px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 700;
             transition: all 0.2s;
         }
 
-        #clear-filters:hover {
-            background: rgba(255,255,255,0.25);
-            color: white;
+        #apply-filters {
+            background: #ffffff;
+            color: #1E52BA;
+            border-color: #ffffff;
         }
 
-        #clear-filters:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+        #reset-filters:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        #apply-filters:hover {
+            opacity: 0.9;
         }
 
         #map {
@@ -1209,6 +1214,7 @@
                 transition: transform 0.3s ease;
                 padding-top: 12px;
                 padding-bottom: 20px;
+                z-index: 1006;
             }
 
             #sidebar.show {
@@ -1778,7 +1784,6 @@
                     </svg>
                     <span id="sidebar-favorites-label">Favorites</span>
                 </button>
-                <button id="reset-filters" class="filter-button" type="button">Clear all</button>
             </div>
 
             <div id="filters-container">
@@ -1804,8 +1809,8 @@
             </div>
 
             <div id="active-filters">
-                <span id="filter-count">0 filters active</span>
-                <button id="clear-filters" disabled>Clear All</button>
+                <button id="reset-filters" type="button">Reset all filters</button>
+                <button id="apply-filters" type="button">Show all spaces</button>
             </div>
         </aside>
 
@@ -1942,6 +1947,9 @@
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
                     clearFilters: "Alle löschen",
+                    showAllSpaces: "Alle Orte anzeigen",
+                    showSpaces: "Zeige",
+                    spacesLabel: "Orte",
                     allTab: "Alle",
                     favoritesTab: "Favoriten",
                     mapTab: "Karte",
@@ -2013,6 +2021,9 @@
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
                     clearFilters: "Tout effacer",
+                    showAllSpaces: "Afficher tous les lieux",
+                    showSpaces: "Afficher",
+                    spacesLabel: "lieux",
                     allTab: "Tous",
                     favoritesTab: "Favoris",
                     mapTab: "Carte",
@@ -2084,6 +2095,9 @@
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
                     clearFilters: "Clear All",
+                    showAllSpaces: "Show all spaces",
+                    showSpaces: "Show",
+                    spacesLabel: "spaces",
                     allTab: "All",
                     favoritesTab: "Favorites",
                     mapTab: "Map",
@@ -2542,6 +2556,7 @@
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
         const resetFiltersButton = document.getElementById('reset-filters');
+        const applyFiltersButton = document.getElementById('apply-filters');
         const menuToggle = document.getElementById('menu-toggle');
         const menuBackdrop = document.getElementById('menu-backdrop');
         const menuDrawer = document.getElementById('menu-drawer');
@@ -2615,10 +2630,11 @@
             const topSearchInputEl = document.getElementById('top-search-input');
             if (topSearchInputEl) topSearchInputEl.placeholder = translate('ui.searchPlaceholder', topSearchInputEl.placeholder);
 
-            const clearBtn = document.getElementById('clear-filters');
-            if (clearBtn) clearBtn.textContent = translate('ui.clearFilters', clearBtn.textContent);
             if (resetFiltersButton) {
-                resetFiltersButton.textContent = translate('ui.clearFilters', resetFiltersButton.textContent);
+                resetFiltersButton.textContent = translate('ui.clearFilters', 'Reset all filters');
+            }
+            if (applyFiltersButton) {
+                applyFiltersButton.textContent = translate('ui.showAllSpaces', 'Show all spaces');
             }
 
             const mapTab = document.getElementById('bottom-tab-map');
@@ -3021,15 +3037,12 @@
         // Update filter count display
         function updateFilterCount() {
             const total = Object.values(activeFilters).flat().length;
-            const countEl = document.getElementById('filter-count');
-            const clearBtn = document.getElementById('clear-filters');
-
-            const filterActiveText = translate('ui.filtersActive');
-            countEl.textContent = typeof filterActiveText === 'function'
-                ? filterActiveText(total)
-                : `${total} filter${total !== 1 ? 's' : ''} active`;
-            clearBtn.disabled = total === 0 && !searchQuery;
-
+            if (applyFiltersButton) {
+                const label = total > 0
+                    ? `${translate('ui.showSpaces', 'Show')} ${getVisibleVenues().length} ${translate('ui.spacesLabel', 'spaces')}`
+                    : translate('ui.showAllSpaces', 'Show all spaces');
+                applyFiltersButton.textContent = label;
+            }
         }
 
         // Check if venue matches filters
@@ -3627,6 +3640,10 @@
 
         if (resetFiltersButton) {
             resetFiltersButton.addEventListener('click', resetAllFilters);
+        }
+
+        if (applyFiltersButton) {
+            applyFiltersButton.addEventListener('click', () => closeFilterSheet());
         }
 
         const languageButtons = document.querySelectorAll('#language-toggle button');
