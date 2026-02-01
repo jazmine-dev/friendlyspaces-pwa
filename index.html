@@ -3130,11 +3130,6 @@
                 sliderHtml = `
                     <div class="venue-slider" id="${sliderId}">
                         <div class="slider-container">${imagesHtml}</div>
-                        ${venue.images.length > 1 ? `
-                            <button class="slider-arrow prev" onclick="slideImage('${sliderId}', -1)">‹</button>
-                            <button class="slider-arrow next" onclick="slideImage('${sliderId}', 1)">›</button>
-                            <div class="slider-dots">${dotsHtml}</div>
-                        ` : ''}
                     </div>
                 `;
             }
