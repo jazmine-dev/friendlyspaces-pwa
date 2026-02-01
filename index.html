@@ -519,6 +519,12 @@
             color: #ffffff;
             transition: all 0.2s;
             user-select: none;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .filter-button.wide {
+            min-width: 190px;
         }
 
         .filter-button:hover {
@@ -2753,11 +2759,20 @@
                     heading.textContent = translate(`filters.categories.${category}`, heading.textContent);
                 }
 
-                filterDefinitions[category].forEach(filter => {
+                const filters = [...filterDefinitions[category]];
+                if (category === 'amenities') {
+                    filters.sort((a, b) => {
+                        if (a.id === 'friendly-spaces') return 1;
+                        if (b.id === 'friendly-spaces') return -1;
+                        return 0;
+                    });
+                }
+
+                filters.forEach(filter => {
                     const count = countVenuesWithFilter(category, filter.id);
 
                     const button = document.createElement('button');
-                    button.className = 'filter-button';
+                    button.className = `filter-button${filter.id === 'friendly-spaces' ? ' wide' : ''}`;
                     if (activeFilters[category].includes(filter.id)) {
                         button.classList.add('active');
                     }
