@@ -679,6 +679,19 @@
             color: #ffffff;
         }
 
+        .favorite-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        .favorite-icon.filled {
+            fill: currentColor;
+        }
+
         .list-empty {
             padding: 40px 20px;
             text-align: center;
@@ -903,12 +916,17 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
+        .detail-favorite-btn .favorite-icon {
+            width: 20px;
+            height: 20px;
+        }
+
         .detail-favorite-btn:hover {
             transform: scale(1.1);
         }
 
         .detail-favorite-btn.active {
-            color: #e74c3c;
+            color: #1E52BA;
         }
 
         /* Content section below image */
@@ -1446,9 +1464,9 @@
             color: white;
         }
 
-        .favorite-heart {
-            font-size: 14px;
-            line-height: 1;
+        .favorite-toggle .favorite-icon {
+            width: 16px;
+            height: 16px;
         }
 
         .install-banner {
@@ -3092,7 +3110,9 @@
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px 0;">
                         <h3 style="margin: 0; font-size: 16px; cursor: pointer;" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${venue.name}</h3>
                         <button class="favorite-toggle ${isFavorite(venue.name) ? 'active' : ''}" data-venue="${venue.name}">
-                            <span class="favorite-heart">${isFavorite(venue.name) ? '♥' : '♡'}</span>
+                            <svg class="favorite-icon ${isFavorite(venue.name) ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                            </svg>
                             <span class="favorite-label">${isFavorite(venue.name) ? favoriteRemoveLabel : favoriteAddLabel}</span>
                         </button>
                     </div>
@@ -3185,8 +3205,10 @@
                         : `<div class="venue-card-image" aria-hidden="true"></div>`}
                     <div class="venue-card-header">
                         <h3 class="venue-card-title">${venue.name}</h3>
-                        <button class="venue-card-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button">
-                            <span>${isFav ? '★' : '☆'}</span>
+                        <button class="venue-card-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Save venue">
+                            <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                            </svg>
                         </button>
                     </div>
                     <div class="venue-card-meta">${venue.city}</div>
@@ -3300,7 +3322,9 @@
                             <p class="detail-hero-address">${venue.city}</p>
                         </div>
                         <button class="detail-favorite-btn ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Add to favorites">
-                            ${isFav ? '♥' : '♡'}
+                            <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -3373,7 +3397,8 @@
                     toggleFavorite(venueName);
                     const isFav = isFavorite(venueName);
                     favoriteBtn.classList.toggle('active', isFav);
-                    favoriteBtn.innerHTML = isFav ? '♥' : '♡';
+                    const heartIcon = favoriteBtn.querySelector('.favorite-icon');
+                    if (heartIcon) heartIcon.classList.toggle('filled', isFav);
                 });
             }
 
@@ -3493,9 +3518,9 @@
                 toggleFavorite(venueName);
                 const isFav = isFavorite(venueName);
                 btn.classList.toggle('active', isFav);
-                const heart = btn.querySelector('.favorite-heart');
+                const heart = btn.querySelector('.favorite-icon');
                 const label = btn.querySelector('.favorite-label');
-                if (heart) heart.textContent = isFav ? '♥' : '♡';
+                if (heart) heart.classList.toggle('filled', isFav);
                 if (label) label.textContent = isFav
                     ? translate('ui.favoriteRemove', 'Saved')
                     : translate('ui.favoriteAdd', 'Save');
