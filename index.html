@@ -64,7 +64,10 @@
         }
 
         #app-title {
-            display: none;
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
         }
 
         #menu-toggle {
@@ -1232,7 +1235,7 @@
             }
 
             #app-title {
-                font-size: 18px;
+                font-size: 17px;
             }
 
             #brand {
@@ -1692,7 +1695,7 @@
             <span id="brand-logo-wrap">
                 <img id="brand-logo" src="assets/FriendlySpaces_white.png" alt="Friendly Spaces">
             </span>
-            <h1 id="app-title">Friendly Spaces</h1>
+            <h1 id="app-title">Find a Friendly Space</h1>
         </div>
         <button id="menu-toggle" type="button" aria-label="Open menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1924,7 +1927,7 @@
         const translations = {
             de: {
                 ui: {
-                    title: "Familienfreundliche Karte - Bern",
+                    title: "Einen Friendly Space finden",
                     sidebarTitle: "Orte finden",
                     searchPlaceholder: "Nach Name, Stadt oder Adresse suchen...",
                     languageLabel: "Sprache",
@@ -1995,7 +1998,7 @@
             },
             fr: {
                 ui: {
-                    title: "Carte des lieux familiaux - Berne",
+                    title: "Trouver un Friendly Space",
                     sidebarTitle: "Trouver des lieux",
                     searchPlaceholder: "Rechercher par nom, ville ou adresse...",
                     languageLabel: "Langue",
@@ -2066,7 +2069,7 @@
             },
             en: {
                 ui: {
-                    title: "Friendly Spaces",
+                    title: "Find a Friendly Space",
                     sidebarTitle: "Find Venues",
                     searchPlaceholder: "Search by name, city, or address...",
                     languageLabel: "Language",
@@ -3590,6 +3593,9 @@
                     setActiveView('map');
                 } else {
                     setActiveView('favorites');
+                }
+                if (sidebar.classList.contains('show')) {
+                    closeFilterSheet();
                 }
             });
         }
