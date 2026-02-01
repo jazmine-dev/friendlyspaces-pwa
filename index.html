@@ -90,36 +90,6 @@
             color: #1E52BA;
         }
 
-        /* Mobile summary bar */
-        #mobile-summary-bar {
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 12px 16px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1002;
-        }
-
-        #mobile-summary-bar .count {
-            font-size: 14px;
-            color: #333;
-        }
-
-        #mobile-filter-toggle {
-            background: #1E52BA;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 14px;
-            font-size: 14px;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
         #sheet-backdrop {
             display: none;
             position: fixed;
@@ -964,10 +934,6 @@
                 min-height: 100dvh;
             }
 
-            #mobile-summary-bar {
-                display: flex;
-            }
-
             #sidebar {
                 position: fixed;
                 left: 0;
@@ -1441,10 +1407,6 @@
         </button>
     </div>
     <div id="sheet-backdrop"></div>
-    <div id="mobile-summary-bar">
-        <span class="count">Showing <strong id="venue-count-mobile">0</strong> venues</span>
-        <button id="mobile-filter-toggle">Filters</button>
-    </div>
     <div id="container">
         <aside id="sidebar">
             <div id="drag-handle"></div>
@@ -2125,7 +2087,6 @@
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
         const sidebar = document.getElementById('sidebar');
-        const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
         const sheetBackdrop = document.getElementById('sheet-backdrop');
         const mapPanel = document.getElementById('map');
         const listPanel = document.getElementById('list-view');
@@ -2180,16 +2141,11 @@
 
         function renderCountWrappers() {
             const resultCount = document.getElementById('result-count');
-            const mobileCount = document.querySelector('#mobile-summary-bar .count');
             const showingLabel = translate('ui.showingLabel', 'Showing');
             const venuesLabel = translate('ui.venuesLabel', 'venues');
 
             if (resultCount) {
                 resultCount.innerHTML = `${showingLabel} <strong id="venue-count">0</strong> ${venuesLabel}`;
-            }
-
-            if (mobileCount) {
-                mobileCount.innerHTML = `${showingLabel} <strong id="venue-count-mobile">0</strong> ${venuesLabel}`;
             }
         }
 
@@ -2205,9 +2161,6 @@
 
             const topSearchInputEl = document.getElementById('top-search-input');
             if (topSearchInputEl) topSearchInputEl.placeholder = translate('ui.searchPlaceholder', topSearchInputEl.placeholder);
-
-            const mobileToggle = document.getElementById('mobile-filter-toggle');
-            if (mobileToggle) mobileToggle.textContent = translate('ui.filtersLabel', mobileToggle.textContent);
 
             const clearBtn = document.getElementById('clear-filters');
             if (clearBtn) clearBtn.textContent = translate('ui.clearFilters', clearBtn.textContent);
@@ -2573,15 +2526,6 @@
                 : `${total} filter${total !== 1 ? 's' : ''} active`;
             clearBtn.disabled = total === 0 && !searchQuery;
 
-            const mobileToggleEl = document.getElementById('mobile-filter-toggle');
-            if (mobileToggleEl) {
-                const filtersButtonText = translate('ui.filtersButton');
-                if (typeof filtersButtonText === 'function') {
-                    mobileToggleEl.textContent = filtersButtonText(total);
-                } else {
-                    mobileToggleEl.textContent = filtersButtonText || (total > 0 ? `Filters (${total})` : 'Filters');
-                }
-            }
         }
 
         // Check if venue matches filters
@@ -2754,11 +2698,6 @@
 
             // Update count
             document.getElementById('venue-count').textContent = visibleCount;
-            const mobileCountEl = document.getElementById('venue-count-mobile');
-            if (mobileCountEl) {
-                mobileCountEl.textContent = visibleCount;
-            }
-
             // Only auto-zoom on initial load
             if (isInitialLoad) {
                 if (bounds.isValid()) {
@@ -3029,16 +2968,6 @@
             closeDetailModal();
             updateMap();
             updateListView();
-        }
-
-        if (mobileFilterToggle) {
-            mobileFilterToggle.addEventListener('click', () => {
-                if (sidebar.classList.contains('show')) {
-                    closeFilterSheet();
-                } else {
-                    openFilterSheet();
-                }
-            });
         }
 
         if (sheetBackdrop) {
