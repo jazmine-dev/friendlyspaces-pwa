@@ -391,6 +391,21 @@
             position: relative;
         }
 
+        #reset-filters {
+            border: 1px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+        }
+
         #search-input {
             width: 100%;
             padding: 12px 40px 12px 15px;
@@ -1775,6 +1790,7 @@
                     </svg>
                     <span id="sidebar-favorites-label">Favorites</span>
                 </button>
+                <button id="reset-filters" type="button">Reset filters</button>
                 <div id="search-container">
                     <input type="text" id="search-input" placeholder="Search by name, city, or address...">
                     <span id="search-icon" aria-hidden="true">
@@ -2549,6 +2565,7 @@
         const detailModalContent = document.getElementById('detail-modal-content');
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
+        const resetFiltersButton = document.getElementById('reset-filters');
         const menuToggle = document.getElementById('menu-toggle');
         const menuBackdrop = document.getElementById('menu-backdrop');
         const menuDrawer = document.getElementById('menu-drawer');
@@ -2632,6 +2649,9 @@
 
             const clearBtn = document.getElementById('clear-filters');
             if (clearBtn) clearBtn.textContent = translate('ui.clearFilters', clearBtn.textContent);
+            if (resetFiltersButton) {
+                resetFiltersButton.textContent = translate('ui.clearFilters', resetFiltersButton.textContent);
+            }
 
             const mapTab = document.getElementById('bottom-tab-map');
             if (mapTab) mapTab.textContent = translate('ui.mapTab', mapTab.textContent);
@@ -3573,6 +3593,24 @@
                 } else {
                     setActiveView('favorites');
                 }
+            });
+        }
+
+        if (resetFiltersButton) {
+            resetFiltersButton.addEventListener('click', () => {
+                activeFilters = {
+                    venueType: [],
+                    cuisineType: [],
+                    ageRange: [],
+                    amenities: []
+                };
+                searchQuery = '';
+                if (searchInput) searchInput.value = '';
+                if (topSearchInput) topSearchInput.value = '';
+                isInitialLoad = true;
+                updateFilterCount();
+                updateMap();
+                updateListView();
             });
         }
 
