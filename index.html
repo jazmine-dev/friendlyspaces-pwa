@@ -1215,10 +1215,16 @@
                 padding-top: 12px;
                 padding-bottom: 20px;
                 z-index: 1006;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
             }
 
             #sidebar.show {
                 transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
             }
 
             #filters-container {
