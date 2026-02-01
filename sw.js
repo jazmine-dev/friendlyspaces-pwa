@@ -1,10 +1,12 @@
-const CACHE_VERSION = 'friendlyspaces-pwa-v2';
+const CACHE_VERSION = 'friendlyspaces-pwa-v9';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-192-maskable.png?v=8',
+  './icons/icon-512-maskable.png?v=8',
+  './icons/icon-192-mono.png?v=8',
+  './icons/icon-512-mono.png?v=8'
 ];
 
 self.addEventListener('install', (event) => {
