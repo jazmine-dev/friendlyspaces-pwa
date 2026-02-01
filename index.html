@@ -362,27 +362,6 @@
             font-size: 20px;
         }
 
-        #sidebar-favorites {
-            border: 1px solid rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.15);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            width: fit-content;
-        }
-
-        #sidebar-favorites.active {
-            background: #ffffff;
-            color: #1E52BA;
-            border-color: #ffffff;
-        }
-
         .language-toggle {
             display: none;
         }
@@ -391,19 +370,11 @@
             position: relative;
         }
 
-        #reset-filters {
-            border: 1px solid rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.1);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 14px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            width: fit-content;
+        #sidebar-actions {
+            display: flex;
+            gap: 10px;
+            padding: 0 20px 12px;
+            justify-content: center;
         }
 
         #search-input {
@@ -504,6 +475,7 @@
             overflow-y: auto;
             padding: 20px;
             color: #ffffff;
+            text-align: center;
         }
 
         .filter-category {
@@ -520,24 +492,26 @@
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            text-align: center;
         }
 
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
+            justify-content: center;
         }
 
         .filter-button {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
+            padding: 10px 16px;
             background: rgba(255,255,255,0.18);
             border: 2px solid rgba(255,255,255,0.2);
             border-radius: 20px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             color: #ffffff;
             transition: all 0.2s;
             user-select: none;
@@ -1292,7 +1266,8 @@
             }
 
             .filter-button {
-                font-size: 14px;
+                font-size: 15px;
+                padding: 12px 18px;
             }
 
             .tab-button {
@@ -1775,13 +1750,6 @@
             <div id="drag-handle"></div>
             <div id="sidebar-header">
                 <h2 id="sidebar-title">Find Venues</h2>
-                <button id="sidebar-favorites" type="button">
-                    <svg class="favorite-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
-                    </svg>
-                    <span id="sidebar-favorites-label">Favorites</span>
-                </button>
-                <button id="reset-filters" type="button">Reset filters</button>
                 <div id="search-container">
                     <input type="text" id="search-input" placeholder="Search by name, city, or address...">
                     <span id="search-icon" aria-hidden="true">
@@ -1792,6 +1760,15 @@
                     </span>
                     <div id="search-dropdown"></div>
                 </div>
+            </div>
+            <div id="sidebar-actions">
+                <button id="sidebar-favorites" class="filter-button" type="button">
+                    <svg class="favorite-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                    </svg>
+                    <span id="sidebar-favorites-label">Favorites</span>
+                </button>
+                <button id="reset-filters" class="filter-button" type="button">Clear all</button>
             </div>
 
             <div id="filters-container">
@@ -3001,28 +2978,26 @@
             }
         });
 
-        // Clear filters
-        document.getElementById('clear-filters').addEventListener('click', () => {
-            // Remove active class from all filter buttons
-            document.querySelectorAll('.filter-button.active').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Reset active filters
-            Object.keys(activeFilters).forEach(key => {
-                activeFilters[key] = [];
-            });
-
-            // Clear search
-            document.getElementById('search-input').value = '';
-            document.getElementById('top-search-input').value = '';
+        function resetAllFilters() {
+            activeFilters = {
+                venueType: [],
+                cuisineType: [],
+                ageRange: [],
+                amenities: []
+            };
             searchQuery = '';
-
-            // Reset map view to show all venues
+            if (searchInput) searchInput.value = '';
+            if (topSearchInput) topSearchInput.value = '';
+            setActiveView('map');
+            createFilterButtons();
+            updateFilterCount();
             isInitialLoad = true;
             updateMap();
-            updateFilterCount();
-        });
+            updateListView();
+        }
+
+        // Clear filters
+        document.getElementById('clear-filters').addEventListener('click', resetAllFilters);
 
         // Update filter count display
         function updateFilterCount() {
@@ -3620,21 +3595,7 @@
         }
 
         if (resetFiltersButton) {
-            resetFiltersButton.addEventListener('click', () => {
-                activeFilters = {
-                    venueType: [],
-                    cuisineType: [],
-                    ageRange: [],
-                    amenities: []
-                };
-                searchQuery = '';
-                if (searchInput) searchInput.value = '';
-                if (topSearchInput) topSearchInput.value = '';
-                isInitialLoad = true;
-                updateFilterCount();
-                updateMap();
-                updateListView();
-            });
+            resetFiltersButton.addEventListener('click', resetAllFilters);
         }
 
         const languageButtons = document.querySelectorAll('#language-toggle button');
