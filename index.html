@@ -1180,14 +1180,6 @@
             display: none;
         }
 
-        #result-count {
-            padding: 10px 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-            color: #666;
-        }
-
         .leaflet-popup-content h3 {
             margin-top: 0;
             color: #1E52BA;
@@ -1223,7 +1215,7 @@
                 position: fixed;
                 left: 0;
                 right: 0;
-                top: 156px;
+                top: 168px;
                 bottom: 0;
                 width: 100%;
                 max-height: none;
@@ -1304,10 +1296,6 @@
             }
 
             .tab-button {
-                font-size: 14px;
-            }
-
-            #result-count {
                 font-size: 14px;
             }
 
@@ -1805,8 +1793,6 @@
                     <div id="search-dropdown"></div>
                 </div>
             </div>
-
-            <div id="result-count">Showing <strong id="venue-count">0</strong> venues</div>
 
             <div id="filters-container">
                 <div class="filter-category">
@@ -2627,15 +2613,7 @@
             if (bottomBadge) bottomBadge.textContent = favorites.size;
         }
 
-        function renderCountWrappers() {
-            const resultCount = document.getElementById('result-count');
-            const showingLabel = translate('ui.showingLabel', 'Showing');
-            const venuesLabel = translate('ui.venuesLabel', 'venues');
-
-            if (resultCount) {
-                resultCount.innerHTML = `${showingLabel} <strong id="venue-count">0</strong> ${venuesLabel}`;
-            }
-        }
+        function renderCountWrappers() {}
 
         function applyTranslations() {
             document.title = translate('ui.title', document.title);
@@ -3226,7 +3204,6 @@
             });
 
             // Update count
-            document.getElementById('venue-count').textContent = visibleCount;
             // Only auto-zoom on initial load
             if (isInitialLoad) {
                 if (bounds.isValid()) {
