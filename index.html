@@ -869,26 +869,17 @@
         }
 
         .detail-hero .slider-arrow {
-            width: 36px;
-            height: 36px;
-            font-size: 18px;
-        }
-
-        .detail-hero .slider-arrow.prev {
-            left: 16px;
-        }
-
-        .detail-hero .slider-arrow.next {
-            right: 16px;
+            display: none;
         }
 
         .detail-hero .slider-dots {
             bottom: 70px;
+            z-index: 10;
         }
 
         .detail-hero .slider-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
         }
 
         /* Gradient overlay for text */
@@ -1068,33 +1059,12 @@
             font-weight: 600;
         }
 
-        /* Filter tags */
-        .detail-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .detail-tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            color: white;
-        }
-
-        .detail-tag { background: #1E52BA; }
-
-        /* Action buttons row */
+        /* Icon buttons row */
         .detail-icon-buttons {
             display: flex;
             justify-content: center;
             gap: 24px;
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 16px;
+            padding: 20px 0 8px;
         }
 
         .detail-icon-btn {
@@ -1106,27 +1076,58 @@
             border: none;
             cursor: pointer;
             text-decoration: none;
-            color: #1E52BA;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 8px;
-            border-radius: 12px;
-            transition: background 0.2s;
+            color: inherit;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .detail-icon-btn:hover {
-            background: #f0f4ff;
-        }
-
-        .detail-icon-btn-circle {
-            width: 48px;
-            height: 48px;
+        .detail-icon-btn .icon-circle {
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: #e8f0fe;
+            background: #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            transition: background 0.2s;
+        }
+
+        .detail-icon-btn:hover .icon-circle,
+        .detail-icon-btn:active .icon-circle {
+            background: #e0e0e0;
+        }
+
+        .detail-icon-btn .icon-circle svg {
+            width: 22px;
+            height: 22px;
+            stroke: #1E52BA;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .detail-icon-btn .icon-label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Filter tags */
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .detail-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
+            background: #1E52BA;
         }
 
         .detail-section-title {
@@ -3358,49 +3359,77 @@
                     <div class="venue-slider" id="${sliderId}">
                         <div class="slider-container">${imagesHtml}</div>
                         ${venue.images.length > 1 ? `
-                            <button class="slider-arrow prev" onclick="slideImage('${sliderId}', -1)">‹</button>
-                            <button class="slider-arrow next" onclick="slideImage('${sliderId}', 1)">›</button>
                             <div class="slider-dots">${dotsHtml}</div>
                         ` : ''}
                     </div>
                 `;
             }
 
-            // Build tags by category
+            // Build tags by category — plain text labels only, no Unicode symbols
             const tagsHtml = Object.entries(venue.filters)
                 .filter(([_, values]) => values.length > 0)
                 .map(([category, values]) => {
                     return values.map(v => {
                         const def = filterDefinitions[category].find(f => f.id === v);
                         const translated = translate(`filters.options.${category}.${v}`, def?.label || v);
-                        const label = typeof translated === 'function' ? translated() : translated;
-                        return `<span class="detail-tag ${category}">${label}</span>`;
+                        let label = typeof translated === 'function' ? translated() : translated;
+                        // Strip any leading Unicode symbols/bullets
+                        label = label.replace(/^[\s○•△★□◇◈◎◊◆►▸▪▫●◦‣⁃※✦✧⬥⬦♦♢☆✶✴✵✷✸❖⚬⬡⬢]+/, '').trim();
+                        return `<span class="detail-tag">${label}</span>`;
                     }).join('');
                 })
                 .join('');
 
-            // Build phone contact
-            const phoneHtml = venue.phone && phoneHref
-                ? `<a class="detail-contact-item clickable" href="${phoneHref}">
-                        <span class="detail-contact-icon">📞</span>
-                        <span class="detail-contact-text">${venue.phone}</span>
-                        <span class="detail-contact-arrow">→</span>
-                   </a>`
-                : venue.phone
-                    ? `<div class="detail-contact-item">
-                            <span class="detail-contact-icon">📞</span>
-                            <span class="detail-contact-text">${venue.phone}</span>
-                       </div>`
-                    : '';
+            // Icon buttons row: Navigate, Call, Website, Instagram
+            const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
+            const callSvg = `<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
+            const websiteSvg = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`;
+            const instagramSvg = `<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`;
 
-            // Build website contact
-            const websiteHtml = venue.website
-                ? `<a class="detail-contact-item clickable" href="${venue.website}" target="_blank" rel="noopener noreferrer">
-                        <span class="detail-contact-icon">🌐</span>
-                        <span class="detail-contact-text">${visitWebsiteLabel}</span>
-                        <span class="detail-contact-arrow">→</span>
-                   </a>`
-                : '';
+            // Determine Instagram URL from venue data (use instagram field or fall back to empty)
+            const instagramUrl = venue.instagram || '';
+
+            const iconButtonsHtml = `
+                <div class="detail-icon-buttons">
+                    <a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">
+                        <span class="icon-circle">${navigateSvg}</span>
+                        <span class="icon-label">Navigate</span>
+                    </a>
+                    ${phoneHref ? `
+                        <a class="detail-icon-btn" href="${phoneHref}">
+                            <span class="icon-circle">${callSvg}</span>
+                            <span class="icon-label">Call</span>
+                        </a>
+                    ` : `
+                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
+                            <span class="icon-circle">${callSvg}</span>
+                            <span class="icon-label">Call</span>
+                        </span>
+                    `}
+                    ${venue.website ? `
+                        <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer">
+                            <span class="icon-circle">${websiteSvg}</span>
+                            <span class="icon-label">Website</span>
+                        </a>
+                    ` : `
+                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
+                            <span class="icon-circle">${websiteSvg}</span>
+                            <span class="icon-label">Website</span>
+                        </span>
+                    `}
+                    ${instagramUrl ? `
+                        <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer">
+                            <span class="icon-circle">${instagramSvg}</span>
+                            <span class="icon-label">Instagram</span>
+                        </a>
+                    ` : `
+                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
+                            <span class="icon-circle">${instagramSvg}</span>
+                            <span class="icon-label">Instagram</span>
+                        </span>
+                    `}
+                </div>
+            `;
 
             return `
                 <div class="detail-hero">
@@ -3408,7 +3437,7 @@
                     <div class="detail-hero-overlay">
                         <div class="detail-hero-info">
                             <h2 class="detail-hero-name">${venue.name}</h2>
-                            <p class="detail-hero-address">${venue.city}</p>
+                            <p class="detail-hero-address">${venue.address}</p>
                         </div>
                         <button class="detail-favorite-btn ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Add to favorites">
                             <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
@@ -3418,36 +3447,7 @@
                     </div>
                 </div>
                 <div class="detail-content">
-                    <div class="detail-icon-buttons">
-                        <a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">
-                            <span class="detail-icon-btn-circle">🧭</span>
-                            <span>${directionsLabel}</span>
-                        </a>
-                        ${venue.instagram ? `<a class="detail-icon-btn" href="${venue.instagram}" target="_blank" rel="noopener noreferrer">
-                            <span class="detail-icon-btn-circle">📷</span>
-                            <span>Social</span>
-                        </a>` : ''}
-                        ${phoneHref ? `<a class="detail-icon-btn" href="${phoneHref}">
-                            <span class="detail-icon-btn-circle">📞</span>
-                            <span>${translate('popup.call', 'Call')}</span>
-                        </a>` : ''}
-                        ${venue.website ? `<a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer">
-                            <span class="detail-icon-btn-circle">🌐</span>
-                            <span>${visitWebsiteLabel}</span>
-                        </a>` : ''}
-                    </div>
-
-                    <div class="detail-section">
-                        <div class="detail-contact-list">
-                            <a class="detail-contact-item clickable" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">
-                                <span class="detail-contact-icon">📍</span>
-                                <span class="detail-contact-text">${venue.address}</span>
-                                <span class="detail-contact-arrow">→</span>
-                            </a>
-                            ${phoneHtml}
-                            ${websiteHtml}
-                        </div>
-                    </div>
+                    ${iconButtonsHtml}
 
                     <div class="detail-section">
                         <p class="detail-description">${localizedDescription}</p>
