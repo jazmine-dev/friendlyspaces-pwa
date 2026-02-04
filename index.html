@@ -3834,7 +3834,7 @@
                 openPanel(aboutView);
             });
         }
-        const SHARE_URL = `https://${APP_DOMAIN}`;
+        const SHARE_URL = window.location.origin;
 
         if (menuShare) {
             menuShare.addEventListener('click', async () => {
