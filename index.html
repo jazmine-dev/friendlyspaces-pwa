@@ -7,6 +7,13 @@
     <meta name="theme-color" content="#1E52BA">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-23RW5YZHCW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-23RW5YZHCW');
+    </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -2634,6 +2641,20 @@
         };
 
         const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+        const APP_VERSION = 'pwa-1.0';
+        const APP_DOMAIN = 'app.friendlyspaces.ch';
+        const analyticsEnabled = true;
+        let hasTrackedInitialMapView = false;
+
+        function trackEvent(name, params = {}) {
+            if (!analyticsEnabled) return;
+            if (typeof gtag === 'function') {
+                gtag('event', name, {
+                    app_domain: APP_DOMAIN,
+                    ...params
+                });
+            }
+        }
 
         function loadFavorites() {
             try {
@@ -3385,6 +3406,29 @@
                 })
                 .join('');
 
+            // Build phone contact
+            const phoneHtml = venue.phone && phoneHref
+                ? `<a class="detail-contact-item clickable" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
+                        <span class="detail-contact-icon">📞</span>
+                        <span class="detail-contact-text">${venue.phone}</span>
+                        <span class="detail-contact-arrow">→</span>
+                   </a>`
+                : venue.phone
+                    ? `<div class="detail-contact-item">
+                            <span class="detail-contact-icon">📞</span>
+                            <span class="detail-contact-text">${venue.phone}</span>
+                       </div>`
+                    : '';
+
+            // Build website contact
+            const websiteHtml = venue.website
+                ? `<a class="detail-contact-item clickable" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
+                        <span class="detail-contact-icon">🌐</span>
+                        <span class="detail-contact-text">${visitWebsiteLabel}</span>
+                        <span class="detail-contact-arrow">→</span>
+                   </a>`
+                : '';
+
             // Icon buttons row: Navigate, Call, Website, Instagram
             const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
             const callSvg = `<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
@@ -3396,12 +3440,12 @@
 
             const iconButtonsHtml = `
                 <div class="detail-icon-buttons">
-                    <a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">
+                    <a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
                         <span class="icon-circle">${navigateSvg}</span>
                         <span class="icon-label">Navigate</span>
                     </a>
                     ${phoneHref ? `
-                        <a class="detail-icon-btn" href="${phoneHref}">
+                        <a class="detail-icon-btn" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
                             <span class="icon-circle">${callSvg}</span>
                             <span class="icon-label">Call</span>
                         </a>
@@ -3412,7 +3456,7 @@
                         </span>
                     `}
                     ${venue.website ? `
-                        <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer">
+                        <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
                             <span class="icon-circle">${websiteSvg}</span>
                             <span class="icon-label">Website</span>
                         </a>
@@ -3423,7 +3467,7 @@
                         </span>
                     `}
                     ${instagramUrl ? `
-                        <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer">
+                        <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="instagram">
                             <span class="icon-circle">${instagramSvg}</span>
                             <span class="icon-label">Instagram</span>
                         </a>
@@ -3455,6 +3499,18 @@
                     ${iconButtonsHtml}
 
                     <div class="detail-section">
+                        <div class="detail-contact-list">
+                            <a class="detail-contact-item clickable" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
+                                <span class="detail-contact-icon">📍</span>
+                                <span class="detail-contact-text">${venue.address}</span>
+                                <span class="detail-contact-arrow">→</span>
+                            </a>
+                            ${phoneHtml}
+                            ${websiteHtml}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
                         <p class="detail-description">${localizedDescription}</p>
                     </div>
 
@@ -3483,8 +3539,16 @@
             `;
         }
 
-        function openDetailModal(venue) {
+        function openDetailModal(venue, source = 'unknown') {
             if (!detailModal || !detailModalContent) return;
+
+            trackEvent('venue_click', {
+                venue_name: venue.name,
+                venue_city: venue.city,
+                source: source,
+                language: currentLang,
+                app_version: APP_VERSION
+            });
 
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
@@ -3517,6 +3581,20 @@
 
             const sliderEl = detailModalContent.querySelector('.slider-container');
             attachSliderScrollSync(sliderEl);
+
+            detailModalContent.querySelectorAll('a[data-analytics-link="true"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    const linkType = link.dataset.linkType || 'unknown';
+                    trackEvent('outbound_click', {
+                        venue_name: venue.name,
+                        venue_city: venue.city,
+                        link_type: linkType,
+                        url: link.href,
+                        language: currentLang,
+                        app_version: APP_VERSION
+                    });
+                }, { passive: true });
+            });
         }
 
         function closeDetailModal() {
@@ -3561,6 +3639,11 @@
             if (listPanel) listPanel.classList.toggle('hidden', showMap);
             if (showMap) {
                 setTimeout(() => map.invalidateSize(), 100);
+                trackEvent('map_view', {
+                    view_source: 'tab',
+                    language: currentLang,
+                    app_version: APP_VERSION
+                });
             }
             closeDetailModal();
             updateMap();
@@ -3751,7 +3834,7 @@
                 openPanel(aboutView);
             });
         }
-        const SHARE_URL = 'https://friendlyspaces-pwa.netlify.app';
+        const SHARE_URL = `https://${APP_DOMAIN}`;
 
         if (menuShare) {
             menuShare.addEventListener('click', async () => {
@@ -3829,7 +3912,7 @@
                 if (!card) return;
                 const venueName = card.dataset.venue;
                 const venue = venues.find(v => v.name === venueName);
-                if (venue) openDetailModal(venue);
+                if (venue) openDetailModal(venue, 'list_card');
             });
         }
 
@@ -3861,7 +3944,7 @@
             const venue = venues.find(v => v.name === venueName);
             if (venue) {
                 map.closePopup();
-                openDetailModal(venue);
+                openDetailModal(venue, 'map_popup');
             }
         };
 
@@ -4010,6 +4093,15 @@
         updateQuickFilterLabels();
         syncQuickFilterPills();
         setSuggestRole('owner');
+
+        if (!hasTrackedInitialMapView) {
+            trackEvent('map_view', {
+                view_source: 'load',
+                language: currentLang,
+                app_version: APP_VERSION
+            });
+            hasTrackedInitialMapView = true;
+        }
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
