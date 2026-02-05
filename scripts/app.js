@@ -1167,18 +1167,10 @@
 
         // Create popup content with color-coded tags and image slider
         function createPopup(venue) {
-            const visitWebsiteLabel = translate('popup.visitWebsite', 'Visit Website');
-            const hoursLabel = translate('popup.hours', 'Hours');
-            const specialtyLabel = translate('popup.specialty', 'Specialty');
             const favoriteAddLabel = translate('ui.favoriteAdd', 'Save');
             const favoriteRemoveLabel = translate('ui.favoriteRemove', 'Saved');
-            const seasonalNote = venue.seasonalNote
-                ? (venue.seasonalNote[currentLang] || venue.seasonalNote.en || venue.seasonalNote.de)
-                : null;
 
             const localizedDescription = getVenueText(venue, 'description');
-            const localizedHours = getVenueText(venue, 'hours');
-            const localizedSpecialty = getVenueText(venue, 'specialty');
 
             const tagsByCategory = Object.entries(venue.filters)
                 .map(([category, values]) => {
@@ -1195,11 +1187,6 @@
             // Create Google Maps directions link
             const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venue.address)}`;
             const phoneHref = formatPhoneHref(venue.phone);
-
-            // Website link (if available)
-            const websiteHtml = venue.website
-                ? `<p style="margin: 5px 0; font-size: 13px;"><strong>🌐</strong> <a href="${venue.website}" target="_blank" rel="noopener noreferrer" style="color: #1E52BA; text-decoration: none;">${visitWebsiteLabel}</a></p>`
-                : '';
 
             // Image slider (if images available)
             let sliderHtml = '';
@@ -1221,10 +1208,10 @@
             }
 
             return `
-                <div style="min-width: 240px; max-width: 300px;">
+                <div class="popup-card">
                     ${sliderHtml}
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px 0;">
-                        <h3 style="margin: 0; font-size: 16px; cursor: pointer;" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${venue.name}</h3>
+                    <div class="popup-header">
+                        <h3 class="popup-title" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${venue.name}</h3>
                         <button class="favorite-toggle ${isFavorite(venue.name) ? 'active' : ''}" data-venue="${venue.name}">
                             <svg class="favorite-icon ${isFavorite(venue.name) ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
@@ -1232,13 +1219,8 @@
                             <span class="favorite-label">${isFavorite(venue.name) ? favoriteRemoveLabel : favoriteAddLabel}</span>
                         </button>
                     </div>
-                    <p style="margin: 5px 0; font-size: 13px;"><strong>📍</strong> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" style="color: #1E52BA; text-decoration: none;">${venue.address}</a></p>
-                    <p style="margin: 5px 0; font-size: 13px;"><strong>📞</strong> ${phoneHref ? `<a href="${phoneHref}" style="color: #1E52BA; text-decoration: none;">${venue.phone}</a>` : venue.phone}</p>
-                    ${websiteHtml}
-                    <p style="margin: 8px 0; font-size: 13px;">${localizedDescription}</p>
-                    <p style="margin: 5px 0; font-size: 12px; color: #666;"><strong>${hoursLabel}:</strong> ${localizedHours}</p>
-                    ${seasonalNote ? `<p style="margin: 5px 0; font-size: 12px; color: #BA1E1E;"><strong>${seasonalNote}</strong></p>` : ''}
-                    <p style="margin: 5px 0; font-size: 12px; color: #1E52BA;"><strong>${specialtyLabel}:</strong> ${localizedSpecialty}</p>
+                    <p class="popup-address"><strong>📍</strong> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}</a></p>
+                    <p class="popup-desc">${localizedDescription}</p>
                     <div class="venue-tags">${tagsByCategory}</div>
                     <button class="popup-cta" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${translate('popup.viewProfile', 'View Full Profile')}</button>
                 </div>

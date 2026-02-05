@@ -1701,12 +1701,12 @@
             width: clamp(260px, 70vw, 340px);
         }
 
-.custom-popup .leaflet-popup-content {
-    margin: 8px 10px;
-    max-height: 320px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+        .custom-popup .leaflet-popup-content {
+            margin: 8px 10px;
+            max-height: 280px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
 .custom-popup .leaflet-popup-close-button {
     font-size: 22px;
@@ -1733,16 +1733,51 @@
             color: white;
         }
 
-.favorite-toggle .favorite-icon {
-    width: 16px;
-    height: 16px;
-}
+        .favorite-toggle .favorite-icon {
+            width: 16px;
+            height: 16px;
+        }
 
-.popup-cta {
-    width: 100%;
-    margin-top: 12px;
-    padding: 10px 16px;
-    background: #1E52BA;
+        .popup-card {
+            min-width: 240px;
+            max-width: 300px;
+        }
+
+        .popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0 0 8px 0;
+        }
+
+        .popup-title {
+            margin: 0;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .popup-address {
+            margin: 4px 0;
+            font-size: 13px;
+        }
+
+        .popup-address a {
+            color: #1E52BA;
+            text-decoration: none;
+        }
+
+        .popup-desc {
+            margin: 6px 0 8px;
+            font-size: 13px;
+            color: #3b3834;
+        }
+
+        .popup-cta {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: #1E52BA;
     color: white;
     border: none;
     border-radius: 14px;
