@@ -18,7 +18,7 @@
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
                     suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
                     suggestMessageLabel: "Nachricht (optional)",
-                    suggestVenueNameLabel: "Name des Ortes",
+                    suggestVenueNameLabel: "Name des Geschäfts",
                     suggestVenueCityLabel: "Stadt",
                     suggestWhyLabel: "Warum familienfreundlich? (optional)",
                     suggestOwnerNameLabel: "Dein Name",
