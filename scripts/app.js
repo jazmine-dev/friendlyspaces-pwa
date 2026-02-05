@@ -127,8 +127,8 @@
                     suggestVenueNameLabel: "Nom du lieu",
                     suggestVenueCityLabel: "Ville",
                     suggestWhyLabel: "Pourquoi c'est adapté ? (facultatif)",
-                    suggestOwnerNameLabel: "Votre nom",
-                    suggestOwnerEmailLabel: "Votre e-mail",
+                    suggestOwnerNameLabel: "Nom",
+                    suggestOwnerEmailLabel: "E-mail",
                     suggestOwnerPhoneLabel: "Téléphone (facultatif)",
                     suggestSubmit: "Envoyer la suggestion",
                     aboutBody: "Friendly Spaces est le premier label suisse de certification family-friendly. Nous aidons les parents à trouver les meilleurs cafés, restaurants, boutiques et espaces culturels pour les familles avec de jeunes enfants. Grâce à nos audits sur site rigoureux, nous veillons à ce que chaque lieu certifié accueille vraiment les familles et leurs tout-petits.",
@@ -748,6 +748,10 @@
             const suggestWhy = document.getElementById('suggest-why');
             if (suggestWhy) {
                 suggestWhy.style.display = role === 'owner' ? 'none' : 'block';
+            }
+            const suggestMessage = document.getElementById('suggest-message');
+            if (suggestMessage) {
+                suggestMessage.style.display = role === 'owner' ? 'block' : 'none';
             }
             if (ownerFields) {
                 const isOwner = role === 'owner';
