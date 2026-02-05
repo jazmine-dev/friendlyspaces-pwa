@@ -279,8 +279,19 @@
             return venue[field] || '';
         }
 
-        // Venue data loaded from data/venues.js
-        let venues = window.VENUES || [];
+        // Venue data loaded from data/venues.json
+        let venues = [];
+
+        function loadVenues() {
+            return fetch('data/venues.json')
+                .then((response) => response.json())
+                .then((data) => {
+                    venues = Array.isArray(data) ? data : [];
+                })
+                .catch(() => {
+                    venues = [];
+                });
+        }
 
         // Filter definitions
         const filterDefinitions = {
@@ -1887,26 +1898,29 @@
             syncQuickFilterPills();
         };
 
-        // Initialize
-        loadFavorites();
-        updateFavoritesBadge();
-        setLanguage(currentLang, { skipUrlUpdate: true });
-        handleResize();
-        updateQuickFilterLabels();
-        syncQuickFilterPills();
-        setSuggestRole('owner');
+        function startApp() {
+            loadFavorites();
+            updateFavoritesBadge();
+            setLanguage(currentLang, { skipUrlUpdate: true });
+            handleResize();
+            updateQuickFilterLabels();
+            syncQuickFilterPills();
+            setSuggestRole('owner');
 
-        if (!hasTrackedInitialMapView) {
-            trackEvent('map_view', {
-                view_source: 'load',
-                language: currentLang,
-                app_version: APP_VERSION
-            });
-            hasTrackedInitialMapView = true;
+            if (!hasTrackedInitialMapView) {
+                trackEvent('map_view', {
+                    view_source: 'load',
+                    language: currentLang,
+                    app_version: APP_VERSION
+                });
+                hasTrackedInitialMapView = true;
+            }
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js').catch(() => {});
+                });
+            }
         }
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(() => {});
-            });
-        }
+        loadVenues().finally(startApp);

@@ -1,0 +1,206 @@
+[
+            {
+                "name": "Orangerie Elfenau",
+                "address": "Elfenauweg 92, 3006 Bern",
+                "city": "Bern",
+                "description": "Elegant cafe and bistro in a historic orangery surrounded by beautiful gardens",
+                "i18n": {
+                    "description": {
+                        "de": "Elegantes Café und Bistro in einer historischen Orangerie mit Gartenambiente",
+                        "fr": "Café-bistro élégant dans une orangerie historique entourée de jardins"
+                    },
+                    "hours": {
+                        "de": "Mi-So: 11-19 Uhr (Saisonzeiten können variieren)",
+                        "fr": "Mer-dim : 11h-19h (horaires saisonniers variables)"
+                    },
+                    "specialty": {
+                        "de": "Gartenterrasse und hausgemachte Kuchen",
+                        "fr": "Terrasse jardin et gâteaux maison"
+                    }
+                },
+                "hours": "Wed-Sun: 11am-7pm (seasonal hours may vary)",
+                "specialty": "Garden terrace and homemade cakes",
+                "seasonalNote": {
+                    "de": "Derzeit geschlossen bis April (Saisonbetrieb)",
+                    "fr": "Actuellement fermé jusqu'en avril (ouverture saisonnière)",
+                    "en": "Currently closed until April (seasonal)"
+                },
+                "phone": "+41 31 350 16 20",
+                "website": "https://orangerieelfenau.ch/",
+                "instagram": "https://www.instagram.com/orangerie_elfenau",
+                "images": [
+                    "assets/bern/Orangerie_Elfenau/Orangerie_01.jpg",
+                    "assets/bern/Orangerie_Elfenau/Orangerie_02.jpg",
+                    "assets/bern/Orangerie_Elfenau/Orangerie_03.jpg",
+                    "assets/bern/Orangerie_Elfenau/Orangerie_04.jpg",
+                    "assets/bern/Orangerie_Elfenau/Orangerie_06.jpg"
+                ],
+                "fallbackCoords": [46.9330368, 7.4659898],
+                "filters": {
+                    "venueType": ["cafe"],
+                    "cuisineType": ["bistro"],
+                    "ageRange": ["baby", "toddler", "small-child", "kid"],
+                    "amenities": ["outdoor-seating", "playground", "friendly-spaces", "high-chair", "change-table"]
+                }
+            },
+            {
+                "name": "Love is Sweet Atelier",
+                "address": "Socinstrasse 2, 4051 Basel",
+                "city": "Basel",
+                "description": "Creative craft atelier offering art workshops for children including jewelry, ceramics, painting, and more",
+                "i18n": {
+                    "description": {
+                        "de": "Kreatives Atelier mit Kunstworkshops für Kinder, darunter Schmuck, Keramik, Malen und mehr",
+                        "fr": "Atelier créatif proposant des ateliers d'art pour enfants : bijoux, céramique, peinture et plus"
+                    },
+                    "hours": {
+                        "de": "Workshop-Zeiten variieren – siehe Website für den Plan",
+                        "fr": "Horaires des ateliers variables – consulter le site pour le planning"
+                    },
+                    "specialty": {
+                        "de": "Kunstworkshops und kreative Aktivitäten für Kinder",
+                        "fr": "Ateliers d'art et activités créatives pour enfants"
+                    }
+                },
+                "hours": "Workshop hours vary - check website for schedule",
+                "specialty": "Art workshops and creative activities for kids",
+                "phone": "Contact via website",
+                "website": "https://loveissweet.ch/",
+                "instagram": "https://www.instagram.com/loveissweet_ds",
+                "images": [
+                    "assets/basel/LIS_Atelier/LIS_Atelier_01.jpg",
+                    "assets/basel/LIS_Atelier/LIS_Atelier_02.jpg",
+                    "assets/basel/LIS_Atelier/LIS_Atelier_03.jpg",
+                    "assets/basel/LIS_Atelier/LIS_Atelier_04.jpg",
+                    "assets/basel/LIS_Atelier/LIS_Atelier_05.jpg"
+                ],
+                "fallbackCoords": [47.5580748, 7.5792603],
+                "filters": {
+                    "venueType": ["craft-atelier"],
+                    "cuisineType": [],
+                    "ageRange": ["toddler", "small-child", "kid"],
+                    "amenities": ["high-chair", "change-table"]
+                }
+            },
+            {
+                "name": "Magical Cafe",
+                "address": "Max Kämpf Platz 2, 4058 Basel",
+                "city": "Basel",
+                "description": "Family-friendly cafe with homemade cupcakes, coffee, and large indoor play area for children",
+                "i18n": {
+                    "description": {
+                        "de": "Familienfreundliches Café mit hausgemachten Cupcakes, Kaffee und grossem Indoor-Spielbereich",
+                        "fr": "Café familial avec cupcakes maison, café et grande aire de jeux intérieure"
+                    },
+                    "hours": {
+                        "de": "Di-Fr: 10-17 Uhr (Wochenenden für Privatfeiern reserviert)",
+                        "fr": "Mar-ven : 10h-17h (week-ends réservés aux fêtes privées)"
+                    },
+                    "specialty": {
+                        "de": "Hausgemachte Cupcakes und thematische Geburtstagsfeiern",
+                        "fr": "Cupcakes maison et fêtes d'anniversaire à thème"
+                    }
+                },
+                "hours": "Tue-Fri: 10am-5pm (weekends reserved for private parties)",
+                "specialty": "Homemade cupcakes and themed birthday parties",
+                "phone": "+41 78 905 37 38",
+                "website": "https://magicalcafe.ch/",
+                "instagram": "https://www.instagram.com/magicalcafebasel",
+                "images": [
+                    "assets/basel/Magical_Cafe/magical_cafe_01.jpg",
+                    "assets/basel/Magical_Cafe/magical_cafe_02.jpg",
+                    "assets/basel/Magical_Cafe/magical_cafe_03.jpg",
+                    "assets/basel/Magical_Cafe/magical_cafe_04.jpg",
+                    "assets/basel/Magical_Cafe/magical_cafe_05.jpg",
+                    "assets/basel/Magical_Cafe/magical_cafe_06.jpg"
+                ],
+                "fallbackCoords": [47.5699729, 7.5995347],
+                "filters": {
+                    "venueType": ["cafe"],
+                    "cuisineType": ["patisserie"],
+                    "ageRange": ["baby", "toddler", "small-child"],
+                    "amenities": ["play-area", "outdoor-seating", "high-chair", "change-table"]
+                }
+            },
+            {
+                "name": "Klara 13",
+                "address": "Clarastrasse 13, 4058 Basel",
+                "city": "Basel",
+                "description": "Community food hall and cafe at Claraplatz with diverse kitchens from 5 continents and family-friendly space",
+                "i18n": {
+                    "description": {
+                        "de": "Gemeinschaftliche Foodhall und Café am Claraplatz mit Küchen aus 5 Kontinenten und familienfreundlichem Bereich",
+                        "fr": "Halle gourmande communautaire et café à Claraplatz avec cuisines variées des 5 continents et espace familial"
+                    },
+                    "hours": {
+                        "de": "Mo-So: 10-22 Uhr (Küchenzeiten können variieren)",
+                        "fr": "Lun-dim : 10h-22h (horaires des cuisines variables)"
+                    },
+                    "specialty": {
+                        "de": "Verschiedene Küchen unter einem Dach, zentrale Lage",
+                        "fr": "Plusieurs cuisines sous un même toit, emplacement central"
+                    }
+                },
+                "hours": "Daily: 10am-10pm (kitchen hours may vary)",
+                "specialty": "Multiple kitchens under one roof, central Claraplatz location",
+                "phone": "Contact via website",
+                "website": "https://www.klarabasel.ch/",
+                "instagram": "https://www.instagram.com/klara.basel",
+                "images": [
+                    "assets/basel/Klara/klara_01.jpg",
+                    "assets/basel/Klara/klara_02.jpg",
+                    "assets/basel/Klara/klara_03.jpg",
+                    "assets/basel/Klara/klara_04.jpg",
+                    "assets/basel/Klara/klara_05.jpg",
+                    "assets/basel/Klara/klara_06.jpg",
+                    "assets/basel/Klara/klara_07.jpg"
+                ],
+                "fallbackCoords": [47.5660, 7.5950],
+                "filters": {
+                    "venueType": ["food-hall"],
+                    "cuisineType": ["international"],
+                    "ageRange": ["baby", "toddler", "small-child", "kid"],
+                    "amenities": ["play-area", "high-chair", "change-table", "games-room"]
+                }
+            },
+            {
+                "name": "Markthalle Basel",
+                "address": "Steinentorberg 20, 4051 Basel",
+                "city": "Basel",
+                "description": "Historic market hall with international food stalls, cafes, open seating, and a family-friendly play area",
+                "i18n": {
+                    "description": {
+                        "de": "Historische Markthalle mit internationalen Food-Ständen, Cafés, offenen Sitzplätzen und einem familienfreundlichen Spielbereich",
+                        "fr": "Halle historique avec stands de cuisine internationale, cafés, places assises ouvertes et une aire de jeux familiale"
+                    },
+                    "hours": {
+                        "de": "Mo-Sa: 8-23 Uhr (Stände variieren)",
+                        "fr": "Lun-sam : 8h-23h (horaires des stands variables)"
+                    },
+                    "specialty": {
+                        "de": "Vielfältige Küche unter einer Kuppel, zentrale Lage am Bahnhof SBB",
+                        "fr": "Cuisine variée sous un dôme, emplacement central près de la gare CFF"
+                    }
+                },
+                "hours": "Mon-Sat: 8am-11pm (stalls vary)",
+                "specialty": "Varied kitchens under one dome, central near Basel SBB",
+                "phone": "Contact via website",
+                "website": "https://www.altemarkthalle.ch/",
+                "instagram": "https://www.instagram.com/markthalle_basel",
+                "images": [
+                    "assets/basel/Markthalle/markthalle_01.jpg",
+                    "assets/basel/Markthalle/markthalle_02.jpg",
+                    "assets/basel/Markthalle/markthalle_03.jpg",
+                    "assets/basel/Markthalle/markthalle_04.jpg",
+                    "assets/basel/Markthalle/markthalle_05.jpg",
+                    "assets/basel/Markthalle/markthalle_06.jpg"
+                ],
+                "fallbackCoords": [47.5480, 7.5898],
+                "filters": {
+                    "venueType": ["food-hall"],
+                    "cuisineType": ["international"],
+                    "ageRange": ["baby", "toddler", "small-child", "kid"],
+                    "amenities": ["play-area", "high-chair", "change-table", "outdoor-seating"]
+                }
+            }
+        ]
