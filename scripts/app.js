@@ -1192,6 +1192,7 @@
             // Create Google Maps directions link
             const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venue.address)}`;
             const phoneHref = formatPhoneHref(venue.phone);
+            const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
 
             // Image slider (if images available)
             let sliderHtml = '';
@@ -1224,7 +1225,7 @@
                             <span class="favorite-label">${isFavorite(venue.name) ? favoriteRemoveLabel : favoriteAddLabel}</span>
                         </button>
                     </div>
-                    <p class="popup-address"><strong>📍</strong> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}</a></p>
+                    <p class="popup-address"><span class="popup-icon">${navigateSvg}</span> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}</a></p>
                     ${localizedHours ? `<p class="popup-hours"><strong>${hoursLabel}:</strong> ${localizedHours}</p>` : ''}
                     ${seasonalNote ? `<p class="popup-seasonal">${seasonalNote}</p>` : ''}
                     <p class="popup-desc">${localizedDescription}</p>
