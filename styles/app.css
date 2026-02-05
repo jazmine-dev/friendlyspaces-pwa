@@ -123,15 +123,15 @@
         #menu-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             gap: 12px;
+            position: relative;
         }
 
         .menu-brand {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex: 1;
             justify-content: center;
         }
 
@@ -151,7 +151,8 @@
             font-size: 16px;
             font-weight: 800;
             line-height: 1;
-            margin-left: auto;
+            position: absolute;
+            right: 0;
         }
 
         .menu-button {
@@ -200,8 +201,8 @@
         }
 
         #language-toggle button.active {
-            background: #d9bdf2;
-            color: #3b3834;
+            background: #1E52BA;
+            color: #ffffff;
         }
 
         .fullscreen-panel {
