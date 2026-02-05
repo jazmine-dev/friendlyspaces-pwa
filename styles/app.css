@@ -1710,12 +1710,37 @@
             overflow-x: hidden;
         }
 
-.custom-popup .leaflet-popup-close-button {
-    font-size: 22px;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-}
+        .custom-popup .leaflet-popup-close-button {
+            font-size: 22px;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .locate-control {
+            margin-bottom: 52px;
+        }
+
+        .locate-button {
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .locate-button svg {
+            width: 18px;
+            height: 18px;
+            stroke: #1E52BA;
+            stroke-width: 2;
+            fill: none;
+        }
 
         .favorite-toggle {
             border: none;

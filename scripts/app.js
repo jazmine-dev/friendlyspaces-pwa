@@ -444,6 +444,41 @@
             position: 'bottomright'
         }).addTo(map);
 
+        // Add locate control (bottom right)
+        const locateControl = L.control({ position: 'bottomright' });
+        locateControl.onAdd = function () {
+            const container = L.DomUtil.create('div', 'leaflet-bar locate-control');
+            container.innerHTML = `
+                <button type="button" class="locate-button" aria-label="Center map on my location">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <circle cx="12" cy="12" r="8" fill="none"></circle>
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                </button>
+            `;
+            L.DomEvent.disableClickPropagation(container);
+            L.DomEvent.disableScrollPropagation(container);
+            container.querySelector('.locate-button').addEventListener('click', () => {
+                if (!navigator.geolocation) return;
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        const { latitude, longitude } = pos.coords;
+                        map.setView([latitude, longitude], 14);
+                    },
+                    () => {
+                        // Ignore location errors
+                    },
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+                );
+            });
+            return container;
+        };
+        locateControl.addTo(map);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19
