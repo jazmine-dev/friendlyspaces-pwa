@@ -193,7 +193,11 @@
                     <span class="suggest-label" data-suggest-label="fan">I can recommend a Friendly Space</span>
                 </button>
             </div>
-            <form id="suggest-form" class="suggest-form">
+            <form id="suggest-form" class="suggest-form" name="suggest" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="suggest">
+                <p class="hidden">
+                    <label>Don’t fill this out: <input name="bot-field"></label>
+                </p>
                 <div>
                     <label for="venue-name">Venue name</label>
                     <input id="venue-name" name="venueName" required>
@@ -225,6 +229,7 @@
                     </div>
                 </div>
                 <button class="suggest-submit" type="submit">Send suggestion</button>
+                <div class="form-status" id="suggest-status" role="status" aria-live="polite"></div>
             </form>
         </div>
     </section>
@@ -245,12 +250,17 @@
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="bug-title">Report a bug</h2>
-            <form id="bug-form" class="suggest-form">
+            <form id="bug-form" class="suggest-form" name="bug" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="bug">
+                <p class="hidden">
+                    <label>Don’t fill this out: <input name="bot-field"></label>
+                </p>
                 <div>
                     <label for="bug-message" id="bug-message-label">Message</label>
                     <textarea id="bug-message" name="bugMessage" required></textarea>
                 </div>
                 <button class="suggest-submit" type="submit" id="bug-submit">Send</button>
+                <div class="form-status" id="bug-status" role="status" aria-live="polite"></div>
             </form>
         </div>
     </section>

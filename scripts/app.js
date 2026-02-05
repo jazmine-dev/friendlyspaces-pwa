@@ -18,6 +18,11 @@
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
                     suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
                     suggestMessageLabel: "Nachricht (optional)",
+                    formSending: "Wird gesendet...",
+                    suggestSubmitSuccess: "Danke! Vorschlag gesendet.",
+                    suggestSubmitError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+                    bugSubmitSuccess: "Danke! Fehlerbericht gesendet.",
+                    bugSubmitError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
                     bugTitle: "Fehler melden",
                     bugMessageLabel: "Nachricht",
                     bugSubmit: "Senden",
@@ -106,6 +111,11 @@
                     suggestRoleOwner: "Je travaille dans un Friendly Space",
                     suggestRoleFan: "Je peux recommander un Friendly Space",
                     suggestMessageLabel: "Message (facultatif)",
+                    formSending: "Envoi en cours...",
+                    suggestSubmitSuccess: "Merci ! Suggestion envoyée.",
+                    suggestSubmitError: "Une erreur est survenue. Réessayez.",
+                    bugSubmitSuccess: "Merci ! Bug signalé.",
+                    bugSubmitError: "Une erreur est survenue. Réessayez.",
                     bugTitle: "Signaler un bug",
                     bugMessageLabel: "Message",
                     bugSubmit: "Envoyer",
@@ -194,6 +204,11 @@
                     suggestRoleOwner: "I work at a Friendly Space",
                     suggestRoleFan: "I can recommend a Friendly Space",
                     suggestMessageLabel: "Message (optional)",
+                    formSending: "Sending...",
+                    suggestSubmitSuccess: "Thanks! Suggestion sent.",
+                    suggestSubmitError: "Something went wrong. Please try again.",
+                    bugSubmitSuccess: "Thanks! Bug report sent.",
+                    bugSubmitError: "Something went wrong. Please try again.",
                     bugTitle: "Report a bug",
                     bugMessageLabel: "Message",
                     bugSubmit: "Send",
@@ -625,6 +640,11 @@
             const bugSubmit = document.getElementById('bug-submit');
             if (bugSubmit) bugSubmit.textContent = translate('ui.bugSubmit', bugSubmit.textContent);
             if (bugClose) bugClose.setAttribute('aria-label', translate('ui.menuClose', bugClose.getAttribute('aria-label') || 'Close'));
+
+            const suggestStatus = document.getElementById('suggest-status');
+            if (suggestStatus) suggestStatus.textContent = '';
+            const bugStatus = document.getElementById('bug-status');
+            if (bugStatus) bugStatus.textContent = '';
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -1741,50 +1761,59 @@
         suggestRoleButtons.forEach(btn => {
             btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
         });
+        function encodeFormData(form) {
+            const data = new FormData(form);
+            const params = new URLSearchParams();
+            for (const [key, value] of data.entries()) {
+                params.append(key, value.toString());
+            }
+            return params.toString();
+        }
+
+        function handleNetlifySubmit(form, statusEl, successKey, errorKey) {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (statusEl) statusEl.textContent = translate('ui.formSending', 'Sending...');
+            if (submitBtn) submitBtn.disabled = true;
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: encodeFormData(form)
+            })
+                .then(() => {
+                    if (statusEl) statusEl.textContent = translate(successKey, 'Thanks! Sent.');
+                    form.reset();
+                })
+                .catch(() => {
+                    if (statusEl) statusEl.textContent = translate(errorKey, 'Something went wrong. Please try again.');
+                })
+                .finally(() => {
+                    if (submitBtn) submitBtn.disabled = false;
+                });
+        }
+
         if (suggestForm) {
             suggestForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'owner';
-                const venueName = document.getElementById('venue-name')?.value || '';
-                const venueCity = document.getElementById('venue-city')?.value || '';
-                const venueMessage = document.getElementById('venue-message')?.value || '';
-                const venueWhy = document.getElementById('venue-why')?.value || '';
-                const ownerName = document.getElementById('owner-name')?.value || '';
-                const ownerEmail = document.getElementById('owner-email')?.value || '';
-                const ownerPhone = document.getElementById('owner-phone')?.value || '';
+                const roleField = document.createElement('input');
+                roleField.type = 'hidden';
+                roleField.name = 'role';
+                roleField.value = role;
+                suggestForm.appendChild(roleField);
 
-                const lines = [
-                    `Role: ${role === 'owner' ? 'Venue owner' : 'Friendly Spaces enthusiast'}`,
-                    `Venue name: ${venueName}`,
-                    `City: ${venueCity}`
-                ];
-                if (venueMessage) lines.push(`Message: ${venueMessage}`);
-                if (venueWhy) lines.push(`Why friendly: ${venueWhy}`);
-                if (role === 'owner') {
-                    if (ownerName) lines.push(`Owner name: ${ownerName}`);
-                    if (ownerEmail) lines.push(`Owner email: ${ownerEmail}`);
-                    if (ownerPhone) lines.push(`Owner phone: ${ownerPhone}`);
-                }
+                const statusEl = document.getElementById('suggest-status');
+                handleNetlifySubmit(suggestForm, statusEl, 'ui.suggestSubmitSuccess', 'ui.suggestSubmitError');
 
-                const subject = encodeURIComponent('Friendly Spaces venue suggestion');
-                const body = encodeURIComponent(lines.join('\n'));
-                const to = 'hello@friendlyspaces.ch';
-                window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+                roleField.remove();
             });
         }
 
         if (bugForm) {
             bugForm.addEventListener('submit', (event) => {
                 event.preventDefault();
-                const message = document.getElementById('bug-message')?.value || '';
-                const lines = [
-                    'Bug report',
-                    `Message: ${message}`
-                ];
-                const subject = encodeURIComponent('Friendly Spaces bug report');
-                const body = encodeURIComponent(lines.join('\n'));
-                const to = 'hello@friendlyspaces.ch';
-                window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+                const statusEl = document.getElementById('bug-status');
+                handleNetlifySubmit(bugForm, statusEl, 'ui.bugSubmitSuccess', 'ui.bugSubmitError');
             });
         }
 
