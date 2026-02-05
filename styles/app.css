@@ -178,6 +178,23 @@
             margin: 0;
         }
 
+        .menu-footer {
+            margin-top: auto;
+            padding-top: 6px;
+        }
+
+        .menu-link {
+            border: none;
+            background: transparent;
+            color: #3b3834;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 6px 2px;
+            text-align: left;
+        }
+
         #language-toggle {
             display: inline-flex;
             align-items: center;

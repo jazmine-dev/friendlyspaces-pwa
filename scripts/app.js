@@ -12,11 +12,15 @@
                     menuShare: "App teilen",
                     menuAbout: "Über uns",
                     menuLanguage: "Sprache",
+                    menuBug: "Fehler melden",
                     suggestTitle: "Space vorschlagen",
                     suggestTagline: "Kennst du Orte, die gut zu Friendly Spaces passen würden?",
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
                     suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
                     suggestMessageLabel: "Nachricht (optional)",
+                    bugTitle: "Fehler melden",
+                    bugMessageLabel: "Nachricht",
+                    bugSubmit: "Senden",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -96,11 +100,15 @@
                     menuShare: "Partager l'app",
                     menuAbout: "À propos",
                     menuLanguage: "Langue",
+                    menuBug: "Signaler un bug",
                     suggestTitle: "Suggérer un espace",
                     suggestTagline: "Connais-tu des lieux qui seraient parfaits pour Friendly Spaces ?",
                     suggestRoleOwner: "Je travaille dans un Friendly Space",
                     suggestRoleFan: "Je peux recommander un Friendly Space",
                     suggestMessageLabel: "Message (facultatif)",
+                    bugTitle: "Signaler un bug",
+                    bugMessageLabel: "Message",
+                    bugSubmit: "Envoyer",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -180,11 +188,15 @@
                     menuShare: "Share the app",
                     menuAbout: "About us",
                     menuLanguage: "Language",
+                    menuBug: "Report a bug",
                     suggestTitle: "Suggest a space",
                     suggestTagline: "Do you know of any places that would be a great fit for friendly spaces?",
                     suggestRoleOwner: "I work at a Friendly Space",
                     suggestRoleFan: "I can recommend a Friendly Space",
                     suggestMessageLabel: "Message (optional)",
+                    bugTitle: "Report a bug",
+                    bugMessageLabel: "Message",
+                    bugSubmit: "Send",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -469,11 +481,15 @@
         const menuSuggest = document.getElementById('menu-suggest');
         const menuShare = document.getElementById('menu-share');
         const menuAbout = document.getElementById('menu-about');
+        const menuBug = document.getElementById('menu-bug');
         const suggestView = document.getElementById('suggest-view');
         const aboutView = document.getElementById('about-view');
+        const bugView = document.getElementById('bug-view');
         const suggestClose = document.getElementById('suggest-close');
         const aboutClose = document.getElementById('about-close');
+        const bugClose = document.getElementById('bug-close');
         const suggestForm = document.getElementById('suggest-form');
+        const bugForm = document.getElementById('bug-form');
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
 
@@ -588,6 +604,7 @@
             }
             const menuLanguageTitle = document.getElementById('menu-language-title');
             if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
+            if (menuBug) menuBug.textContent = translate('ui.menuBug', menuBug.textContent);
 
             const suggestTitle = document.getElementById('suggest-title');
             if (suggestTitle) suggestTitle.textContent = translate('ui.suggestTitle', suggestTitle.textContent);
@@ -600,6 +617,14 @@
             const suggestMessageLabel = document.querySelector('label[for="venue-message"]');
             if (suggestMessageLabel) suggestMessageLabel.textContent = translate('ui.suggestMessageLabel', suggestMessageLabel.textContent);
             if (suggestClose) suggestClose.setAttribute('aria-label', translate('ui.menuClose', suggestClose.getAttribute('aria-label') || 'Close'));
+
+            const bugTitle = document.getElementById('bug-title');
+            if (bugTitle) bugTitle.textContent = translate('ui.bugTitle', bugTitle.textContent);
+            const bugMessageLabel = document.getElementById('bug-message-label');
+            if (bugMessageLabel) bugMessageLabel.textContent = translate('ui.bugMessageLabel', bugMessageLabel.textContent);
+            const bugSubmit = document.getElementById('bug-submit');
+            if (bugSubmit) bugSubmit.textContent = translate('ui.bugSubmit', bugSubmit.textContent);
+            if (bugClose) bugClose.setAttribute('aria-label', translate('ui.menuClose', bugClose.getAttribute('aria-label') || 'Close'));
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -1674,6 +1699,12 @@
                 openPanel(aboutView);
             });
         }
+        if (menuBug) {
+            menuBug.addEventListener('click', () => {
+                closeMenu();
+                openPanel(bugView);
+            });
+        }
         const SHARE_URL = window.location.origin;
 
         if (menuShare) {
@@ -1704,6 +1735,9 @@
         if (aboutClose) {
             aboutClose.addEventListener('click', () => closePanel(aboutView));
         }
+        if (bugClose) {
+            bugClose.addEventListener('click', () => closePanel(bugView));
+        }
         suggestRoleButtons.forEach(btn => {
             btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
         });
@@ -1733,6 +1767,21 @@
                 }
 
                 const subject = encodeURIComponent('Friendly Spaces venue suggestion');
+                const body = encodeURIComponent(lines.join('\n'));
+                const to = 'hello@friendlyspaces.com';
+                window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+            });
+        }
+
+        if (bugForm) {
+            bugForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const message = document.getElementById('bug-message')?.value || '';
+                const lines = [
+                    'Bug report',
+                    `Message: ${message}`
+                ];
+                const subject = encodeURIComponent('Friendly Spaces bug report');
                 const body = encodeURIComponent(lines.join('\n'));
                 const to = 'hello@friendlyspaces.com';
                 window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;

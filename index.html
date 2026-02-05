@@ -167,6 +167,9 @@
             <button type="button" data-lang="fr">FR</button>
             <button type="button" data-lang="en">EN</button>
         </div>
+        <div class="menu-footer">
+            <button class="menu-link" id="menu-bug" type="button">Report a bug</button>
+        </div>
     </aside>
     <section id="suggest-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
@@ -233,6 +236,22 @@
         <div class="fullscreen-body">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </section>
+    <section id="bug-view" class="fullscreen-panel" aria-hidden="true">
+        <div class="fullscreen-header suggest-header">
+            <img class="suggest-header-logo" src="icons/icon-192.png" alt="Friendly Spaces">
+            <button class="fullscreen-close" type="button" id="bug-close" aria-label="Close">✕</button>
+        </div>
+        <div class="fullscreen-body">
+            <h2 class="suggest-title" id="bug-title">Report a bug</h2>
+            <form id="bug-form" class="suggest-form">
+                <div>
+                    <label for="bug-message" id="bug-message-label">Message</label>
+                    <textarea id="bug-message" name="bugMessage" required></textarea>
+                </div>
+                <button class="suggest-submit" type="submit" id="bug-submit">Send</button>
+            </form>
         </div>
     </section>
     <nav id="bottom-tabs" aria-label="Primary">
