@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'friendlyspaces-pwa-v11';
+const CACHE_VERSION = 'friendlyspaces-pwa-v12';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,7 +7,9 @@ const APP_SHELL = [
   './scripts/app.js',
   './data/venues.json',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  './assets/logo-friendly.png',
+  './assets/FriendlySpaces_blue.png'
 ];
 
 self.addEventListener('install', (event) => {
