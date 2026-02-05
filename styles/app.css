@@ -234,6 +234,20 @@
             position: relative;
         }
 
+        .suggest-header-logo {
+            height: 56px;
+            width: auto;
+            display: block;
+        }
+
+        .suggest-title {
+            margin: 2px 0 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1c1b19;
+            text-align: center;
+        }
+
         .fullscreen-title {
             margin: 0;
             font-size: 18px;
@@ -264,14 +278,14 @@
         }
 
         .fullscreen-body {
-            padding: 18px;
+            padding: 14px 18px 16px;
             overflow-y: auto;
             flex: 1;
         }
 
         .suggest-tagline {
-            margin: 6px 0 18px;
-            font-size: 14px;
+            margin: 0 0 12px;
+            font-size: 13px;
             line-height: 1.5;
             color: #6f6b65;
             text-align: center;
@@ -280,14 +294,14 @@
         .suggest-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .suggest-option {
             border: 2px solid rgba(59,56,52,0.12);
             background: #ffffff;
             border-radius: 18px;
-            padding: 14px 16px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
             gap: 14px;
@@ -333,8 +347,8 @@
         .suggest-form {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 16px;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .suggest-form label {
@@ -353,7 +367,7 @@
         }
 
         .suggest-form textarea {
-            min-height: 100px;
+            min-height: 80px;
             resize: vertical;
         }
 
@@ -362,7 +376,7 @@
             background: #1E52BA;
             color: #ffffff;
             border-radius: 14px;
-            padding: 12px 14px;
+            padding: 10px 14px;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
