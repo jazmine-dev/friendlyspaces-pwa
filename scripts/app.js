@@ -637,10 +637,16 @@
             }
 
             const mapTab = document.getElementById('bottom-tab-map');
-            if (mapTab) mapTab.textContent = translate('ui.mapTab', mapTab.textContent);
+            if (mapTab) {
+                const mapSpan = mapTab.querySelector('span');
+                if (mapSpan) mapSpan.textContent = translate('ui.mapTab', mapSpan.textContent);
+            }
 
             const listTab = document.getElementById('bottom-tab-list');
-            if (listTab) listTab.textContent = translate('ui.listTab', listTab.textContent);
+            if (listTab) {
+                const listSpan = listTab.querySelector('span');
+                if (listSpan) listSpan.textContent = translate('ui.listTab', listSpan.textContent);
+            }
 
             const favoritesTab = document.getElementById('bottom-tab-favorites-label');
             if (favoritesTab) favoritesTab.textContent = translate('ui.favoritesTab', favoritesTab.textContent);
@@ -1285,7 +1291,10 @@
             // Only auto-zoom on initial load
             if (isInitialLoad) {
                 if (bounds.isValid()) {
-                    map.fitBounds(bounds.pad(0.2));
+                    map.fitBounds(bounds, {
+                        padding: [80, 40],
+                        maxZoom: 12
+                    });
                 } else {
                     map.setView([46.9480, 7.4474], 13);
                 }
