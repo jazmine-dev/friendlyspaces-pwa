@@ -7,6 +7,12 @@
                     sidebarTitle: "Einen Friendly Space finden",
                     searchPlaceholder: "Nach Name, Stadt oder Adresse suchen...",
                     languageLabel: "Sprache",
+                    menuTitle: "Menü",
+                    menuClose: "Schließen",
+                    menuSuggest: "Ort vorschlagen",
+                    menuShare: "App teilen",
+                    menuAbout: "Über uns",
+                    menuLanguage: "Sprache",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -81,6 +87,12 @@
                     sidebarTitle: "Trouver un Friendly Space",
                     searchPlaceholder: "Rechercher par nom, ville ou adresse...",
                     languageLabel: "Langue",
+                    menuTitle: "Menu",
+                    menuClose: "Fermer",
+                    menuSuggest: "Suggérer un lieu",
+                    menuShare: "Partager l'app",
+                    menuAbout: "À propos",
+                    menuLanguage: "Langue",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -155,6 +167,12 @@
                     sidebarTitle: "Find a Friendly Space",
                     searchPlaceholder: "Search by name, city, or address...",
                     languageLabel: "Language",
+                    menuTitle: "Menu",
+                    menuClose: "Close",
+                    menuSuggest: "Suggest a venue",
+                    menuShare: "Share the app",
+                    menuAbout: "About us",
+                    menuLanguage: "Language",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -542,6 +560,24 @@
             if (installBannerText) installBannerText.textContent = translate('ui.favoritesInstall', installBannerText.textContent);
             const installButton = document.getElementById('install-button');
             if (installButton) installButton.textContent = translate('ui.favoritesInstallCta', installButton.textContent);
+
+            const menuTitle = document.getElementById('menu-title');
+            if (menuTitle) menuTitle.textContent = translate('ui.menuTitle', menuTitle.textContent);
+            if (menuClose) menuClose.textContent = translate('ui.menuClose', menuClose.textContent);
+            if (menuSuggest) {
+                const label = menuSuggest.querySelector('.menu-label');
+                if (label) label.textContent = translate('ui.menuSuggest', label.textContent);
+            }
+            if (menuShare) {
+                const label = menuShare.querySelector('.menu-label');
+                if (label) label.textContent = translate('ui.menuShare', label.textContent);
+            }
+            if (menuAbout) {
+                const label = menuAbout.querySelector('.menu-label');
+                if (label) label.textContent = translate('ui.menuAbout', label.textContent);
+            }
+            const menuLanguageTitle = document.getElementById('menu-language-title');
+            if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
