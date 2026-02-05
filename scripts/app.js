@@ -26,6 +26,8 @@
                     bugTitle: "Fehler melden",
                     bugMessageLabel: "Nachricht",
                     bugSubmit: "Senden",
+                    partnerCta: "Partnerschaft anfragen",
+                    partnerSubject: "Partnerschaftsanfrage",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -119,6 +121,8 @@
                     bugTitle: "Signaler un bug",
                     bugMessageLabel: "Message",
                     bugSubmit: "Envoyer",
+                    partnerCta: "Demande de partenariat",
+                    partnerSubject: "Demande de partenariat",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -212,6 +216,8 @@
                     bugTitle: "Report a bug",
                     bugMessageLabel: "Message",
                     bugSubmit: "Send",
+                    partnerCta: "Inquire about partnerships",
+                    partnerSubject: "Partnership Inquiry",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -506,6 +512,7 @@
         const suggestForm = document.getElementById('suggest-form');
         const bugForm = document.getElementById('bug-form');
         const aboutCta = document.getElementById('about-cta');
+        const aboutPartner = document.getElementById('about-partner');
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
 
@@ -646,6 +653,7 @@
             if (suggestStatus) suggestStatus.textContent = '';
             const bugStatus = document.getElementById('bug-status');
             if (bugStatus) bugStatus.textContent = '';
+            if (aboutPartner) aboutPartner.textContent = translate('ui.partnerCta', aboutPartner.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -1760,6 +1768,13 @@
             aboutCta.addEventListener('click', () => {
                 closePanel(aboutView);
                 openPanel(suggestView);
+            });
+        }
+        if (aboutPartner) {
+            aboutPartner.addEventListener('click', () => {
+                const subject = encodeURIComponent(translate('ui.partnerSubject', 'Partnership Inquiry'));
+                const to = 'hello@friendlyspaces.ch';
+                window.location.href = `mailto:${to}?subject=${subject}`;
             });
         }
         if (bugClose) {
