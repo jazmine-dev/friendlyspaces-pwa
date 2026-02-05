@@ -7,7 +7,6 @@
                     sidebarTitle: "Einen Friendly Space finden",
                     searchPlaceholder: "Nach Name, Stadt oder Adresse suchen...",
                     languageLabel: "Sprache",
-                    menuTitle: "Menü",
                     menuClose: "Schließen",
                     menuSuggest: "Ort vorschlagen",
                     menuShare: "App teilen",
@@ -87,7 +86,6 @@
                     sidebarTitle: "Trouver un Friendly Space",
                     searchPlaceholder: "Rechercher par nom, ville ou adresse...",
                     languageLabel: "Langue",
-                    menuTitle: "Menu",
                     menuClose: "Fermer",
                     menuSuggest: "Suggérer un lieu",
                     menuShare: "Partager l'app",
@@ -167,7 +165,6 @@
                     sidebarTitle: "Find a Friendly Space",
                     searchPlaceholder: "Search by name, city, or address...",
                     languageLabel: "Language",
-                    menuTitle: "Menu",
                     menuClose: "Close",
                     menuSuggest: "Suggest a venue",
                     menuShare: "Share the app",
@@ -561,9 +558,7 @@
             const installButton = document.getElementById('install-button');
             if (installButton) installButton.textContent = translate('ui.favoritesInstallCta', installButton.textContent);
 
-            const menuTitle = document.getElementById('menu-title');
-            if (menuTitle) menuTitle.textContent = translate('ui.menuTitle', menuTitle.textContent);
-            if (menuClose) menuClose.textContent = translate('ui.menuClose', menuClose.textContent);
+            if (menuClose) menuClose.setAttribute('aria-label', translate('ui.menuClose', menuClose.getAttribute('aria-label') || 'Close menu'));
             if (menuSuggest) {
                 const label = menuSuggest.querySelector('.menu-label');
                 if (label) label.textContent = translate('ui.menuSuggest', label.textContent);
