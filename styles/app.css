@@ -1535,23 +1535,23 @@
 
             .venue-card-meta,
             .venue-card-address {
-                font-size: 13px;
+                font-size: 14px;
             }
 
             .venue-card-description {
-                font-size: 14px;
+                font-size: 15px;
             }
 
             .venue-card-tag {
-                font-size: 12px;
-            }
-
-            .venue-card-favorite {
                 font-size: 13px;
             }
 
-            .bottom-tab-button {
+            .venue-card-favorite {
                 font-size: 14px;
+            }
+
+            .bottom-tab-button {
+                font-size: 15px;
             }
 
             .menu-button {
@@ -1564,7 +1564,7 @@
             }
 
             .suggest-form label {
-                font-size: 13px;
+                font-size: 14px;
             }
 
             .suggest-form input,
@@ -1705,7 +1705,7 @@
 
         .custom-popup .leaflet-popup-content {
             margin: 8px 10px;
-            max-height: 280px;
+            max-height: 360px;
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -1717,13 +1717,30 @@
             line-height: 32px;
         }
 
+        /* Leaflet zoom and location controls */
+        .leaflet-control-zoom {
+            margin-bottom: 80px !important;
+            margin-right: 10px !important;
+        }
+
+        .leaflet-control-zoom a {
+            width: 36px !important;
+            height: 36px !important;
+            line-height: 36px !important;
+            font-size: 20px !important;
+        }
+
+        .leaflet-control-locate {
+            margin-bottom: 80px !important;
+        }
+
         .locate-control {
-            margin-bottom: 74px;
+            margin-bottom: 80px;
         }
 
         .locate-button {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border: none;
             background: #ffffff;
             border-radius: 8px;
@@ -1735,8 +1752,8 @@
         }
 
         .locate-button svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             stroke: #1E52BA;
             stroke-width: 2;
             fill: none;
@@ -2038,7 +2055,7 @@
             }
 
             .quick-filter-pill {
-                padding: 8px 14px;
-                font-size: 14px;
+                padding: 10px 16px;
+                font-size: 15px;
             }
         }
