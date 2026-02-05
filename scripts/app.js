@@ -632,6 +632,10 @@
             suggestRoleButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.suggestRole === role);
             });
+            const suggestWhy = document.getElementById('suggest-why');
+            if (suggestWhy) {
+                suggestWhy.style.display = role === 'owner' ? 'none' : 'block';
+            }
             if (ownerFields) {
                 const isOwner = role === 'owner';
                 ownerFields.style.display = isOwner ? 'block' : 'none';

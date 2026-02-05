@@ -179,9 +179,10 @@
                 <button type="button" class="suggest-option active" data-suggest-role="owner">
                     <span class="suggest-illustration" aria-hidden="true">
                         <svg viewBox="0 0 64 64" role="presentation">
-                            <rect x="8" y="16" width="48" height="32" rx="10"></rect>
-                            <circle cx="24" cy="32" r="8"></circle>
-                            <circle cx="40" cy="32" r="8"></circle>
+                            <path d="M10 28l22-14 22 14"></path>
+                            <rect x="14" y="28" width="36" height="22" rx="4"></rect>
+                            <rect x="22" y="36" width="10" height="14" rx="2"></rect>
+                            <rect x="36" y="36" width="10" height="10" rx="2"></rect>
                         </svg>
                     </span>
                     <span class="suggest-label" data-suggest-label="owner">I work at a Friendly Space</span>
@@ -189,9 +190,12 @@
                 <button type="button" class="suggest-option" data-suggest-role="fan">
                     <span class="suggest-illustration" aria-hidden="true">
                         <svg viewBox="0 0 64 64" role="presentation">
-                            <circle cx="32" cy="22" r="10"></circle>
-                            <path d="M14 54c2-12 12-20 18-20s16 8 18 20"></path>
-                            <path d="M46 18l10-4"></path>
+                            <circle cx="20" cy="22" r="6"></circle>
+                            <circle cx="44" cy="22" r="6"></circle>
+                            <circle cx="32" cy="30" r="5"></circle>
+                            <path d="M10 52c1-10 8-16 16-16"></path>
+                            <path d="M54 52c-1-10-8-16-16-16"></path>
+                            <path d="M24 52c1-8 6-12 8-12s7 4 8 12"></path>
                         </svg>
                     </span>
                     <span class="suggest-label" data-suggest-label="fan">I can recommend a Friendly Space</span>
@@ -206,7 +210,7 @@
                     <label for="venue-city">City</label>
                     <input id="venue-city" name="venueCity" required>
                 </div>
-                <div>
+                <div id="suggest-why">
                     <label for="venue-why">Why is it friendly? (optional)</label>
                     <textarea id="venue-why" name="venueWhy"></textarea>
                 </div>
