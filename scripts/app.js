@@ -767,6 +767,10 @@
             if (fanEmail) {
                 fanEmail.style.display = role === 'owner' ? 'none' : 'block';
             }
+            const newsletter = document.getElementById('suggest-newsletter');
+            if (newsletter) {
+                newsletter.style.display = role === 'owner' ? 'none' : 'flex';
+            }
             if (ownerFields) {
                 const isOwner = role === 'owner';
                 ownerFields.style.display = isOwner ? 'block' : 'none';
