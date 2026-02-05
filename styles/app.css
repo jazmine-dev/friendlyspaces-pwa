@@ -105,7 +105,7 @@
             right: 0;
             width: min(300px, 84vw);
             height: 100%;
-            background: #ffffff;
+            background: #f05a9d;
             box-shadow: -8px 0 24px rgba(0,0,0,0.15);
             transform: translateX(100%);
             transition: transform 0.25s ease;
@@ -131,15 +131,15 @@
             margin: 0;
             font-size: 16px;
             font-weight: 700;
-            color: #1c1b19;
+            color: #ffffff;
         }
 
         #menu-close {
             border: none;
-            background: #f0ebe4;
-            color: #3b3834;
-            padding: 6px 10px;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 999px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 700;
@@ -147,9 +147,9 @@
 
         .menu-button {
             width: 100%;
-            border: 1px solid #e8e3dc;
+            border: 2px solid rgba(255,255,255,0.6);
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 999px;
             padding: 12px 14px;
             font-size: 14px;
             font-weight: 600;
@@ -164,7 +164,7 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: #7b7873;
+            color: rgba(255,255,255,0.8);
             margin: 0;
         }
 
@@ -174,23 +174,25 @@
             gap: 6px;
             padding: 4px;
             border-radius: 999px;
-            background: #f0ebe4;
+            background: rgba(255,255,255,0.25);
+            width: fit-content;
+            align-self: flex-start;
         }
 
         #language-toggle button {
             border: none;
             background: transparent;
-            padding: 6px 10px;
+            padding: 6px 8px;
             border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
-            color: #4c4a45;
+            color: #ffffff;
             cursor: pointer;
         }
 
         #language-toggle button.active {
-            background: #1E52BA;
-            color: white;
+            background: #ffffff;
+            color: #f05a9d;
         }
 
         .fullscreen-panel {
