@@ -25,6 +25,8 @@
                     suggestOwnerEmailLabel: "E-Mail",
                     suggestOwnerPhoneLabel: "Telefon (optional)",
                     suggestSubmit: "Vorschlag senden",
+                    fanEmailLabel: "E-Mail (optional)",
+                    newsletterLabel: "Newsletter abonnieren",
                     aboutBody: "Friendly Spaces ist das erste familienfreundliche Zertifikationslabel der Schweiz und hilft Eltern, die besten Cafés, Restaurants, Geschaefte und Kulturorte für Familien mit kleinen Kindern zu finden. Durch unsere strengen Vor-Ort-Audits stellen wir sicher, dass jeder zertifizierte Ort Kinder wirklich willkommen heisst und auf ihre Bedürfnisse eingeht.",
                     keepInTouchTitle: "In Kontakt bleiben",
                     partnerTitle: "Partner werden",
@@ -131,6 +133,8 @@
                     suggestOwnerEmailLabel: "E-mail",
                     suggestOwnerPhoneLabel: "Téléphone (facultatif)",
                     suggestSubmit: "Envoyer la suggestion",
+                    fanEmailLabel: "E-mail (facultatif)",
+                    newsletterLabel: "S’inscrire à la newsletter",
                     aboutBody: "Friendly Spaces est le premier label suisse de certification family-friendly. Nous aidons les parents à trouver les meilleurs cafés, restaurants, boutiques et espaces culturels pour les familles avec de jeunes enfants. Grâce à nos audits sur site rigoureux, nous veillons à ce que chaque lieu certifié accueille vraiment les familles et leurs tout-petits.",
                     keepInTouchTitle: "Restons en contact",
                     partnerTitle: "Devenir partenaire",
@@ -237,6 +241,8 @@
                     suggestOwnerEmailLabel: "Your email",
                     suggestOwnerPhoneLabel: "Phone (optional)",
                     suggestSubmit: "Send suggestion",
+                    fanEmailLabel: "Email (optional)",
+                    newsletterLabel: "Sign me up for the newsletter",
                     aboutBody: "Friendly Spaces is Switzerland's first family-friendly certification label, helping parents find the best cafés, restaurants, shops, and cultural spaces for families with young children. Through our rigorous on-site audits, we ensure every certified venue truly welcomes and accommodates your little ones.",
                     keepInTouchTitle: "Keep in Touch",
                     partnerTitle: "Partner With Us",
@@ -683,6 +689,10 @@
             if (ownerEmailLabel) ownerEmailLabel.textContent = translate('ui.suggestOwnerEmailLabel', ownerEmailLabel.textContent);
             const ownerPhoneLabel = document.getElementById('owner-phone-label');
             if (ownerPhoneLabel) ownerPhoneLabel.textContent = translate('ui.suggestOwnerPhoneLabel', ownerPhoneLabel.textContent);
+            const fanEmailLabel = document.getElementById('fan-email-label');
+            if (fanEmailLabel) fanEmailLabel.textContent = translate('ui.fanEmailLabel', fanEmailLabel.textContent);
+            const newsletterLabel = document.getElementById('suggest-newsletter-label');
+            if (newsletterLabel) newsletterLabel.textContent = translate('ui.newsletterLabel', newsletterLabel.textContent);
             const suggestSubmit = document.getElementById('suggest-submit');
             if (suggestSubmit) suggestSubmit.textContent = translate('ui.suggestSubmit', suggestSubmit.textContent);
             if (suggestClose) suggestClose.setAttribute('aria-label', translate('ui.menuClose', suggestClose.getAttribute('aria-label') || 'Close'));
@@ -752,6 +762,10 @@
             const suggestMessage = document.getElementById('suggest-message');
             if (suggestMessage) {
                 suggestMessage.style.display = role === 'owner' ? 'block' : 'none';
+            }
+            const fanEmail = document.getElementById('suggest-fan-email');
+            if (fanEmail) {
+                fanEmail.style.display = role === 'owner' ? 'none' : 'block';
             }
             if (ownerFields) {
                 const isOwner = role === 'owner';

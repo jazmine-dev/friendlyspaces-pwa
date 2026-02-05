@@ -395,6 +395,14 @@
             resize: vertical;
         }
 
+        .suggest-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #3b3834;
+        }
+
         .form-status {
             min-height: 18px;
             font-size: 12px;

@@ -214,6 +214,10 @@
                     <label for="venue-why" id="suggest-why-label">Why is it friendly? (optional)</label>
                     <textarea id="venue-why" name="venueWhy"></textarea>
                 </div>
+                <div id="suggest-fan-email">
+                    <label for="fan-email" id="fan-email-label">Email (optional)</label>
+                    <input id="fan-email" name="fanEmail" type="email">
+                </div>
                 <div id="owner-fields">
                     <div>
                         <label for="owner-name" id="owner-name-label">Your name</label>
@@ -228,6 +232,10 @@
                         <input id="owner-phone" name="ownerPhone" type="tel">
                     </div>
                 </div>
+                <label class="suggest-checkbox">
+                    <input type="checkbox" id="suggest-newsletter" name="newsletterOptIn">
+                    <span id="suggest-newsletter-label">Sign me up for the newsletter</span>
+                </label>
                 <button class="suggest-submit" type="submit" id="suggest-submit">Send suggestion</button>
                 <div class="form-status" id="suggest-status" role="status" aria-live="polite"></div>
             </form>
