@@ -16,6 +16,7 @@
                     suggestTagline: "Kennst du Orte, die gut zu Friendly Spaces passen würden?",
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
                     suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
+                    suggestMessageLabel: "Nachricht (optional)",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -99,6 +100,7 @@
                     suggestTagline: "Connais-tu des lieux qui seraient parfaits pour Friendly Spaces ?",
                     suggestRoleOwner: "Je travaille dans un Friendly Space",
                     suggestRoleFan: "Je peux recommander un Friendly Space",
+                    suggestMessageLabel: "Message (facultatif)",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -182,6 +184,7 @@
                     suggestTagline: "Do you know of any places that would be a great fit for friendly spaces?",
                     suggestRoleOwner: "I work at a Friendly Space",
                     suggestRoleFan: "I can recommend a Friendly Space",
+                    suggestMessageLabel: "Message (optional)",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -594,6 +597,8 @@
             if (suggestOwnerLabel) suggestOwnerLabel.textContent = translate('ui.suggestRoleOwner', suggestOwnerLabel.textContent);
             const suggestFanLabel = document.querySelector('[data-suggest-label="fan"]');
             if (suggestFanLabel) suggestFanLabel.textContent = translate('ui.suggestRoleFan', suggestFanLabel.textContent);
+            const suggestMessageLabel = document.querySelector('label[for="venue-message"]');
+            if (suggestMessageLabel) suggestMessageLabel.textContent = translate('ui.suggestMessageLabel', suggestMessageLabel.textContent);
             if (suggestClose) suggestClose.setAttribute('aria-label', translate('ui.menuClose', suggestClose.getAttribute('aria-label') || 'Close'));
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
@@ -1708,6 +1713,7 @@
                 const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'owner';
                 const venueName = document.getElementById('venue-name')?.value || '';
                 const venueCity = document.getElementById('venue-city')?.value || '';
+                const venueMessage = document.getElementById('venue-message')?.value || '';
                 const venueWhy = document.getElementById('venue-why')?.value || '';
                 const ownerName = document.getElementById('owner-name')?.value || '';
                 const ownerEmail = document.getElementById('owner-email')?.value || '';
@@ -1718,6 +1724,7 @@
                     `Venue name: ${venueName}`,
                     `City: ${venueCity}`
                 ];
+                if (venueMessage) lines.push(`Message: ${venueMessage}`);
                 if (venueWhy) lines.push(`Why friendly: ${venueWhy}`);
                 if (role === 'owner') {
                     if (ownerName) lines.push(`Owner name: ${ownerName}`);
