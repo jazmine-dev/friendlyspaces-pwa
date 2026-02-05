@@ -1292,11 +1292,12 @@
             if (isInitialLoad) {
                 if (bounds.isValid()) {
                     map.fitBounds(bounds, {
-                        padding: [100, 50],
-                        maxZoom: 9
+                        paddingTopLeft: [40, 20],
+                        paddingBottomRight: [40, 80],
+                        maxZoom: 10
                     });
                 } else {
-                    map.setView([46.8182, 8.2275], 8);
+                    map.setView([46.8182, 8.2275], 9);
                 }
                 isInitialLoad = false;
             }
