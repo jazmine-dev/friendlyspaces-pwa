@@ -232,6 +232,8 @@
         .suggest-header {
             justify-content: center;
             position: relative;
+            background: transparent;
+            border-bottom: none;
         }
 
         .suggest-header-logo {
