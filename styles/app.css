@@ -923,11 +923,13 @@
         .bottom-tab-icon {
             width: 20px;
             height: 20px;
-            display: block;
+            display: inline-block;
             flex-shrink: 0;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2.2;
+            stroke-width: 2;
+            visibility: visible;
+            opacity: 1;
         }
 
         .bottom-tab-button.active {

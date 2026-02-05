@@ -426,8 +426,11 @@
         };
 
         // Initialize map with zoom controls in bottom right
+        // Center on Switzerland initially
         const map = L.map('map', {
-            zoomControl: false
+            zoomControl: false,
+            center: [46.8182, 8.2275],
+            zoom: 8
         });
 
         // Disable scroll zoom until the map is focused/clicked to prevent trapping page scroll
