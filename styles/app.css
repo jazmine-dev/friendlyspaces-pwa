@@ -965,7 +965,7 @@
         .detail-content::after {
             content: "";
             display: block;
-            height: 88px;
+            height: 44px;
         }
 
         .detail-section {
