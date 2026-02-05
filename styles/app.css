@@ -1687,9 +1687,13 @@
             margin: 0 3px;
         }
 
-        .slider-dot.active {
-            background: white;
-        }
+.slider-dot.active {
+    background: white;
+}
+
+.custom-popup .slider-dots {
+    bottom: 6px;
+}
 
         /* Popup sizing */
         .custom-popup .leaflet-popup-content-wrapper {
@@ -1697,12 +1701,19 @@
             width: clamp(260px, 70vw, 340px);
         }
 
-        .custom-popup .leaflet-popup-content {
-            margin: 8px 10px;
-            max-height: 320px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+.custom-popup .leaflet-popup-content {
+    margin: 8px 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.custom-popup .leaflet-popup-close-button {
+    font-size: 22px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+}
 
         .favorite-toggle {
             border: none;
@@ -1722,10 +1733,23 @@
             color: white;
         }
 
-        .favorite-toggle .favorite-icon {
-            width: 16px;
-            height: 16px;
-        }
+.favorite-toggle .favorite-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.popup-cta {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #1E52BA;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
 
         .install-banner {
             position: sticky;

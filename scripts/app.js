@@ -1163,13 +1163,7 @@
             return venues.filter(venueMatchesFilters);
         }
 
-        // Color scheme for filter categories
-        const categoryColors = {
-            venueType: '#3b82f6',      // Blue
-            cuisineType: '#10b981',    // Green
-            ageRange: '#f59e0b',       // Orange
-            amenities: '#8b5cf6'       // Purple
-        };
+        const popupTagColor = '#1E52BA';
 
         // Create popup content with color-coded tags and image slider
         function createPopup(venue) {
@@ -1188,12 +1182,11 @@
 
             const tagsByCategory = Object.entries(venue.filters)
                 .map(([category, values]) => {
-                    const color = categoryColors[category];
                     const tags = values.map(v => {
                         const def = filterDefinitions[category].find(f => f.id === v);
                         const translated = translate(`filters.options.${category}.${v}`, def?.label || v);
                         const label = typeof translated === 'function' ? translated() : translated;
-                        return `<span class="venue-tag" style="background: ${color}; color: white;">${label}</span>`;
+                        return `<span class="venue-tag" style="background: ${popupTagColor}; color: white;">${label}</span>`;
                     }).join('');
                     return tags;
                 })
@@ -1215,13 +1208,14 @@
                 const imagesHtml = venue.images.map((img, i) =>
                     `<img src="${img}" alt="${venue.name}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" ${i === 0 ? 'fetchpriority="high"' : 'fetchpriority="low"'} width="320" height="150">`
                 ).join('');
-                const dotsHtml = venue.images.map((_, i) =>
-                    `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`
-                ).join('');
-
                 sliderHtml = `
                     <div class="venue-slider" id="${sliderId}">
                         <div class="slider-container">${imagesHtml}</div>
+                        ${venue.images.length > 1 ? `
+                            <div class="slider-dots">${venue.images.map((_, i) =>
+                                `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`
+                            ).join('')}</div>
+                        ` : ''}
                     </div>
                 `;
             }
@@ -1246,7 +1240,7 @@
                     ${seasonalNote ? `<p style="margin: 5px 0; font-size: 12px; color: #BA1E1E;"><strong>${seasonalNote}</strong></p>` : ''}
                     <p style="margin: 5px 0; font-size: 12px; color: #1E52BA;"><strong>${specialtyLabel}:</strong> ${localizedSpecialty}</p>
                     <div class="venue-tags">${tagsByCategory}</div>
-                    <button onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')" style="width: 100%; margin-top: 12px; padding: 10px 16px; background: #1E52BA; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">${translate('popup.viewProfile', 'View Full Profile')}</button>
+                    <button class="popup-cta" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${translate('popup.viewProfile', 'View Full Profile')}</button>
                 </div>
             `;
         }
