@@ -1166,10 +1166,8 @@
         }
 
         function createDetailProfileContent(venue) {
-            const visitWebsiteLabel = translate('popup.visitWebsite', 'Visit Website');
             const hoursLabel = translate('popup.hours', 'Hours');
             const specialtyLabel = translate('popup.specialty', 'Specialty');
-            const directionsLabel = translate('popup.directions', 'Directions');
 
             const seasonalNote = venue.seasonalNote
                 ? (venue.seasonalNote[currentLang] || venue.seasonalNote.en || venue.seasonalNote.de)
@@ -1218,29 +1216,6 @@
                     }).join('');
                 })
                 .join('');
-
-            // Build phone contact
-            const phoneHtml = venue.phone && phoneHref
-                ? `<a class="detail-contact-item clickable" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
-                        <span class="detail-contact-icon">📞</span>
-                        <span class="detail-contact-text">${venue.phone}</span>
-                        <span class="detail-contact-arrow">→</span>
-                   </a>`
-                : venue.phone
-                    ? `<div class="detail-contact-item">
-                            <span class="detail-contact-icon">📞</span>
-                            <span class="detail-contact-text">${venue.phone}</span>
-                       </div>`
-                    : '';
-
-            // Build website contact
-            const websiteHtml = venue.website
-                ? `<a class="detail-contact-item clickable" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
-                        <span class="detail-contact-icon">🌐</span>
-                        <span class="detail-contact-text">${visitWebsiteLabel}</span>
-                        <span class="detail-contact-arrow">→</span>
-                   </a>`
-                : '';
 
             // Icon buttons row: Navigate, Call, Website, Instagram
             const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
@@ -1310,18 +1285,6 @@
                 </div>
                 <div class="detail-content">
                     ${iconButtonsHtml}
-
-                    <div class="detail-section">
-                        <div class="detail-contact-list">
-                            <a class="detail-contact-item clickable" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
-                                <span class="detail-contact-icon">📍</span>
-                                <span class="detail-contact-text">${venue.address}</span>
-                                <span class="detail-contact-arrow">→</span>
-                            </a>
-                            ${phoneHtml}
-                            ${websiteHtml}
-                        </div>
-                    </div>
 
                     <div class="detail-section">
                         <p class="detail-description">${localizedDescription}</p>
