@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'friendlyspaces-pwa-v9';
+const CACHE_VERSION = 'friendlyspaces-pwa-v10';
 const APP_SHELL = [
   './',
   './index.html',
