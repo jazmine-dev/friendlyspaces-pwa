@@ -340,7 +340,8 @@
             width: 56px;
             height: 56px;
             border-radius: 16px;
-            background: #f5deff;
+            background: #ffffff;
+            border: 1px solid #e6e1da;
             display: inline-flex;
             align-items: center;
             justify-content: center;
