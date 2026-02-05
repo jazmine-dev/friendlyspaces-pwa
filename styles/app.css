@@ -229,11 +229,17 @@
             background: #ffffff;
         }
 
+        .suggest-header {
+            justify-content: center;
+            position: relative;
+        }
+
         .fullscreen-title {
             margin: 0;
             font-size: 18px;
             font-weight: 700;
             color: #1c1b19;
+            text-align: center;
         }
 
         .fullscreen-close {
@@ -247,33 +253,77 @@
             font-weight: 700;
         }
 
+        .suggest-header .fullscreen-close {
+            position: absolute;
+            right: 18px;
+            top: 12px;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 16px;
+            line-height: 1;
+        }
+
         .fullscreen-body {
             padding: 18px;
             overflow-y: auto;
             flex: 1;
         }
 
-        .suggest-toggle {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .suggest-tagline {
+            margin: 6px 0 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #6f6b65;
+            text-align: center;
         }
 
-        .suggest-toggle button {
-            border: 2px solid #e9ecef;
-            background: #f8f9fa;
-            border-radius: 14px;
-            padding: 12px 10px;
-            font-size: 13px;
-            font-weight: 700;
+        .suggest-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .suggest-option {
+            border: 2px solid rgba(59,56,52,0.12);
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
             cursor: pointer;
-            color: #3b3834;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1c1b19;
         }
 
-        .suggest-toggle button.active {
-            background: #1E52BA;
+        .suggest-option.active {
             border-color: #1E52BA;
-            color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(30,82,186,0.12);
+        }
+
+        .suggest-illustration {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: #f5deff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .suggest-illustration svg {
+            width: 34px;
+            height: 34px;
+            fill: none;
+            stroke: #1E52BA;
+            stroke-width: 2.5;
+        }
+
+        .suggest-label {
+            display: block;
         }
 
         .suggest-form {

@@ -12,6 +12,10 @@
                     menuShare: "App teilen",
                     menuAbout: "Über uns",
                     menuLanguage: "Sprache",
+                    suggestTitle: "Café vorschlagen",
+                    suggestTagline: "Kennst du Orte, die gut zu Friendly Spaces passen würden?",
+                    suggestRoleOwner: "Ich arbeite in einem Friendly Space",
+                    suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -91,6 +95,10 @@
                     menuShare: "Partager l'app",
                     menuAbout: "À propos",
                     menuLanguage: "Langue",
+                    suggestTitle: "Suggérer un café",
+                    suggestTagline: "Connais-tu des lieux qui seraient parfaits pour Friendly Spaces ?",
+                    suggestRoleOwner: "Je travaille dans un Friendly Space",
+                    suggestRoleFan: "Je peux recommander un Friendly Space",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -170,6 +178,10 @@
                     menuShare: "Share the app",
                     menuAbout: "About us",
                     menuLanguage: "Language",
+                    suggestTitle: "Suggest a cafe",
+                    suggestTagline: "Do you know of any places that would be a great fit for friendly spaces?",
+                    suggestRoleOwner: "I work at a Friendly Space",
+                    suggestRoleFan: "I can recommend a Friendly Space",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -573,6 +585,16 @@
             }
             const menuLanguageTitle = document.getElementById('menu-language-title');
             if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
+
+            const suggestTitle = document.getElementById('suggest-title');
+            if (suggestTitle) suggestTitle.textContent = translate('ui.suggestTitle', suggestTitle.textContent);
+            const suggestTagline = document.getElementById('suggest-tagline');
+            if (suggestTagline) suggestTagline.textContent = translate('ui.suggestTagline', suggestTagline.textContent);
+            const suggestOwnerLabel = document.querySelector('[data-suggest-label="owner"]');
+            if (suggestOwnerLabel) suggestOwnerLabel.textContent = translate('ui.suggestRoleOwner', suggestOwnerLabel.textContent);
+            const suggestFanLabel = document.querySelector('[data-suggest-label="fan"]');
+            if (suggestFanLabel) suggestFanLabel.textContent = translate('ui.suggestRoleFan', suggestFanLabel.textContent);
+            if (suggestClose) suggestClose.setAttribute('aria-label', translate('ui.menuClose', suggestClose.getAttribute('aria-label') || 'Close'));
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
