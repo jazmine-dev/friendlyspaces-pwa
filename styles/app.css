@@ -402,8 +402,12 @@
             font-size: 13px;
             color: #3b3834;
             justify-content: flex-start;
-            align-self: flex-start;
-            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .suggest-checkbox span {
+            white-space: nowrap;
         }
 
         .form-status {
