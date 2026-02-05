@@ -511,7 +511,6 @@
         const bugClose = document.getElementById('bug-close');
         const suggestForm = document.getElementById('suggest-form');
         const bugForm = document.getElementById('bug-form');
-        const aboutCta = document.getElementById('about-cta');
         const aboutPartner = document.getElementById('about-partner');
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
@@ -1763,12 +1762,6 @@
         }
         if (aboutClose) {
             aboutClose.addEventListener('click', () => closePanel(aboutView));
-        }
-        if (aboutCta) {
-            aboutCta.addEventListener('click', () => {
-                closePanel(aboutView);
-                openPanel(suggestView);
-            });
         }
         if (aboutPartner) {
             aboutPartner.addEventListener('click', () => {
