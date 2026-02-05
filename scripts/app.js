@@ -1167,10 +1167,15 @@
 
         // Create popup content with color-coded tags and image slider
         function createPopup(venue) {
+            const hoursLabel = translate('popup.hours', 'Hours');
             const favoriteAddLabel = translate('ui.favoriteAdd', 'Save');
             const favoriteRemoveLabel = translate('ui.favoriteRemove', 'Saved');
+            const seasonalNote = venue.seasonalNote
+                ? (venue.seasonalNote[currentLang] || venue.seasonalNote.en || venue.seasonalNote.de)
+                : null;
 
             const localizedDescription = getVenueText(venue, 'description');
+            const localizedHours = getVenueText(venue, 'hours');
 
             const tagsByCategory = Object.entries(venue.filters)
                 .map(([category, values]) => {
@@ -1220,6 +1225,8 @@
                         </button>
                     </div>
                     <p class="popup-address"><strong>📍</strong> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}</a></p>
+                    ${localizedHours ? `<p class="popup-hours"><strong>${hoursLabel}:</strong> ${localizedHours}</p>` : ''}
+                    ${seasonalNote ? `<p class="popup-seasonal">${seasonalNote}</p>` : ''}
                     <p class="popup-desc">${localizedDescription}</p>
                     <div class="venue-tags">${tagsByCategory}</div>
                     <button class="popup-cta" onclick="openVenueProfile('${venue.name.replace(/'/g, "\\'")}')">${translate('popup.viewProfile', 'View Full Profile')}</button>
