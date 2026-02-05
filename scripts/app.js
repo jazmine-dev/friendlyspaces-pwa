@@ -1768,7 +1768,7 @@
 
                 const subject = encodeURIComponent('Friendly Spaces venue suggestion');
                 const body = encodeURIComponent(lines.join('\n'));
-                const to = 'hello@friendlyspaces.com';
+                const to = 'hello@friendlyspaces.ch';
                 window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
             });
         }
@@ -1783,7 +1783,7 @@
                 ];
                 const subject = encodeURIComponent('Friendly Spaces bug report');
                 const body = encodeURIComponent(lines.join('\n'));
-                const to = 'hello@friendlyspaces.com';
+                const to = 'hello@friendlyspaces.ch';
                 window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
             });
         }
