@@ -1341,6 +1341,7 @@
             // Prevent body scroll
             document.body.style.overflow = 'hidden';
             document.body.classList.add('detail-open');
+            document.documentElement.classList.add('detail-open');
 
             // Attach event handlers
             const favoriteBtn = detailModalContent.querySelector('.detail-favorite-btn');
@@ -1396,6 +1397,7 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
+                document.documentElement.classList.remove('detail-open');
                 if (isMobile()) {
                     document.body.style.overflow = 'auto';
                 } else {
