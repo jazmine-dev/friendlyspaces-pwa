@@ -412,6 +412,11 @@
             cursor: pointer;
         }
 
+        .about-cta {
+            margin-top: 10px;
+            width: 100%;
+        }
+
 
         #sheet-backdrop {
             display: none;
