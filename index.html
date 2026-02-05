@@ -199,11 +199,11 @@
                     <label>Don’t fill this out: <input name="bot-field"></label>
                 </p>
                 <div>
-                    <label for="venue-name">Venue name</label>
+                    <label for="venue-name" id="suggest-venue-name-label">Venue name</label>
                     <input id="venue-name" name="venueName" required>
                 </div>
                 <div>
-                    <label for="venue-city">City</label>
+                    <label for="venue-city" id="suggest-venue-city-label">City</label>
                     <input id="venue-city" name="venueCity" required>
                 </div>
                 <div id="suggest-message">
@@ -211,24 +211,24 @@
                     <textarea id="venue-message" name="venueMessage"></textarea>
                 </div>
                 <div id="suggest-why">
-                    <label for="venue-why">Why is it friendly? (optional)</label>
+                    <label for="venue-why" id="suggest-why-label">Why is it friendly? (optional)</label>
                     <textarea id="venue-why" name="venueWhy"></textarea>
                 </div>
                 <div id="owner-fields">
                     <div>
-                        <label for="owner-name">Your name</label>
+                        <label for="owner-name" id="owner-name-label">Your name</label>
                         <input id="owner-name" name="ownerName">
                     </div>
                     <div>
-                        <label for="owner-email">Your email</label>
+                        <label for="owner-email" id="owner-email-label">Your email</label>
                         <input id="owner-email" name="ownerEmail" type="email">
                     </div>
                     <div>
-                        <label for="owner-phone">Phone (optional)</label>
+                        <label for="owner-phone" id="owner-phone-label">Phone (optional)</label>
                         <input id="owner-phone" name="ownerPhone" type="tel">
                     </div>
                 </div>
-                <button class="suggest-submit" type="submit">Send suggestion</button>
+                <button class="suggest-submit" type="submit" id="suggest-submit">Send suggestion</button>
                 <div class="form-status" id="suggest-status" role="status" aria-live="polite"></div>
             </form>
         </div>
@@ -240,8 +240,8 @@
         </div>
         <div class="fullscreen-body">
             <img class="about-logo" src="assets/wordmark-blue.png" alt="Friendly Spaces">
-            <p>Friendly Spaces is Switzerland's first family-friendly certification label, helping parents find the best cafés, restaurants, shops, and cultural spaces for families with young children. Through our rigorous on-site audits, we ensure every certified venue truly welcomes and accommodates your little ones.</p>
-            <p class="about-section-title about-section-spacer"><strong>Keep in Touch</strong></p>
+            <p id="about-body">Friendly Spaces is Switzerland's first family-friendly certification label, helping parents find the best cafés, restaurants, shops, and cultural spaces for families with young children. Through our rigorous on-site audits, we ensure every certified venue truly welcomes and accommodates your little ones.</p>
+            <p class="about-section-title about-section-spacer" id="about-keep-title"><strong>Keep in Touch</strong></p>
             <div class="about-socials">
                 <a class="detail-icon-btn" href="https://www.instagram.com/friendly.spaces/" target="_blank" rel="noopener noreferrer">
                     <span class="icon-circle">
@@ -268,8 +268,8 @@
                     <span class="icon-label">LinkedIn</span>
                 </a>
             </div>
-            <p class="about-section-title about-section-spacer"><strong>Partner With Us</strong></p>
-            <p>Support Switzerland's growing family-friendly movement. Friendly Spaces offers sponsorship and advertising opportunities to brands and organizations who share our mission of making Swiss cities more welcoming for families. Reach engaged parents across Switzerland.</p>
+            <p class="about-section-title about-section-spacer" id="about-partner-title"><strong>Partner With Us</strong></p>
+            <p id="about-partner-body">Support Switzerland's growing family-friendly movement. Friendly Spaces offers sponsorship and advertising opportunities to brands and organizations who share our mission of making Swiss cities more welcoming for families. Reach engaged parents across Switzerland.</p>
             <button class="suggest-submit about-cta" type="button" id="about-partner">Inquire about partnerships</button>
         </div>
     </section>

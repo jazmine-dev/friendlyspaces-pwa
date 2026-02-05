@@ -8,16 +8,27 @@
                     searchPlaceholder: "Nach Name, Stadt oder Adresse suchen...",
                     languageLabel: "Sprache",
                     menuClose: "Schließen",
-                    menuSuggest: "Space vorschlagen",
+                    menuSuggest: "Ort vorschlagen",
                     menuShare: "App teilen",
                     menuAbout: "Über uns",
                     menuLanguage: "Sprache",
                     menuBug: "Fehler melden",
-                    suggestTitle: "Space vorschlagen",
+                    suggestTitle: "Ort vorschlagen",
                     suggestTagline: "Kennst du Orte, die gut zu Friendly Spaces passen würden?",
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
                     suggestRoleFan: "Ich kann einen Friendly Space empfehlen",
                     suggestMessageLabel: "Nachricht (optional)",
+                    suggestVenueNameLabel: "Name des Ortes",
+                    suggestVenueCityLabel: "Stadt",
+                    suggestWhyLabel: "Warum familienfreundlich? (optional)",
+                    suggestOwnerNameLabel: "Dein Name",
+                    suggestOwnerEmailLabel: "Deine E-Mail",
+                    suggestOwnerPhoneLabel: "Telefon (optional)",
+                    suggestSubmit: "Vorschlag senden",
+                    aboutBody: "Friendly Spaces ist das erste familienfreundliche Zertifikationslabel der Schweiz und hilft Eltern, die besten Cafés, Restaurants, Geschäfte und Kulturorte für Familien mit kleinen Kindern zu finden. Durch unsere strengen Vor-Ort-Audits stellen wir sicher, dass jeder zertifizierte Ort Kinder wirklich willkommen heißt und auf ihre Bedürfnisse eingeht.",
+                    keepInTouchTitle: "In Kontakt bleiben",
+                    partnerTitle: "Partner werden",
+                    partnerBody: "Unterstützen Sie die wachsende familienfreundliche Bewegung in der Schweiz. Friendly Spaces bietet Sponsoring- und Werbemöglichkeiten für Marken und Organisationen, die unsere Mission teilen, Schweizer Städte familienfreundlicher zu machen. Erreichen Sie engagierte Eltern in der ganzen Schweiz.",
                     formSending: "Wird gesendet...",
                     suggestSubmitSuccess: "Danke! Vorschlag gesendet.",
                     suggestSubmitError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
@@ -113,6 +124,17 @@
                     suggestRoleOwner: "Je travaille dans un Friendly Space",
                     suggestRoleFan: "Je peux recommander un Friendly Space",
                     suggestMessageLabel: "Message (facultatif)",
+                    suggestVenueNameLabel: "Nom du lieu",
+                    suggestVenueCityLabel: "Ville",
+                    suggestWhyLabel: "Pourquoi c'est adapté ? (facultatif)",
+                    suggestOwnerNameLabel: "Votre nom",
+                    suggestOwnerEmailLabel: "Votre e-mail",
+                    suggestOwnerPhoneLabel: "Téléphone (facultatif)",
+                    suggestSubmit: "Envoyer la suggestion",
+                    aboutBody: "Friendly Spaces est le premier label suisse de certification family-friendly. Nous aidons les parents à trouver les meilleurs cafés, restaurants, boutiques et espaces culturels pour les familles avec de jeunes enfants. Grâce à nos audits sur site rigoureux, nous veillons à ce que chaque lieu certifié accueille vraiment les familles et leurs tout-petits.",
+                    keepInTouchTitle: "Restons en contact",
+                    partnerTitle: "Devenir partenaire",
+                    partnerBody: "Soutenez le mouvement family‑friendly en Suisse. Friendly Spaces propose des opportunités de sponsoring et de publicité aux marques et organisations qui partagent notre mission de rendre les villes suisses plus accueillantes pour les familles. Touchez des parents engagés dans toute la Suisse.",
                     formSending: "Envoi en cours...",
                     suggestSubmitSuccess: "Merci ! Suggestion envoyée.",
                     suggestSubmitError: "Une erreur est survenue. Réessayez.",
@@ -208,6 +230,17 @@
                     suggestRoleOwner: "I work at a Friendly Space",
                     suggestRoleFan: "I can recommend a Friendly Space",
                     suggestMessageLabel: "Message (optional)",
+                    suggestVenueNameLabel: "Venue name",
+                    suggestVenueCityLabel: "City",
+                    suggestWhyLabel: "Why is it friendly? (optional)",
+                    suggestOwnerNameLabel: "Your name",
+                    suggestOwnerEmailLabel: "Your email",
+                    suggestOwnerPhoneLabel: "Phone (optional)",
+                    suggestSubmit: "Send suggestion",
+                    aboutBody: "Friendly Spaces is Switzerland's first family-friendly certification label, helping parents find the best cafés, restaurants, shops, and cultural spaces for families with young children. Through our rigorous on-site audits, we ensure every certified venue truly welcomes and accommodates your little ones.",
+                    keepInTouchTitle: "Keep in Touch",
+                    partnerTitle: "Partner With Us",
+                    partnerBody: "Support Switzerland's growing family-friendly movement. Friendly Spaces offers sponsorship and advertising opportunities to brands and organizations who share our mission of making Swiss cities more welcoming for families. Reach engaged parents across Switzerland.",
                     formSending: "Sending...",
                     suggestSubmitSuccess: "Thanks! Suggestion sent.",
                     suggestSubmitError: "Something went wrong. Please try again.",
@@ -638,6 +671,20 @@
             if (suggestFanLabel) suggestFanLabel.textContent = translate('ui.suggestRoleFan', suggestFanLabel.textContent);
             const suggestMessageLabel = document.querySelector('label[for="venue-message"]');
             if (suggestMessageLabel) suggestMessageLabel.textContent = translate('ui.suggestMessageLabel', suggestMessageLabel.textContent);
+            const suggestVenueNameLabel = document.getElementById('suggest-venue-name-label');
+            if (suggestVenueNameLabel) suggestVenueNameLabel.textContent = translate('ui.suggestVenueNameLabel', suggestVenueNameLabel.textContent);
+            const suggestVenueCityLabel = document.getElementById('suggest-venue-city-label');
+            if (suggestVenueCityLabel) suggestVenueCityLabel.textContent = translate('ui.suggestVenueCityLabel', suggestVenueCityLabel.textContent);
+            const suggestWhyLabel = document.getElementById('suggest-why-label');
+            if (suggestWhyLabel) suggestWhyLabel.textContent = translate('ui.suggestWhyLabel', suggestWhyLabel.textContent);
+            const ownerNameLabel = document.getElementById('owner-name-label');
+            if (ownerNameLabel) ownerNameLabel.textContent = translate('ui.suggestOwnerNameLabel', ownerNameLabel.textContent);
+            const ownerEmailLabel = document.getElementById('owner-email-label');
+            if (ownerEmailLabel) ownerEmailLabel.textContent = translate('ui.suggestOwnerEmailLabel', ownerEmailLabel.textContent);
+            const ownerPhoneLabel = document.getElementById('owner-phone-label');
+            if (ownerPhoneLabel) ownerPhoneLabel.textContent = translate('ui.suggestOwnerPhoneLabel', ownerPhoneLabel.textContent);
+            const suggestSubmit = document.getElementById('suggest-submit');
+            if (suggestSubmit) suggestSubmit.textContent = translate('ui.suggestSubmit', suggestSubmit.textContent);
             if (suggestClose) suggestClose.setAttribute('aria-label', translate('ui.menuClose', suggestClose.getAttribute('aria-label') || 'Close'));
 
             const bugTitle = document.getElementById('bug-title');
@@ -653,6 +700,14 @@
             const bugStatus = document.getElementById('bug-status');
             if (bugStatus) bugStatus.textContent = '';
             if (aboutPartner) aboutPartner.textContent = translate('ui.partnerCta', aboutPartner.textContent);
+            const aboutBody = document.getElementById('about-body');
+            if (aboutBody) aboutBody.textContent = translate('ui.aboutBody', aboutBody.textContent);
+            const aboutKeepTitle = document.getElementById('about-keep-title');
+            if (aboutKeepTitle) aboutKeepTitle.textContent = translate('ui.keepInTouchTitle', aboutKeepTitle.textContent);
+            const aboutPartnerTitle = document.getElementById('about-partner-title');
+            if (aboutPartnerTitle) aboutPartnerTitle.textContent = translate('ui.partnerTitle', aboutPartnerTitle.textContent);
+            const aboutPartnerBody = document.getElementById('about-partner-body');
+            if (aboutPartnerBody) aboutPartnerBody.textContent = translate('ui.partnerBody', aboutPartnerBody.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
