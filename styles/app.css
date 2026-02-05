@@ -314,12 +314,9 @@
             flex-shrink: 0;
         }
 
-        .suggest-illustration svg {
-            width: 34px;
-            height: 34px;
-            fill: none;
-            stroke: #1E52BA;
-            stroke-width: 2.5;
+        .suggest-emoji {
+            font-size: 28px;
+            line-height: 1;
         }
 
         .suggest-label {
