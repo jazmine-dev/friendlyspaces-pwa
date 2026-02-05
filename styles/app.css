@@ -418,11 +418,11 @@
         }
 
         .about-section-title {
-            margin: 0 0 6px;
+            margin: 18px 0 6px;
         }
 
         .about-section-spacer {
-            margin-top: 20px;
+            margin-top: 28px;
         }
 
         .about-cta.suggest-submit {
@@ -434,7 +434,7 @@
             display: flex;
             flex-wrap: nowrap;
             gap: 10px;
-            margin: 8px 0 6px;
+            margin: 10px 0 18px;
             overflow-x: auto;
             padding-bottom: 4px;
         }
@@ -443,6 +443,13 @@
             flex: 1 1 0;
             justify-content: center;
             min-width: 0;
+        }
+
+        .about-logo {
+            height: 46px;
+            width: auto;
+            display: block;
+            margin: 4px auto 12px;
         }
 
 
