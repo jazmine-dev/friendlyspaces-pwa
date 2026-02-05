@@ -131,10 +131,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex: 1;
+            justify-content: center;
         }
 
         .menu-logo {
-            height: 36px;
+            height: 72px;
             width: auto;
             display: block;
         }
@@ -149,6 +151,7 @@
             font-size: 16px;
             font-weight: 800;
             line-height: 1;
+            margin-left: auto;
         }
 
         .menu-button {
