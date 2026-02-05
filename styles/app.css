@@ -419,6 +419,9 @@
 
         .about-section-title {
             margin: 18px 0 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1c1b19;
         }
 
         .about-section-spacer {
