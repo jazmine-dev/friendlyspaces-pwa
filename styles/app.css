@@ -13,6 +13,11 @@
             background: #f7f5f1;
         }
 
+        body.detail-open {
+            background: #ffffff;
+            overscroll-behavior: none;
+        }
+
         #container {
             display: flex;
             flex: 1;

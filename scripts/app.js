@@ -1340,6 +1340,7 @@
 
             // Prevent body scroll
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('detail-open');
 
             // Attach event handlers
             const favoriteBtn = detailModalContent.querySelector('.detail-favorite-btn');
@@ -1394,6 +1395,7 @@
                 if (card) card.style.transform = '';
 
                 // Restore body scroll
+                document.body.classList.remove('detail-open');
                 if (isMobile()) {
                     document.body.style.overflow = 'auto';
                 } else {
