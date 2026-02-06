@@ -850,6 +850,7 @@
             flex: 1;
             min-height: 0;
             background: #f7f5f1;
+            overflow: hidden;
         }
 
         .view-panel {
@@ -1999,9 +2000,13 @@
         }
 
         #top-search-input:focus {
-            background: #fff;
-            border-color: #1E52BA;
-            box-shadow: 0 2px 8px rgba(30,82,186,0.15);
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+            box-shadow: none;
+        }
+
+        #top-search-input:focus-visible {
+            outline: none;
         }
 
         #top-search-input::placeholder {
