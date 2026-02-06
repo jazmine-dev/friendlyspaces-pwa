@@ -1998,10 +1998,17 @@
         const installButton = document.getElementById('install-button');
         const installBannerText = document.getElementById('install-banner-text');
 
-        // Detect iOS Safari
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // Detect iOS (any browser on iOS uses WebKit)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || 
+                                   window.navigator.standalone === true;
+        
+        // Check if iOS banner was previously dismissed
+        let iosBannerDismissed = false;
+        try {
+            iosBannerDismissed = localStorage.getItem('friendlyspaces_ios_install_dismissed') === 'true';
+        } catch (e) {}
 
         // Android/Chrome install prompt
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -2010,12 +2017,12 @@
             if (installBanner) installBanner.classList.remove('hidden');
         });
 
-        // iOS Safari - show manual instructions
-        if (isIOS && !isInStandaloneMode) {
+        // iOS - show manual instructions (if not dismissed and not already installed)
+        if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
             if (installBanner && installBannerText && installButton) {
                 const iosText = {
-                    de: 'Tippe auf Teilen □↑ und dann "Zum Home-Bildschirm"',
-                    fr: 'Appuyez sur Partager □↑ puis "Sur l\'écran d\'accueil"',
+                    de: 'Tippe auf Teilen □↑ dann "Zum Home-Bildschirm"',
+                    fr: 'Appuyez sur Partager □↑ puis "Écran d\'accueil"',
                     en: 'Tap Share □↑ then "Add to Home Screen"'
                 };
                 const iosDismiss = {
@@ -2047,15 +2054,6 @@
                 deferredPrompt = null;
                 if (installBanner) installBanner.classList.add('hidden');
             });
-        }
-
-        // Hide if already dismissed on iOS
-        if (isIOS) {
-            try {
-                if (localStorage.getItem('friendlyspaces_ios_install_dismissed')) {
-                    if (installBanner) installBanner.classList.add('hidden');
-                }
-            } catch (e) {}
         }
 
         window.addEventListener('appinstalled', () => {
