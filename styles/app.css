@@ -1296,7 +1296,7 @@
         }
 
         .detail-icon-btn .icon-label {
-            font-size: 11px;
+            font-size: 13px;
             color: #666;
             font-weight: 500;
         }
@@ -1313,7 +1313,7 @@
             align-items: center;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             color: white;
             background: #1E52BA;
@@ -1321,7 +1321,7 @@
 
         .detail-section-title {
             margin: 0 0 12px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -1803,7 +1803,7 @@
 
 .popup-address {
     margin: 4px 0;
-    font-size: 13px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -1816,19 +1816,19 @@
 
         .popup-desc {
             margin: 6px 0 8px;
-            font-size: 13px;
+            font-size: 14px;
             color: #3b3834;
         }
 
 .popup-hours {
     margin: 4px 0 2px;
-    font-size: 13px;
+    font-size: 14px;
     color: #5a5752;
 }
 
 .popup-seasonal {
     margin: 2px 0 6px;
-    font-size: 13px;
+    font-size: 14px;
     color: #BA1E1E;
     font-weight: 600;
 }
@@ -1848,7 +1848,7 @@
     color: white;
     border: none;
     border-radius: 14px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
 }
