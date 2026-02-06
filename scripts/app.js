@@ -913,7 +913,7 @@
             if (!isMobile() && !force) return;
             sidebar.classList.remove('show');
             sheetBackdrop.classList.remove('visible');
-            document.body.style.overflow = isMobile() ? 'auto' : 'hidden';
+            document.body.style.overflow = 'hidden';
         }
 
         function handleResize() {
