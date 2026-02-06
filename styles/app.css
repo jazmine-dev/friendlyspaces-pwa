@@ -776,7 +776,10 @@
 
         .view-panel {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 64px;
         }
 
         .view-panel.hidden {
@@ -1721,7 +1724,7 @@
 
         /* Leaflet zoom and location controls */
         .leaflet-control-zoom {
-            margin-bottom: 80px !important;
+            margin-bottom: 16px !important;
             margin-right: 10px !important;
         }
 
@@ -1733,11 +1736,11 @@
         }
 
         .leaflet-control-locate {
-            margin-bottom: 80px !important;
+            margin-bottom: 16px !important;
         }
 
         .locate-control {
-            margin-bottom: 80px;
+            margin-bottom: 16px;
         }
 
         .locate-button {
