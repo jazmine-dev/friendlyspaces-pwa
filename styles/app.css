@@ -56,15 +56,15 @@
         .intro-icon {
             width: 54px;
             height: 54px;
-            margin: 4px auto 8px;
+            margin: 2px auto 12px;
             display: block;
         }
 
         .intro-wordmark {
-            height: 26px;
+            height: 29px;
             width: auto;
             display: block;
-            margin: 0 auto 12px;
+            margin: 0 auto 16px;
         }
 
         #intro-title {
