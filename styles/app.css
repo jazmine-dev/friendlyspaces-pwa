@@ -304,6 +304,8 @@
             padding: 14px 18px 16px;
             overflow-y: auto;
             flex: 1;
+            font-size: 15px;
+            line-height: 1.6;
         }
 
         .suggest-tagline {
@@ -1560,7 +1562,7 @@
 
             .fullscreen-body,
             .fullscreen-body p {
-                font-size: 15px;
+                font-size: 16px;
             }
 
             .suggest-form label {
