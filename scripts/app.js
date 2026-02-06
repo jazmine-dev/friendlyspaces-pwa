@@ -1665,11 +1665,7 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
-                if (isMobile()) {
-                    document.body.style.overflow = 'auto';
-                } else {
-                    document.body.style.overflow = 'hidden';
-                }
+                document.body.style.overflow = 'hidden';
             }, 300);
         }
 

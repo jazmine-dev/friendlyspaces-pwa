@@ -608,10 +608,11 @@
             gap: 10px;
         }
 
-        #sidebar-header h2 {
-            margin: 0 0 10px 0;
-            font-size: 20px;
-        }
+#sidebar-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    text-align: center;
+}
 
         .language-toggle {
             display: none;
@@ -621,12 +622,12 @@
             position: relative;
         }
 
-        #sidebar-actions {
-            display: flex;
-            gap: 10px;
-            padding: 0 20px 12px;
-            justify-content: center;
-        }
+#sidebar-actions {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px 12px;
+    justify-content: center;
+}
 
         #search-input {
             width: 100%;
