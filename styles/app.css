@@ -1863,14 +1863,19 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 10px 16px;
+            padding: 12px 16px;
             background: #1E52BA;
             color: white;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .install-banner.hidden {
             display: none;
+        }
+
+        .install-banner.ios-install {
+            background: #1E52BA;
+            flex-wrap: wrap;
         }
 
         .install-banner button {
@@ -1878,7 +1883,8 @@
             color: #1E52BA;
             border: none;
             border-radius: 16px;
-            padding: 6px 12px;
+            padding: 8px 14px;
+            font-weight: 600;
             font-size: 12px;
             cursor: pointer;
         }

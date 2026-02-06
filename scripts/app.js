@@ -1996,21 +1996,66 @@
         let deferredPrompt = null;
         const installBanner = document.getElementById('install-banner');
         const installButton = document.getElementById('install-button');
+        const installBannerText = document.getElementById('install-banner-text');
 
+        // Detect iOS Safari
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+        // Android/Chrome install prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             if (installBanner) installBanner.classList.remove('hidden');
         });
 
+        // iOS Safari - show manual instructions
+        if (isIOS && !isInStandaloneMode) {
+            if (installBanner && installBannerText && installButton) {
+                const iosText = {
+                    de: 'Tippe auf Teilen □↑ und dann "Zum Home-Bildschirm"',
+                    fr: 'Appuyez sur Partager □↑ puis "Sur l\'écran d\'accueil"',
+                    en: 'Tap Share □↑ then "Add to Home Screen"'
+                };
+                const iosDismiss = {
+                    de: 'OK',
+                    fr: 'OK', 
+                    en: 'Got it'
+                };
+                installBannerText.textContent = iosText[currentLang] || iosText.en;
+                installButton.textContent = iosDismiss[currentLang] || iosDismiss.en;
+                installBanner.classList.remove('hidden');
+                installBanner.classList.add('ios-install');
+            }
+        }
+
         if (installButton) {
             installButton.addEventListener('click', async () => {
+                // iOS - just dismiss
+                if (isIOS) {
+                    if (installBanner) installBanner.classList.add('hidden');
+                    try {
+                        localStorage.setItem('friendlyspaces_ios_install_dismissed', 'true');
+                    } catch (e) {}
+                    return;
+                }
+                // Android - trigger install prompt
                 if (!deferredPrompt) return;
                 deferredPrompt.prompt();
                 await deferredPrompt.userChoice;
                 deferredPrompt = null;
                 if (installBanner) installBanner.classList.add('hidden');
             });
+        }
+
+        // Hide if already dismissed on iOS
+        if (isIOS) {
+            try {
+                if (localStorage.getItem('friendlyspaces_ios_install_dismissed')) {
+                    if (installBanner) installBanner.classList.add('hidden');
+                }
+            } catch (e) {}
         }
 
         window.addEventListener('appinstalled', () => {
