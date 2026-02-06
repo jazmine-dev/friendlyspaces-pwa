@@ -43,7 +43,7 @@
             right: 14px;
             top: 12px;
             border: none;
-            background: #f0ebe4;
+            background: #ffffff;
             color: #3b3834;
             border-radius: 999px;
             width: 30px;
@@ -64,7 +64,7 @@
             height: 29px;
             width: auto;
             display: block;
-            margin: 0 auto 16px;
+            margin: -6px auto 18px;
         }
 
         #intro-title {
