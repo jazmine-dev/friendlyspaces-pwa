@@ -1999,11 +1999,11 @@
             transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
 
-        #top-search-input:focus {
-            background: #f8f9fa;
-            border-color: #e0e0e0;
-            box-shadow: none;
-        }
+#top-search-input:focus {
+    background: #f8f9fa;
+    border-color: #2d3588;
+    box-shadow: 0 0 0 2px rgba(45, 53, 136, 0.25);
+}
 
         #top-search-input:focus-visible {
             outline: none;
