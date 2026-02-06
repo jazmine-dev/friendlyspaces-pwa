@@ -41,6 +41,9 @@
                     bugSubmit: "Senden",
                     partnerCta: "Partnerschaft anfragen",
                     partnerSubject: "Partnerschaftsanfrage",
+                    introTitle: "Willkommen bei Friendly Spaces",
+                    introText: "Finde familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz.",
+                    introSkip: "Nicht mehr anzeigen",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -149,6 +152,9 @@
                     bugSubmit: "Envoyer",
                     partnerCta: "Demande de partenariat",
                     partnerSubject: "Demande de partenariat",
+                    introTitle: "Bienvenue sur Friendly Spaces",
+                    introText: "Trouvez des cafés, restaurants, boutiques et lieux culturels family‑friendly dans toute la Suisse.",
+                    introSkip: "Ne plus afficher",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -257,6 +263,9 @@
                     bugSubmit: "Send",
                     partnerCta: "Inquire about partnerships",
                     partnerSubject: "Partnership Inquiry",
+                    introTitle: "Welcome to Friendly Spaces",
+                    introText: "Find family-friendly cafés, restaurants, shops, and cultural spaces across Switzerland.",
+                    introSkip: "Do not show again",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -589,6 +598,9 @@
         const suggestForm = document.getElementById('suggest-form');
         const bugForm = document.getElementById('bug-form');
         const aboutPartner = document.getElementById('about-partner');
+        const introOverlay = document.getElementById('intro-overlay');
+        const introClose = document.getElementById('intro-close');
+        const introSkip = document.getElementById('intro-skip');
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
 
@@ -762,6 +774,12 @@
             if (aboutPartnerTitle) aboutPartnerTitle.textContent = translate('ui.partnerTitle', aboutPartnerTitle.textContent);
             const aboutPartnerBody = document.getElementById('about-partner-body');
             if (aboutPartnerBody) aboutPartnerBody.textContent = translate('ui.partnerBody', aboutPartnerBody.textContent);
+            const introTitle = document.getElementById('intro-title');
+            if (introTitle) introTitle.textContent = translate('ui.introTitle', introTitle.textContent);
+            const introText = document.getElementById('intro-text');
+            if (introText) introText.textContent = translate('ui.introText', introText.textContent);
+            const introSkipLabel = document.getElementById('intro-skip-label');
+            if (introSkipLabel) introSkipLabel.textContent = translate('ui.introSkip', introSkipLabel.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -855,6 +873,33 @@
             updateFilterCount();
             updateMap();
             updateListView();
+        }
+
+        function showIntroIfNeeded() {
+            if (!introOverlay) return;
+            let hideIntro = false;
+            try {
+                hideIntro = localStorage.getItem('friendlyspaces_hide_intro') === 'true';
+            } catch (err) {
+                // ignore storage errors
+            }
+            if (!hideIntro) {
+                introOverlay.classList.remove('hidden');
+                introOverlay.setAttribute('aria-hidden', 'false');
+            }
+        }
+
+        function closeIntro() {
+            if (!introOverlay) return;
+            if (introSkip && introSkip.checked) {
+                try {
+                    localStorage.setItem('friendlyspaces_hide_intro', 'true');
+                } catch (err) {
+                    // ignore storage errors
+                }
+            }
+            introOverlay.classList.add('hidden');
+            introOverlay.setAttribute('aria-hidden', 'true');
         }
 
         function openFilterSheet() {
@@ -1879,6 +1924,17 @@
                 window.location.href = `mailto:${to}?subject=${subject}`;
             });
         }
+
+        if (introClose) {
+            introClose.addEventListener('click', closeIntro);
+        }
+        if (introOverlay) {
+            introOverlay.addEventListener('click', (event) => {
+                if (event.target === introOverlay) {
+                    closeIntro();
+                }
+            });
+        }
         if (bugClose) {
             bugClose.addEventListener('click', () => closePanel(bugView));
         }
@@ -2198,3 +2254,6 @@
         }
 
         loadVenues().finally(startApp);
+
+        // Show intro after initial render
+        showIntroIfNeeded();
