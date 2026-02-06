@@ -264,7 +264,7 @@
                     partnerCta: "Inquire about partnerships",
                     partnerSubject: "Partnership Inquiry",
                     introTitle: "Welcome to Friendly Spaces",
-                    introText: "Find family-friendly cafés, restaurants, shops, and cultural spaces across Switzerland.",
+                    introText: "Welcome to Friendly Spaces — your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.",
                     introSkip: "Do not show again",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
