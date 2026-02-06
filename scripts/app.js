@@ -913,7 +913,7 @@
             if (!isMobile() && !force) return;
             sidebar.classList.remove('show');
             sheetBackdrop.classList.remove('visible');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
         }
 
         function handleResize() {
@@ -921,7 +921,7 @@
                 closeFilterSheet(true);
                 document.body.style.overflow = 'hidden';
             } else {
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
             }
             if (mapPanel && !mapPanel.classList.contains('hidden')) {
                 setTimeout(() => map.invalidateSize(), 100);
@@ -1665,7 +1665,7 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
-                document.body.style.overflow = 'hidden';
+                document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
             }, 300);
         }
 
