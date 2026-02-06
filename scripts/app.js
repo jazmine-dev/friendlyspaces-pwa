@@ -1687,6 +1687,9 @@
                     language: currentLang,
                     app_version: APP_VERSION
                 });
+                document.body.style.overflow = 'auto';
+            } else {
+                document.body.style.overflow = 'hidden';
             }
             closeDetailModal();
             updateMap();
