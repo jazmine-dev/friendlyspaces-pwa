@@ -1877,11 +1877,12 @@
             margin: 0 0 8px 0;
         }
 
-        .popup-title {
-            margin: 0;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.popup-title {
+    margin: 0;
+    font-size: 16px;
+    cursor: pointer;
+    color: #2d3588;
+}
 
 .popup-address {
     margin: 4px 0;
@@ -1889,44 +1890,45 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    color: #2d3588;
 }
 
-        .popup-address a {
-            color: #1E52BA;
-            text-decoration: none;
-        }
+.popup-address a {
+    color: #2d3588;
+    text-decoration: none;
+}
 
-        .popup-desc {
-            margin: 6px 0 8px;
-            font-size: 14px;
-            color: #3b3834;
-        }
+.popup-desc {
+    margin: 6px 0 8px;
+    font-size: 14px;
+    color: #2d3588;
+}
 
 .popup-hours {
     margin: 4px 0 2px;
     font-size: 14px;
-    color: #5a5752;
+    color: #2d3588;
 }
 
 .popup-seasonal {
     margin: 2px 0 6px;
     font-size: 14px;
-    color: #BA1E1E;
+    color: #2d3588;
     font-weight: 600;
 }
 
 .popup-icon svg {
     width: 16px;
     height: 16px;
-    stroke: #1E52BA;
+    stroke: #2d3588;
     stroke-width: 2;
 }
 
-        .popup-cta {
-            width: 100%;
-            margin-top: 12px;
-            padding: 10px 16px;
-            background: #1E52BA;
+.popup-cta {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #2d3588;
     color: white;
     border: none;
     border-radius: 14px;
