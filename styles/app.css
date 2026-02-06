@@ -71,13 +71,13 @@
             margin: 0 0 6px;
             font-size: 18px;
             font-weight: 700;
-            color: #1c1b19;
+            color: #2d3588;
         }
 
         #intro-text {
             margin: 0 0 14px;
             font-size: 14px;
-            color: #3b3834;
+            color: #2d3588;
             line-height: 1.5;
         }
 
@@ -87,7 +87,7 @@
             justify-content: center;
             gap: 8px;
             font-size: 13px;
-            color: #3b3834;
+            color: #2d3588;
         }
 
         body.detail-open {
