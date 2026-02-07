@@ -448,9 +448,9 @@
         map.on('blur', () => map.scrollWheelZoom.disable());
         map.on('click', () => map.scrollWheelZoom.enable());
 
-        // Add zoom control to bottom right
+        // Add zoom control to top right (avoids bottom tab overlap)
         L.control.zoom({
-            position: 'bottomright'
+            position: 'topright'
         }).addTo(map);
 
         // Add locate control (bottom right)
