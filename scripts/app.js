@@ -436,10 +436,14 @@
 
         // Initialize map with zoom controls in bottom right
         // Center on Switzerland initially
+        const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+        
         const map = L.map('map', {
             zoomControl: false,
             center: [46.8182, 8.2275],
-            zoom: 8
+            zoom: 8,
+            dragging: !isMobile,
+            tap: !isMobile
         });
 
         // Disable scroll zoom until the map is focused/clicked to prevent trapping page scroll
@@ -447,6 +451,43 @@
         map.on('focus', () => map.scrollWheelZoom.enable());
         map.on('blur', () => map.scrollWheelZoom.disable());
         map.on('click', () => map.scrollWheelZoom.enable());
+        
+        // Mobile: Show overlay when user tries to drag with one finger
+        if (isMobile) {
+            const mapContainer = document.getElementById('map');
+            let gestureOverlay = document.createElement('div');
+            gestureOverlay.className = 'map-gesture-overlay';
+            gestureOverlay.innerHTML = '<span>Use two fingers to move the map</span>';
+            mapContainer.appendChild(gestureOverlay);
+            
+            let touchCount = 0;
+            let overlayTimeout;
+            
+            mapContainer.addEventListener('touchstart', (e) => {
+                touchCount = e.touches.length;
+                if (touchCount >= 2) {
+                    map.dragging.enable();
+                    gestureOverlay.classList.remove('visible');
+                }
+            }, { passive: true });
+            
+            mapContainer.addEventListener('touchmove', (e) => {
+                if (touchCount === 1 && e.touches.length === 1) {
+                    gestureOverlay.classList.add('visible');
+                    clearTimeout(overlayTimeout);
+                    overlayTimeout = setTimeout(() => {
+                        gestureOverlay.classList.remove('visible');
+                    }, 1500);
+                }
+            }, { passive: true });
+            
+            mapContainer.addEventListener('touchend', () => {
+                touchCount = 0;
+                setTimeout(() => {
+                    map.dragging.disable();
+                }, 100);
+            }, { passive: true });
+        }
 
         // Add zoom control to bottom right
         L.control.zoom({
