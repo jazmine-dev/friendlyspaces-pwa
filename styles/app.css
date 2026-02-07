@@ -858,13 +858,7 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 64px;
-        }
-
-        @supports (padding-bottom: env(safe-area-inset-bottom)) {
-            .view-panel {
-                bottom: calc(64px + env(safe-area-inset-bottom));
-            }
+            bottom: calc(64px + env(safe-area-inset-bottom, 0px));
         }
 
         .view-panel.hidden {
@@ -988,7 +982,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 64px;
+            height: calc(64px + env(safe-area-inset-bottom, 0px));
+            padding-bottom: env(safe-area-inset-bottom, 0px);
             background: #ffffff;
             border-top: 1px solid #e3ded6;
             display: flex;
@@ -1816,7 +1811,7 @@
 
         /* Leaflet zoom and location controls */
         .leaflet-control-zoom {
-            margin-bottom: 50px !important;
+            margin-bottom: 10px !important;
             margin-right: 10px !important;
         }
 
@@ -1827,24 +1822,8 @@
             font-size: 20px !important;
         }
 
-        .leaflet-control-locate {
-            margin-bottom: 10px !important;
-        }
-
         .locate-control {
             margin-bottom: 10px;
-        }
-
-        .leaflet-right {
-            right: 10px !important;
-        }
-
-        .leaflet-bottom .leaflet-control {
-            margin-bottom: 8px !important;
-        }
-
-        #map .leaflet-control-container .leaflet-bottom {
-            bottom: 10px !important;
         }
 
         .locate-button {
