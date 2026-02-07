@@ -493,44 +493,6 @@
             maxZoom: 19
         }).addTo(map);
 
-        // Mobile: require two-finger gesture to pan map (like Google Maps)
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        if (isTouchDevice) {
-            // Disable one-finger dragging
-            map.dragging.disable();
-            
-            // Create gesture overlay
-            const mapEl = document.getElementById('map');
-            const gestureOverlay = document.createElement('div');
-            gestureOverlay.className = 'map-gesture-overlay';
-            gestureOverlay.innerHTML = '<span>Use two fingers to move the map</span>';
-            mapEl.appendChild(gestureOverlay);
-            
-            let lastTouchCount = 0;
-            let overlayTimer;
-            
-            mapEl.addEventListener('touchstart', (e) => {
-                lastTouchCount = e.touches.length;
-                if (lastTouchCount >= 2) {
-                    map.dragging.enable();
-                    gestureOverlay.classList.remove('visible');
-                    clearTimeout(overlayTimer);
-                }
-            }, { passive: true });
-            
-            mapEl.addEventListener('touchmove', (e) => {
-                if (lastTouchCount === 1) {
-                    gestureOverlay.classList.add('visible');
-                    clearTimeout(overlayTimer);
-                    overlayTimer = setTimeout(() => gestureOverlay.classList.remove('visible'), 1200);
-                }
-            }, { passive: true });
-            
-            mapEl.addEventListener('touchend', () => {
-                setTimeout(() => map.dragging.disable(), 50);
-            }, { passive: true });
-        }
-
         // Initialize marker cluster group
         let markerClusterGroup = L.markerClusterGroup({
             maxClusterRadius: 150,
