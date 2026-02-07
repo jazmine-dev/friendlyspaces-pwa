@@ -1816,8 +1816,8 @@
         }
 
         .map-attribution {
-            margin-top: 24px;
-            font-size: 12px;
+            margin-top: 48px;
+            font-size: inherit;
             color: #888;
             text-align: center;
         }
