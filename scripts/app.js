@@ -2212,7 +2212,7 @@
         let userLocationMarker = null;
         let userCoords = null;
         let nearMeActive = false;
-        const NEAR_ME_RADIUS_KM = 15;
+        const NEAR_ME_RADIUS_KM = 75;
 
         // Calculate distance between two coordinates in km (Haversine formula)
         function getDistanceKm(lat1, lon1, lat2, lon2) {
