@@ -861,38 +861,6 @@
             bottom: 64px;
         }
 
-        .map-gesture-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
-            pointer-events: none;
-        }
-
-        .map-gesture-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .map-gesture-overlay span {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
         .view-panel.hidden {
             display: none;
         }
