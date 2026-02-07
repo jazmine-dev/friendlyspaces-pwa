@@ -477,10 +477,6 @@
                     (pos) => {
                         const { latitude, longitude } = pos.coords;
                         map.setView([latitude, longitude], 14);
-                        // Show user location marker
-                        if (typeof createUserLocationMarker === 'function') {
-                            createUserLocationMarker(latitude, longitude);
-                        }
                     },
                     () => {
                         // Ignore location errors
@@ -2206,95 +2202,6 @@
                 syncQuickFilterPills();
             });
         }
-
-        // Near Me pill - filters venues by distance and shows user location
-        const pillNearMe = document.getElementById('pill-near-me');
-        let userLocationMarker = null;
-        let userCoords = null;
-        let nearMeActive = false;
-        const NEAR_ME_RADIUS_KM = 75;
-
-        // Calculate distance between two coordinates in km (Haversine formula)
-        function getDistanceKm(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        // Create user location marker
-        function createUserLocationMarker(lat, lng) {
-            if (userLocationMarker) {
-                userLocationMarker.setLatLng([lat, lng]);
-            } else {
-                const userIcon = L.divIcon({
-                    className: 'user-location-marker',
-                    html: '<div class="user-location-dot"></div>',
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
-                });
-                userLocationMarker = L.marker([lat, lng], { icon: userIcon, zIndexOffset: 1000 }).addTo(map);
-            }
-        }
-
-        // Remove user location marker
-        function removeUserLocationMarker() {
-            if (userLocationMarker) {
-                map.removeLayer(userLocationMarker);
-                userLocationMarker = null;
-            }
-        }
-
-        if (pillNearMe) {
-            pillNearMe.addEventListener('click', () => {
-                if (nearMeActive) {
-                    // Deactivate Near Me
-                    nearMeActive = false;
-                    pillNearMe.classList.remove('active');
-                    removeUserLocationMarker();
-                    userCoords = null;
-                    updateMap();
-                } else {
-                    // Request location
-                    if (!navigator.geolocation) {
-                        alert('Geolocation is not supported by your browser');
-                        return;
-                    }
-                    navigator.geolocation.getCurrentPosition(
-                        (pos) => {
-                            userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-                            nearMeActive = true;
-                            pillNearMe.classList.add('active');
-                            createUserLocationMarker(userCoords.lat, userCoords.lng);
-                            map.setView([userCoords.lat, userCoords.lng], 12);
-                            updateMap();
-                        },
-                        (err) => {
-                            alert('Unable to get your location. Please enable location services.');
-                        },
-                        { enableHighAccuracy: true, timeout: 10000 }
-                    );
-                }
-            });
-        }
-
-        // Extend getVisibleVenues to filter by distance when Near Me is active
-        const originalGetVisibleVenues = getVisibleVenues;
-        getVisibleVenues = function() {
-            let results = originalGetVisibleVenues();
-            if (nearMeActive && userCoords) {
-                results = results.filter(venue => {
-                    const coords = venue.fallbackCoords || [0, 0];
-                    const dist = getDistanceKm(userCoords.lat, userCoords.lng, coords[0], coords[1]);
-                    return dist <= NEAR_ME_RADIUS_KM;
-                });
-            }
-            return results;
-        };
 
         // Quick filter pills - toggle their respective filters
         quickFilterPills.forEach(pill => {
