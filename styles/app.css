@@ -2136,10 +2136,38 @@
             flex-shrink: 0;
         }
 
-        .quick-filter-heart {
+        .quick-filter-heart,
+        .quick-filter-location {
             width: 18px;
             height: 18px;
             stroke: currentColor;
+        }
+
+        /* User location marker (pulsing blue dot) */
+        .user-location-marker {
+            background: transparent;
+        }
+
+        .user-location-dot {
+            width: 16px;
+            height: 16px;
+            background: #1E52BA;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            animation: pulse-location 2s ease-out infinite;
+        }
+
+        @keyframes pulse-location {
+            0% {
+                box-shadow: 0 0 0 0 rgba(30, 82, 186, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(30, 82, 186, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(30, 82, 186, 0);
+            }
         }
 
         .quick-filter-pill.active svg {
