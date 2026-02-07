@@ -858,7 +858,13 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+            bottom: 64px;
+        }
+
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .view-panel {
+                bottom: calc(64px + env(safe-area-inset-bottom));
+            }
         }
 
         .view-panel.hidden {
@@ -1810,7 +1816,7 @@
 
         /* Leaflet zoom and location controls */
         .leaflet-control-zoom {
-            margin-bottom: 10px !important;
+            margin-bottom: 50px !important;
             margin-right: 10px !important;
         }
 
@@ -1829,7 +1835,15 @@
             margin-bottom: 10px;
         }
 
-        .leaflet-bottom.leaflet-right {
+        .leaflet-right {
+            right: 10px !important;
+        }
+
+        .leaflet-bottom .leaflet-control {
+            margin-bottom: 8px !important;
+        }
+
+        #map .leaflet-control-container .leaflet-bottom {
             bottom: 10px !important;
         }
 
