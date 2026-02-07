@@ -2257,7 +2257,7 @@
                     pillNearMe.classList.remove('active');
                     removeUserLocationMarker();
                     userCoords = null;
-                    updateMarkers();
+                    updateMap();
                 } else {
                     // Request location
                     if (!navigator.geolocation) {
@@ -2271,7 +2271,7 @@
                             pillNearMe.classList.add('active');
                             createUserLocationMarker(userCoords.lat, userCoords.lng);
                             map.setView([userCoords.lat, userCoords.lng], 12);
-                            updateMarkers();
+                            updateMap();
                         },
                         (err) => {
                             alert('Unable to get your location. Please enable location services.');
@@ -2282,24 +2282,18 @@
             });
         }
 
-        // Modify updateMarkers to filter by distance when Near Me is active
-        const originalUpdateMarkers = updateMarkers;
-        updateMarkers = function() {
+        // Extend getVisibleVenues to filter by distance when Near Me is active
+        const originalGetVisibleVenues = getVisibleVenues;
+        getVisibleVenues = function() {
+            let results = originalGetVisibleVenues();
             if (nearMeActive && userCoords) {
-                // Filter venues by distance
-                const nearbyVenues = venues.filter(venue => {
+                results = results.filter(venue => {
                     const coords = venue.fallbackCoords || [0, 0];
                     const dist = getDistanceKm(userCoords.lat, userCoords.lng, coords[0], coords[1]);
                     return dist <= NEAR_ME_RADIUS_KM;
                 });
-                // Temporarily replace venues, call original, restore
-                const allVenues = venues;
-                venues = nearbyVenues;
-                originalUpdateMarkers();
-                venues = allVenues;
-            } else {
-                originalUpdateMarkers();
             }
+            return results;
         };
 
         // Quick filter pills - toggle their respective filters
