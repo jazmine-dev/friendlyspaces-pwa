@@ -858,7 +858,7 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 64px;
+            bottom: calc(64px + env(safe-area-inset-bottom, 0px));
         }
 
         .view-panel.hidden {
@@ -1810,7 +1810,7 @@
 
         /* Leaflet zoom and location controls */
         .leaflet-control-zoom {
-            margin-bottom: 16px !important;
+            margin-bottom: 10px !important;
             margin-right: 10px !important;
         }
 
@@ -1822,11 +1822,15 @@
         }
 
         .leaflet-control-locate {
-            margin-bottom: 16px !important;
+            margin-bottom: 10px !important;
         }
 
         .locate-control {
-            margin-bottom: 16px;
+            margin-bottom: 10px;
+        }
+
+        .leaflet-bottom.leaflet-right {
+            bottom: 10px !important;
         }
 
         .locate-button {
