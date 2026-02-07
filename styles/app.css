@@ -1810,9 +1810,20 @@
             line-height: 32px;
         }
 
-        /* Hide Leaflet attribution on mobile */
+        /* Hide Leaflet attribution on map (shown in About page instead) */
         .leaflet-control-attribution {
             display: none !important;
+        }
+
+        .map-attribution {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+
+        .map-attribution a {
+            color: #1E52BA;
         }
 
         /* Leaflet zoom and location controls */
