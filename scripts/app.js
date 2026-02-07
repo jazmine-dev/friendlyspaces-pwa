@@ -441,10 +441,13 @@
         const map = L.map('map', {
             zoomControl: false,
             center: [46.8182, 8.2275],
-            zoom: 8,
-            dragging: !isMobile,
-            tap: !isMobile
+            zoom: 8
         });
+        
+        // Disable touch dragging on mobile (will enable with two-finger gesture)
+        if (isMobile) {
+            map.dragging.disable();
+        }
 
         // Disable scroll zoom until the map is focused/clicked to prevent trapping page scroll
         map.scrollWheelZoom.disable();
