@@ -86,17 +86,18 @@
             line-height: 1.5;
         }
 
-        .intro-slide .intro-install-platform {
+        .intro-slide .intro-install-line {
+            margin: 0 0 8px;
+        }
+
+        .intro-slide .intro-install-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .intro-slide .intro-install-line strong,
+        .intro-slide .intro-install-line span {
+            display: block;
             margin: 0;
-        }
-
-        #intro-install-ios-text {
-            margin-top: 0;
-            margin-bottom: 8px;
-        }
-
-        #intro-install-android-text {
-            margin-top: 0;
         }
 
         .intro-slides {
