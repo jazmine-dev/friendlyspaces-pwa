@@ -86,6 +86,10 @@
             line-height: 1.5;
         }
 
+        #intro-install-text {
+            white-space: pre-line;
+        }
+
         .intro-slides {
             min-height: 158px;
         }
