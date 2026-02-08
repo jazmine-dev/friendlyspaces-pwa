@@ -86,8 +86,12 @@
             line-height: 1.5;
         }
 
-        #intro-install-text {
-            white-space: pre-line;
+        .intro-install-platform {
+            margin: 0 0 2px;
+        }
+
+        #intro-install-ios-text {
+            margin-bottom: 10px;
         }
 
         .intro-slides {

@@ -45,7 +45,10 @@
                     introTitle: "Willkommen bei Friendly Spaces",
                     introText: "Dein Guide zu zertifizierten familienfreundlichen Cafés, Restaurants, Geschäften und Kulturorten in der ganzen Schweiz.",
                     introInstallTitle: "Fuer schnelleren Zugriff installieren",
-                    introInstallText: "iPhone: In Safari öffnen -> auf Teilen tippen -> Zum Home-Bildschirm wählen.\n\nAndroid: Oben auf Zum Home-Bildschirm tippen -> bestätigen. Die App wird automatisch installiert.",
+                    introInstallIosLabel: "iPhone:",
+                    introInstallIosText: "In Safari öffnen -> auf Teilen tippen -> Zum Home-Bildschirm wählen.",
+                    introInstallAndroidLabel: "Android:",
+                    introInstallAndroidText: "Oben auf Zum Home-Bildschirm tippen. Die App wird automatisch installiert.",
                     introMapTitle: "Schnell den passenden Ort finden",
                     introMapText: "Suche nach Stadt oder Name, nutze Filter für eure Bedürfnisse und öffne dann einen Pin oder eine Karte für das volle Profil.",
                     introBack: "Zurück",
@@ -178,7 +181,10 @@
                     introTitle: "Bienvenue sur Friendly Spaces",
                     introText: "Votre guide des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse.",
                     introInstallTitle: "Installez pour un accès plus rapide",
-                    introInstallText: "iPhone : ouvrez dans Safari -> appuyez sur Partager -> Ajouter à l'écran d'accueil.\n\nAndroid : appuyez en haut sur Ajouter à l'écran d'accueil -> confirmez. L'app s'installe automatiquement.",
+                    introInstallIosLabel: "iPhone :",
+                    introInstallIosText: "Ouvrez dans Safari -> appuyez sur Partager -> Ajouter à l'écran d'accueil.",
+                    introInstallAndroidLabel: "Android :",
+                    introInstallAndroidText: "Appuyez en haut sur Ajouter à l'écran d'accueil. L'app s'installe automatiquement.",
                     introMapTitle: "Trouvez le bon lieu rapidement",
                     introMapText: "Utilisez la recherche par ville ou nom, appliquez des filtres selon vos besoins, puis ouvrez une épingle ou une carte pour le profil complet.",
                     introBack: "Retour",
@@ -311,7 +317,10 @@
                     introTitle: "Welcome to Friendly Spaces",
                     introText: "Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.",
                     introInstallTitle: "Install for faster access",
-                    introInstallText: "iPhone: Open in Safari -> tap Share -> Add to Home Screen.\n\nAndroid: Tap Add to Home screen at the top -> confirm. The app installs automatically.",
+                    introInstallIosLabel: "iPhone:",
+                    introInstallIosText: "Open in Safari -> tap Share -> Add to Home Screen.",
+                    introInstallAndroidLabel: "Android:",
+                    introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
                     introMapTitle: "Find the right place fast",
                     introMapText: "Use Search for city or venue name, apply Filters for your family needs, then open a pin or card for the full profile.",
                     introBack: "Back",
@@ -864,8 +873,14 @@
             if (introText) introText.textContent = translate('ui.introText', introText.textContent);
             const introInstallTitle = document.getElementById('intro-install-title');
             if (introInstallTitle) introInstallTitle.textContent = translate('ui.introInstallTitle', introInstallTitle.textContent);
-            const introInstallText = document.getElementById('intro-install-text');
-            if (introInstallText) introInstallText.textContent = translate('ui.introInstallText', introInstallText.textContent);
+            const introInstallIosLabel = document.getElementById('intro-install-ios-label');
+            if (introInstallIosLabel) introInstallIosLabel.textContent = translate('ui.introInstallIosLabel', introInstallIosLabel.textContent);
+            const introInstallIosText = document.getElementById('intro-install-ios-text');
+            if (introInstallIosText) introInstallIosText.textContent = translate('ui.introInstallIosText', introInstallIosText.textContent);
+            const introInstallAndroidLabel = document.getElementById('intro-install-android-label');
+            if (introInstallAndroidLabel) introInstallAndroidLabel.textContent = translate('ui.introInstallAndroidLabel', introInstallAndroidLabel.textContent);
+            const introInstallAndroidText = document.getElementById('intro-install-android-text');
+            if (introInstallAndroidText) introInstallAndroidText.textContent = translate('ui.introInstallAndroidText', introInstallAndroidText.textContent);
             const introMapTitle = document.getElementById('intro-map-title');
             if (introMapTitle) introMapTitle.textContent = translate('ui.introMapTitle', introMapTitle.textContent);
             const introMapText = document.getElementById('intro-map-text');
