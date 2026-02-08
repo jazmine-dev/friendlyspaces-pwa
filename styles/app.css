@@ -2,12 +2,17 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            min-height: 100dvh;
+            height: var(--app-height, 100dvh);
+            min-height: 0;
             display: flex;
             flex-direction: column;
             background: #f7f5f1;
@@ -79,6 +84,71 @@
             font-size: 14px;
             color: #2d3588;
             line-height: 1.5;
+        }
+
+        .intro-slides {
+            min-height: 158px;
+        }
+
+        .intro-slide {
+            display: none;
+        }
+
+        .intro-slide.active {
+            display: block;
+        }
+
+        .intro-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 6px 0 10px;
+        }
+
+        .intro-dot {
+            width: 9px;
+            height: 9px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(45, 53, 136, 0.25);
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .intro-dot.active {
+            background: #2d3588;
+        }
+
+        .intro-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .intro-nav {
+            border: 1px solid rgba(45, 53, 136, 0.28);
+            border-radius: 999px;
+            background: #ffffff;
+            color: #2d3588;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 14px;
+            cursor: pointer;
+            min-width: 92px;
+        }
+
+        .intro-nav.intro-nav-primary {
+            border-color: #2d3588;
+            background: #2d3588;
+            color: #ffffff;
+        }
+
+        .intro-nav:disabled {
+            opacity: 0.35;
+            cursor: default;
         }
 
         .intro-checkbox {
@@ -383,6 +453,30 @@
             flex: 1;
             font-size: 15px;
             line-height: 1.6;
+        }
+
+        .install-help-block {
+            border-radius: 14px;
+            border: 1px solid #e7e4dd;
+            background: #faf9f7;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+        }
+
+        .install-help-block h3 {
+            margin: 0 0 6px;
+            font-size: 15px;
+            color: #2d3588;
+            font-weight: 700;
+        }
+
+        .install-help-block ol,
+        .install-help-block ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #3b3834;
+            font-size: 14px;
+            line-height: 1.45;
         }
 
         .suggest-tagline {
@@ -841,8 +935,8 @@
 
         #map {
             flex: 1;
-            height: 100%;
             width: 100%;
+            min-height: 0;
         }
 
         #main-view {
@@ -1519,6 +1613,8 @@
                 height: 100%;
                 overflow: hidden;
                 padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+                flex: 1;
+                min-height: 0;
             }
 
             #sidebar {
@@ -1561,6 +1657,7 @@
 
             #map {
                 height: 100%;
+                min-height: 0;
             }
 
             #main-view {

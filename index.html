@@ -29,8 +29,29 @@
             <button class="intro-close" type="button" id="intro-close" aria-label="Close">✕</button>
             <img class="intro-icon" src="icons/icon-192.png" alt="Friendly Spaces">
             <img class="intro-wordmark" src="assets/FriendlySpaces_blue.png" alt="Friendly Spaces">
-            <h2 id="intro-title">Welcome to Friendly Spaces</h2>
-            <p id="intro-text">Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.</p>
+            <div class="intro-slides" id="intro-slides">
+                <section class="intro-slide active" data-intro-slide="0">
+                    <h2 id="intro-title">Welcome to Friendly Spaces</h2>
+                    <p id="intro-text">Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.</p>
+                </section>
+                <section class="intro-slide" data-intro-slide="1">
+                    <h2 id="intro-install-title">Install for faster access</h2>
+                    <p id="intro-install-text">On iPhone, open in Safari, tap Share, then Add to Home Screen. On Android, tap Install when prompted.</p>
+                </section>
+                <section class="intro-slide" data-intro-slide="2">
+                    <h2 id="intro-map-title">Find the right place fast</h2>
+                    <p id="intro-map-text">Use Search for city or venue name, apply Filters for your family needs, then open a pin or card for the full profile.</p>
+                </section>
+            </div>
+            <div class="intro-dots" role="tablist" aria-label="Onboarding slides">
+                <button class="intro-dot active" type="button" data-intro-dot="0" aria-label="Slide 1"></button>
+                <button class="intro-dot" type="button" data-intro-dot="1" aria-label="Slide 2"></button>
+                <button class="intro-dot" type="button" data-intro-dot="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="intro-actions">
+                <button class="intro-nav" type="button" id="intro-prev">Back</button>
+                <button class="intro-nav intro-nav-primary" type="button" id="intro-next">Next</button>
+            </div>
             <label class="intro-checkbox">
                 <input type="checkbox" id="intro-skip">
                 <span id="intro-skip-label">Do not show again</span>
@@ -174,6 +195,9 @@
         <button class="menu-button" id="menu-about" type="button">
             <span class="menu-label">About us</span>
         </button>
+        <button class="menu-button" id="menu-install-help" type="button">
+            <span class="menu-label">How to install</span>
+        </button>
         <p class="menu-section-title" id="menu-language-title">Language</p>
         <div id="language-toggle" aria-label="Language switcher">
             <button type="button" data-lang="de">DE</button>
@@ -314,6 +338,40 @@
                 <button class="suggest-submit" type="submit" id="bug-submit">Send</button>
                 <div class="form-status" id="bug-status" role="status" aria-live="polite"></div>
             </form>
+        </div>
+    </section>
+    <section id="install-help-view" class="fullscreen-panel" aria-hidden="true">
+        <div class="fullscreen-header suggest-header">
+            <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
+            <button class="fullscreen-close" type="button" id="install-help-close" aria-label="Close">✕</button>
+        </div>
+        <div class="fullscreen-body">
+            <h2 class="suggest-title" id="install-help-title">Install Friendly Spaces</h2>
+            <p class="suggest-tagline" id="install-help-tagline">Add Friendly Spaces to your home screen for faster access.</p>
+            <div class="install-help-block">
+                <h3 id="install-help-ios-title">On iPhone (Safari)</h3>
+                <ol>
+                    <li id="install-help-ios-step-1">Open Friendly Spaces in Safari.</li>
+                    <li id="install-help-ios-step-2">Tap Share (square with arrow).</li>
+                    <li id="install-help-ios-step-3">Choose Add to Home Screen.</li>
+                </ol>
+            </div>
+            <div class="install-help-block">
+                <h3 id="install-help-android-title">On Android (Chrome)</h3>
+                <ol>
+                    <li id="install-help-android-step-1">Open Friendly Spaces in Chrome.</li>
+                    <li id="install-help-android-step-2">Tap Install from the browser prompt or menu.</li>
+                    <li id="install-help-android-step-3">Confirm to add it to your home screen.</li>
+                </ol>
+            </div>
+            <div class="install-help-block">
+                <h3 id="install-help-use-title">How to use the app</h3>
+                <ul>
+                    <li id="install-help-use-step-1">Use Search to find venues by city, name, or address.</li>
+                    <li id="install-help-use-step-2">Apply Filters to match your family needs.</li>
+                    <li id="install-help-use-step-3">Open a pin or card to view the full profile.</li>
+                </ul>
+            </div>
         </div>
     </section>
     <nav id="bottom-tabs" aria-label="Primary">

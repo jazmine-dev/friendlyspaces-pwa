@@ -11,6 +11,7 @@
                     menuSuggest: "Ort vorschlagen",
                     menuShare: "App teilen",
                     menuAbout: "Über uns",
+                    menuInstall: "Installation",
                     menuLanguage: "Sprache",
                     menuBug: "Fehler melden",
                     suggestTitle: "Ort vorschlagen",
@@ -42,8 +43,29 @@
                     partnerCta: "Partnerschaft anfragen",
                     partnerSubject: "Partnerschaftsanfrage",
                     introTitle: "Willkommen bei Friendly Spaces",
-                    introText: "Finde familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz.",
+                    introText: "Dein Guide zu zertifizierten familienfreundlichen Cafés, Restaurants, Geschäften und Kulturorten in der ganzen Schweiz.",
+                    introInstallTitle: "Fuer schnelleren Zugriff installieren",
+                    introInstallText: "Auf dem iPhone in Safari öffnen, auf Teilen tippen und dann Zum Home-Bildschirm wählen. Auf Android bei der Installationsabfrage bestätigen.",
+                    introMapTitle: "Schnell den passenden Ort finden",
+                    introMapText: "Suche nach Stadt oder Name, nutze Filter für eure Bedürfnisse und öffne dann einen Pin oder eine Karte für das volle Profil.",
+                    introBack: "Zurück",
+                    introNext: "Weiter",
+                    introDone: "Fertig",
                     introSkip: "Nicht mehr anzeigen",
+                    installHelpTitle: "Friendly Spaces installieren",
+                    installHelpTagline: "Füge Friendly Spaces zum Home-Bildschirm hinzu, um schneller zu starten.",
+                    installHelpIosTitle: "Auf iPhone (Safari)",
+                    installHelpIosStep1: "Friendly Spaces in Safari öffnen.",
+                    installHelpIosStep2: "Auf Teilen tippen (Quadrat mit Pfeil).",
+                    installHelpIosStep3: "Zum Home-Bildschirm auswählen.",
+                    installHelpAndroidTitle: "Auf Android (Chrome)",
+                    installHelpAndroidStep1: "Friendly Spaces in Chrome öffnen.",
+                    installHelpAndroidStep2: "Installieren in der Browserabfrage oder im Menü wählen.",
+                    installHelpAndroidStep3: "Bestätigen, um zum Home-Bildschirm hinzuzufügen.",
+                    installHelpUseTitle: "So nutzt du die App",
+                    installHelpUseStep1: "Nutze die Suche für Stadt, Namen oder Adresse.",
+                    installHelpUseStep2: "Setze Filter passend zu euren Bedürfnissen.",
+                    installHelpUseStep3: "Öffne einen Pin oder eine Karte für das volle Profil.",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -122,6 +144,7 @@
                     menuSuggest: "Suggérer un espace",
                     menuShare: "Partager l'app",
                     menuAbout: "À propos",
+                    menuInstall: "Installation",
                     menuLanguage: "Langue",
                     menuBug: "Signaler un bug",
                     suggestTitle: "Suggérer un espace",
@@ -153,8 +176,29 @@
                     partnerCta: "Demande de partenariat",
                     partnerSubject: "Demande de partenariat",
                     introTitle: "Bienvenue sur Friendly Spaces",
-                    introText: "Trouvez des cafés, restaurants, boutiques et lieux culturels family‑friendly dans toute la Suisse.",
+                    introText: "Votre guide des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse.",
+                    introInstallTitle: "Installez pour un accès plus rapide",
+                    introInstallText: "Sur iPhone, ouvrez dans Safari, appuyez sur Partager puis Ajouter à l'écran d'accueil. Sur Android, confirmez l'installation quand elle s'affiche.",
+                    introMapTitle: "Trouvez le bon lieu rapidement",
+                    introMapText: "Utilisez la recherche par ville ou nom, appliquez des filtres selon vos besoins, puis ouvrez une épingle ou une carte pour le profil complet.",
+                    introBack: "Retour",
+                    introNext: "Suivant",
+                    introDone: "Terminer",
                     introSkip: "Ne plus afficher",
+                    installHelpTitle: "Installer Friendly Spaces",
+                    installHelpTagline: "Ajoutez Friendly Spaces à votre écran d'accueil pour un accès plus rapide.",
+                    installHelpIosTitle: "Sur iPhone (Safari)",
+                    installHelpIosStep1: "Ouvrez Friendly Spaces dans Safari.",
+                    installHelpIosStep2: "Appuyez sur Partager (carré avec flèche).",
+                    installHelpIosStep3: "Choisissez Ajouter à l'écran d'accueil.",
+                    installHelpAndroidTitle: "Sur Android (Chrome)",
+                    installHelpAndroidStep1: "Ouvrez Friendly Spaces dans Chrome.",
+                    installHelpAndroidStep2: "Choisissez Installer depuis la fenêtre du navigateur ou le menu.",
+                    installHelpAndroidStep3: "Confirmez pour l'ajouter à l'écran d'accueil.",
+                    installHelpUseTitle: "Comment utiliser l'app",
+                    installHelpUseStep1: "Utilisez la recherche par ville, nom ou adresse.",
+                    installHelpUseStep2: "Appliquez les filtres selon les besoins de votre famille.",
+                    installHelpUseStep3: "Ouvrez une épingle ou une carte pour voir le profil complet.",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -233,6 +277,7 @@
                     menuSuggest: "Suggest a space",
                     menuShare: "Share the app",
                     menuAbout: "About us",
+                    menuInstall: "How to install",
                     menuLanguage: "Language",
                     menuBug: "Report a bug",
                     suggestTitle: "Suggest a space",
@@ -265,7 +310,28 @@
                     partnerSubject: "Partnership Inquiry",
                     introTitle: "Welcome to Friendly Spaces",
                     introText: "Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.",
+                    introInstallTitle: "Install for faster access",
+                    introInstallText: "On iPhone, open in Safari, tap Share, then Add to Home Screen. On Android, confirm Install when prompted.",
+                    introMapTitle: "Find the right place fast",
+                    introMapText: "Use Search for city or venue name, apply Filters for your family needs, then open a pin or card for the full profile.",
+                    introBack: "Back",
+                    introNext: "Next",
+                    introDone: "Done",
                     introSkip: "Do not show again",
+                    installHelpTitle: "Install Friendly Spaces",
+                    installHelpTagline: "Add Friendly Spaces to your home screen for faster access.",
+                    installHelpIosTitle: "On iPhone (Safari)",
+                    installHelpIosStep1: "Open Friendly Spaces in Safari.",
+                    installHelpIosStep2: "Tap Share (square with arrow).",
+                    installHelpIosStep3: "Choose Add to Home Screen.",
+                    installHelpAndroidTitle: "On Android (Chrome)",
+                    installHelpAndroidStep1: "Open Friendly Spaces in Chrome.",
+                    installHelpAndroidStep2: "Tap Install from the browser prompt or menu.",
+                    installHelpAndroidStep3: "Confirm to add it to your home screen.",
+                    installHelpUseTitle: "How to use the app",
+                    installHelpUseStep1: "Use Search to find venues by city, name, or address.",
+                    installHelpUseStep2: "Apply Filters to match your family needs.",
+                    installHelpUseStep3: "Open a pin or card to view the full profile.",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -588,21 +654,29 @@
         const menuSuggest = document.getElementById('menu-suggest');
         const menuShare = document.getElementById('menu-share');
         const menuAbout = document.getElementById('menu-about');
+        const menuInstallHelp = document.getElementById('menu-install-help');
         const menuBug = document.getElementById('menu-bug');
         const suggestView = document.getElementById('suggest-view');
         const aboutView = document.getElementById('about-view');
         const bugView = document.getElementById('bug-view');
+        const installHelpView = document.getElementById('install-help-view');
         const suggestClose = document.getElementById('suggest-close');
         const aboutClose = document.getElementById('about-close');
         const bugClose = document.getElementById('bug-close');
+        const installHelpClose = document.getElementById('install-help-close');
         const suggestForm = document.getElementById('suggest-form');
         const bugForm = document.getElementById('bug-form');
         const aboutPartner = document.getElementById('about-partner');
         const introOverlay = document.getElementById('intro-overlay');
         const introClose = document.getElementById('intro-close');
         const introSkip = document.getElementById('intro-skip');
+        const introSlides = Array.from(document.querySelectorAll('[data-intro-slide]'));
+        const introDots = Array.from(document.querySelectorAll('[data-intro-dot]'));
+        const introPrev = document.getElementById('intro-prev');
+        const introNext = document.getElementById('intro-next');
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
+        let introSlideIndex = 0;
 
         // City coordinates for zoom
         const cityCoordinates = {
@@ -615,6 +689,11 @@
         const APP_DOMAIN = 'app.friendlyspaces.ch';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
+
+        function setAppShellHeight() {
+            const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+            document.documentElement.style.setProperty('--app-height', `${Math.round(viewportHeight)}px`);
+        }
 
         function trackEvent(name, params = {}) {
             if (!analyticsEnabled) return;
@@ -719,6 +798,10 @@
                 const label = menuAbout.querySelector('.menu-label');
                 if (label) label.textContent = translate('ui.menuAbout', label.textContent);
             }
+            if (menuInstallHelp) {
+                const label = menuInstallHelp.querySelector('.menu-label');
+                if (label) label.textContent = translate('ui.menuInstall', label.textContent);
+            }
             const menuLanguageTitle = document.getElementById('menu-language-title');
             if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
             if (menuBug) menuBug.textContent = translate('ui.menuBug', menuBug.textContent);
@@ -760,6 +843,7 @@
             const bugSubmit = document.getElementById('bug-submit');
             if (bugSubmit) bugSubmit.textContent = translate('ui.bugSubmit', bugSubmit.textContent);
             if (bugClose) bugClose.setAttribute('aria-label', translate('ui.menuClose', bugClose.getAttribute('aria-label') || 'Close'));
+            if (installHelpClose) installHelpClose.setAttribute('aria-label', translate('ui.menuClose', installHelpClose.getAttribute('aria-label') || 'Close'));
 
             const suggestStatus = document.getElementById('suggest-status');
             if (suggestStatus) suggestStatus.textContent = '';
@@ -778,8 +862,51 @@
             if (introTitle) introTitle.textContent = translate('ui.introTitle', introTitle.textContent);
             const introText = document.getElementById('intro-text');
             if (introText) introText.textContent = translate('ui.introText', introText.textContent);
+            const introInstallTitle = document.getElementById('intro-install-title');
+            if (introInstallTitle) introInstallTitle.textContent = translate('ui.introInstallTitle', introInstallTitle.textContent);
+            const introInstallText = document.getElementById('intro-install-text');
+            if (introInstallText) introInstallText.textContent = translate('ui.introInstallText', introInstallText.textContent);
+            const introMapTitle = document.getElementById('intro-map-title');
+            if (introMapTitle) introMapTitle.textContent = translate('ui.introMapTitle', introMapTitle.textContent);
+            const introMapText = document.getElementById('intro-map-text');
+            if (introMapText) introMapText.textContent = translate('ui.introMapText', introMapText.textContent);
             const introSkipLabel = document.getElementById('intro-skip-label');
             if (introSkipLabel) introSkipLabel.textContent = translate('ui.introSkip', introSkipLabel.textContent);
+            if (introPrev) introPrev.textContent = translate('ui.introBack', introPrev.textContent);
+            if (introNext && introSlideIndex < introSlides.length - 1) {
+                introNext.textContent = translate('ui.introNext', introNext.textContent);
+            } else if (introNext) {
+                introNext.textContent = translate('ui.introDone', introNext.textContent);
+            }
+
+            const installHelpTitle = document.getElementById('install-help-title');
+            if (installHelpTitle) installHelpTitle.textContent = translate('ui.installHelpTitle', installHelpTitle.textContent);
+            const installHelpTagline = document.getElementById('install-help-tagline');
+            if (installHelpTagline) installHelpTagline.textContent = translate('ui.installHelpTagline', installHelpTagline.textContent);
+            const installHelpIosTitle = document.getElementById('install-help-ios-title');
+            if (installHelpIosTitle) installHelpIosTitle.textContent = translate('ui.installHelpIosTitle', installHelpIosTitle.textContent);
+            const installHelpIosStep1 = document.getElementById('install-help-ios-step-1');
+            if (installHelpIosStep1) installHelpIosStep1.textContent = translate('ui.installHelpIosStep1', installHelpIosStep1.textContent);
+            const installHelpIosStep2 = document.getElementById('install-help-ios-step-2');
+            if (installHelpIosStep2) installHelpIosStep2.textContent = translate('ui.installHelpIosStep2', installHelpIosStep2.textContent);
+            const installHelpIosStep3 = document.getElementById('install-help-ios-step-3');
+            if (installHelpIosStep3) installHelpIosStep3.textContent = translate('ui.installHelpIosStep3', installHelpIosStep3.textContent);
+            const installHelpAndroidTitle = document.getElementById('install-help-android-title');
+            if (installHelpAndroidTitle) installHelpAndroidTitle.textContent = translate('ui.installHelpAndroidTitle', installHelpAndroidTitle.textContent);
+            const installHelpAndroidStep1 = document.getElementById('install-help-android-step-1');
+            if (installHelpAndroidStep1) installHelpAndroidStep1.textContent = translate('ui.installHelpAndroidStep1', installHelpAndroidStep1.textContent);
+            const installHelpAndroidStep2 = document.getElementById('install-help-android-step-2');
+            if (installHelpAndroidStep2) installHelpAndroidStep2.textContent = translate('ui.installHelpAndroidStep2', installHelpAndroidStep2.textContent);
+            const installHelpAndroidStep3 = document.getElementById('install-help-android-step-3');
+            if (installHelpAndroidStep3) installHelpAndroidStep3.textContent = translate('ui.installHelpAndroidStep3', installHelpAndroidStep3.textContent);
+            const installHelpUseTitle = document.getElementById('install-help-use-title');
+            if (installHelpUseTitle) installHelpUseTitle.textContent = translate('ui.installHelpUseTitle', installHelpUseTitle.textContent);
+            const installHelpUseStep1 = document.getElementById('install-help-use-step-1');
+            if (installHelpUseStep1) installHelpUseStep1.textContent = translate('ui.installHelpUseStep1', installHelpUseStep1.textContent);
+            const installHelpUseStep2 = document.getElementById('install-help-use-step-2');
+            if (installHelpUseStep2) installHelpUseStep2.textContent = translate('ui.installHelpUseStep2', installHelpUseStep2.textContent);
+            const installHelpUseStep3 = document.getElementById('install-help-use-step-3');
+            if (installHelpUseStep3) installHelpUseStep3.textContent = translate('ui.installHelpUseStep3', installHelpUseStep3.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -875,6 +1002,23 @@
             updateListView();
         }
 
+        function updateIntroSlides() {
+            if (!introSlides.length) return;
+            introSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === introSlideIndex);
+            });
+            introDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === introSlideIndex);
+            });
+            if (introPrev) introPrev.disabled = introSlideIndex === 0;
+            if (introNext) {
+                const isLast = introSlideIndex === introSlides.length - 1;
+                introNext.textContent = isLast
+                    ? translate('ui.introDone', introNext.textContent)
+                    : translate('ui.introNext', introNext.textContent);
+            }
+        }
+
         function showIntroIfNeeded() {
             if (!introOverlay) return;
             let hideIntro = false;
@@ -884,6 +1028,8 @@
                 // ignore storage errors
             }
             if (!hideIntro) {
+                introSlideIndex = 0;
+                updateIntroSlides();
                 introOverlay.classList.remove('hidden');
                 introOverlay.setAttribute('aria-hidden', 'false');
             }
@@ -913,16 +1059,15 @@
             if (!isMobile() && !force) return;
             sidebar.classList.remove('show');
             sheetBackdrop.classList.remove('visible');
-            document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
+            document.body.style.overflow = 'hidden';
         }
 
         function handleResize() {
+            setAppShellHeight();
             if (!isMobile()) {
                 closeFilterSheet(true);
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
             }
+            document.body.style.overflow = 'hidden';
             if (mapPanel && !mapPanel.classList.contains('hidden')) {
                 setTimeout(() => map.invalidateSize(), 100);
             }
@@ -1665,7 +1810,7 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
-                document.body.style.overflow = activeTab === 'map' ? 'auto' : 'hidden';
+                document.body.style.overflow = 'hidden';
             }, 300);
         }
 
@@ -1687,10 +1832,8 @@
                     language: currentLang,
                     app_version: APP_VERSION
                 });
-                document.body.style.overflow = 'auto';
-            } else {
-                document.body.style.overflow = 'hidden';
             }
+            document.body.style.overflow = 'hidden';
             closeDetailModal();
             updateMap();
             updateListView();
@@ -1880,6 +2023,12 @@
                 openPanel(aboutView);
             });
         }
+        if (menuInstallHelp) {
+            menuInstallHelp.addEventListener('click', () => {
+                closeMenu();
+                openPanel(installHelpView);
+            });
+        }
         if (menuBug) {
             menuBug.addEventListener('click', () => {
                 closeMenu();
@@ -1927,6 +2076,31 @@
         if (introClose) {
             introClose.addEventListener('click', closeIntro);
         }
+        if (introPrev) {
+            introPrev.addEventListener('click', () => {
+                if (introSlideIndex === 0) return;
+                introSlideIndex -= 1;
+                updateIntroSlides();
+            });
+        }
+        if (introNext) {
+            introNext.addEventListener('click', () => {
+                if (introSlideIndex >= introSlides.length - 1) {
+                    closeIntro();
+                    return;
+                }
+                introSlideIndex += 1;
+                updateIntroSlides();
+            });
+        }
+        introDots.forEach((dot) => {
+            dot.addEventListener('click', () => {
+                const index = Number(dot.dataset.introDot);
+                if (Number.isNaN(index)) return;
+                introSlideIndex = index;
+                updateIntroSlides();
+            });
+        });
         if (introOverlay) {
             introOverlay.addEventListener('click', (event) => {
                 if (event.target === introOverlay) {
@@ -1936,6 +2110,9 @@
         }
         if (bugClose) {
             bugClose.addEventListener('click', () => closePanel(bugView));
+        }
+        if (installHelpClose) {
+            installHelpClose.addEventListener('click', () => closePanel(installHelpView));
         }
         suggestRoleButtons.forEach(btn => {
             btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
@@ -2228,6 +2405,12 @@
         };
 
         function startApp() {
+            setAppShellHeight();
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', setAppShellHeight);
+                window.visualViewport.addEventListener('scroll', setAppShellHeight);
+            }
+            window.addEventListener('orientationchange', setAppShellHeight);
             loadFavorites();
             updateFavoritesBadge();
             setLanguage(currentLang, { skipUrlUpdate: true });
