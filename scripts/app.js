@@ -322,7 +322,7 @@
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
                     introMapTitle: "Find the right place fast",
-                    introMapText: "Browse all Friendly Spaces in List view, or switch to Map view to explore nearby pins. Use Filters to find the right places faster. Save your beloved spots to Favorites so you can quickly find them again.",
+                    introMapText: "Browse all our Friendly Spaces in List view, or switch to Map view to explore nearby pins. Use Filters to find the right places faster. Save your beloved spots to Favorites so you can quickly find them again.",
                     introBack: "Back",
                     introNext: "Next",
                     introDone: "Done",
