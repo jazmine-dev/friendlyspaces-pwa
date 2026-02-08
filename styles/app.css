@@ -72,14 +72,14 @@
             margin: -6px auto 18px;
         }
 
-        #intro-title {
+        .intro-slide h2 {
             margin: 0 0 6px;
             font-size: 18px;
             font-weight: 700;
             color: #2d3588;
         }
 
-        #intro-text {
+        .intro-slide p {
             margin: 0 0 14px;
             font-size: 14px;
             color: #2d3588;
