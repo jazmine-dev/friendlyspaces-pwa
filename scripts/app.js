@@ -760,6 +760,7 @@
         const detailModal = document.getElementById('detail-modal');
         const detailModalContent = document.getElementById('detail-modal-content');
         const detailSheetGrabber = document.getElementById('detail-sheet-grabber');
+        const detailPeekTitle = document.getElementById('detail-peek-title');
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
         const sidebarNearMe = document.getElementById('sidebar-near-me');
@@ -1932,6 +1933,7 @@
 
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
+            if (detailPeekTitle) detailPeekTitle.textContent = venue.name;
 
             // Trigger sheet animation
             detailModal.setAttribute('aria-hidden', 'false');
@@ -1987,6 +1989,7 @@
                 detailModal.classList.remove('active');
                 detailModal.setAttribute('aria-hidden', 'true');
                 detailModal.style.opacity = '';
+                if (detailPeekTitle) detailPeekTitle.textContent = '';
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');

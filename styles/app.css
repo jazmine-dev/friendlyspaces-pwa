@@ -1213,6 +1213,28 @@
             background: #d0cbc3;
         }
 
+        .detail-peek-title {
+            position: sticky;
+            top: 0;
+            z-index: 31;
+            margin: 0;
+            padding: 2px 16px 8px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #2d3588;
+            background: rgba(255, 255, 255, 0.96);
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .detail-modal-card.snap-peek .detail-peek-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         #detail-modal-content {
             flex: 1;
             min-height: 0;
