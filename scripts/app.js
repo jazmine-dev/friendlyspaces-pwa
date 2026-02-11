@@ -669,6 +669,29 @@
             iconAnchor: [16, 46],
             popupAnchor: [0, -42]
         });
+        const selectedPinSvg = `
+            <svg width="32" height="48" viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="pinGradSelected" x1="50%" y1="0%" x2="50%" y2="100%">
+                        <stop offset="0%" stop-color="#F5DEFF"/>
+                        <stop offset="100%" stop-color="#D7A6F3"/>
+                    </linearGradient>
+                    <filter id="pinShadowSelected" x="-20%" y="-10%" width="140%" height="130%">
+                        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.28)"/>
+                    </filter>
+                </defs>
+                <g filter="url(#pinShadowSelected)">
+                    <path fill="url(#pinGradSelected)" d="M16 0c-7.18 0-13 5.82-13 13 0 9.75 8.9 18.9 12.1 21.83.5.46 1.3.46 1.8 0C20.1 31.9 29 22.75 29 13 29 5.82 23.18 0 16 0Z"/>
+                    <circle cx="16" cy="13" r="5" fill="rgba(255,255,255,0.95)"/>
+                </g>
+            </svg>
+        `;
+        const markerIconSelected = L.icon({
+            iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(selectedPinSvg),
+            iconSize: [32, 48],
+            iconAnchor: [16, 46],
+            popupAnchor: [0, -42]
+        });
 
         // Add click event to zoom into clusters
         markerClusterGroup.on('clusterclick', function (a) {
@@ -699,6 +722,7 @@
 
         // State
         let markers = [];
+        let selectedVenueName = null;
         let activeFilters = {
             venueType: [],
             cuisineType: [],
@@ -1530,6 +1554,12 @@
             return venues.filter(venueMatchesFilters);
         }
 
+        function applySelectedMarkerStyle() {
+            markers.forEach(({ venue, marker }) => {
+                marker.setIcon(venue.name === selectedVenueName ? markerIconSelected : markerIcon);
+            });
+        }
+
         const popupTagColor = '#1E52BA';
 
         // Create popup content with color-coded tags and image slider
@@ -1620,6 +1650,12 @@
                 const coords = venue.fallbackCoords;
                 const marker = L.marker(coords, { icon: markerIcon });
                 marker.on('click', () => {
+                    selectedVenueName = venue.name;
+                    applySelectedMarkerStyle();
+                    map.panTo(coords, { animate: true });
+                    setTimeout(() => {
+                        map.panBy([0, -Math.round(window.innerHeight * 0.18)], { animate: true });
+                    }, 120);
                     openDetailModal(venue, 'map_pin');
                 });
 
@@ -1645,6 +1681,7 @@
                 }
                 isInitialLoad = false;
             }
+            applySelectedMarkerStyle();
             updateListView();
         }
 
@@ -1939,6 +1976,8 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
+                selectedVenueName = null;
+                applySelectedMarkerStyle();
                 updateBodyScrollLock();
             }, 300);
         }
