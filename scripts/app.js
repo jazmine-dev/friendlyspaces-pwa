@@ -644,6 +644,22 @@
             });
         }
 
+        function centerPinAboveSheet(coords, snap = 'half') {
+            const latLng = L.latLng(coords[0], coords[1]);
+            const size = map.getSize();
+            const targetRatio = snap === 'peek' ? 0.2 : snap === 'full' ? 0.36 : 0.26;
+            const targetY = Math.round(size.y * targetRatio);
+            const currentPoint = map.latLngToContainerPoint(latLng);
+            if (Math.abs(currentPoint.y - targetY) < 4) return;
+
+            const zoom = map.getZoom();
+            const centerProjected = map.project(map.getCenter(), zoom);
+            const markerProjected = map.project(latLng, zoom);
+            const desiredCenterY = markerProjected.y - targetY + (size.y / 2);
+            const nextCenter = map.unproject(L.point(centerProjected.x, desiredCenterY), zoom);
+            map.panTo(nextCenter, { animate: true, duration: 0.35 });
+        }
+
         // Custom marker icon (brand blue gradient)
         const pinSvg = `
             <svg width="32" height="48" viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg">
@@ -1652,11 +1668,9 @@
                 marker.on('click', () => {
                     selectedVenueName = venue.name;
                     applySelectedMarkerStyle();
-                    map.panTo(coords, { animate: true });
-                    setTimeout(() => {
-                        map.panBy([0, -Math.round(window.innerHeight * 0.18)], { animate: true });
-                    }, 120);
                     openDetailModal(venue, 'map_pin');
+                    centerPinAboveSheet(coords, 'half');
+                    setTimeout(() => centerPinAboveSheet(coords, 'half'), 320);
                 });
 
                 // Add marker to cluster group instead of directly to map
