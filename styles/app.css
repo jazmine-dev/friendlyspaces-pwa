@@ -879,6 +879,15 @@
             justify-content: center;
         }
 
+        .filter-button svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
         .filter-button.wide {
             min-width: 190px;
         }

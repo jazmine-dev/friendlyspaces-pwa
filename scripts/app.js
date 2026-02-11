@@ -721,6 +721,8 @@
         const detailModalContent = document.getElementById('detail-modal-content');
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
+        const sidebarNearMe = document.getElementById('sidebar-near-me');
+        const sidebarNearMeLabel = document.getElementById('sidebar-near-me-label');
         const resetFiltersButton = document.getElementById('reset-filters');
         const applyFiltersButton = document.getElementById('apply-filters');
         const menuToggle = document.getElementById('menu-toggle');
@@ -869,6 +871,9 @@
             if (favoritesTab) favoritesTab.textContent = translate('ui.favoritesTab', favoritesTab.textContent);
             if (sidebarFavoritesLabel) {
                 sidebarFavoritesLabel.textContent = translate('ui.favoritesTab', sidebarFavoritesLabel.textContent);
+            }
+            if (sidebarNearMeLabel) {
+                sidebarNearMeLabel.textContent = translate('ui.nearMe', sidebarNearMeLabel.textContent);
             }
 
             const installBannerText = document.getElementById('install-banner-text');
@@ -2421,7 +2426,6 @@
         // Quick filter pills functionality
         const pillFilters = document.getElementById('pill-filters');
         const pillFavorites = document.getElementById('pill-favorites');
-        const pillNearMe = document.getElementById('pill-near-me');
         const quickFilterPills = document.querySelectorAll('.quick-filter-pill[data-filter-category]');
 
         // Update quick filter pill labels based on current language
@@ -2430,8 +2434,6 @@
                 const key = label.dataset.pillLabel;
                 if (key === 'filters') {
                     label.textContent = translate('ui.filtersLabel', 'Filters');
-                } else if (key === 'near-me') {
-                    label.textContent = translate('ui.nearMe', 'Near Me');
                 } else if (key === 'cafe') {
                     label.textContent = translate('filters.options.venueType.cafe', 'Cafe');
                 } else if (key === 'baby') {
@@ -2457,9 +2459,7 @@
             if (pillFavorites) {
                 pillFavorites.classList.toggle('active', activeTab === 'favorites');
             }
-            if (pillNearMe) {
-                pillNearMe.classList.toggle('active', nearMeActive);
-            }
+            if (sidebarNearMe) sidebarNearMe.classList.toggle('active', nearMeActive);
         }
 
         // Toggle a quick filter
@@ -2512,18 +2512,16 @@
             });
         }
 
-        if (pillNearMe) {
-            pillNearMe.addEventListener('click', () => {
-                const toggleNearMe = () => {
-                    nearMeActive = !nearMeActive;
-                    if (nearMeActive) {
-                        setActiveView('map');
-                    }
-                    updateMap();
-                    updateFilterCount();
-                    syncQuickFilterPills();
-                };
+        const toggleNearMe = () => {
+            nearMeActive = !nearMeActive;
+            if (nearMeActive) setActiveView('map');
+            updateMap();
+            updateFilterCount();
+            syncQuickFilterPills();
+        };
 
+        if (sidebarNearMe) {
+            sidebarNearMe.addEventListener('click', () => {
                 if (!nearMeActive && !userLocationLatLng) {
                     if (!navigator.geolocation) return;
                     navigator.geolocation.getCurrentPosition(
