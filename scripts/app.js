@@ -719,6 +719,7 @@
         const bottomTabs = document.querySelectorAll('#bottom-tabs .bottom-tab-button');
         const detailModal = document.getElementById('detail-modal');
         const detailModalContent = document.getElementById('detail-modal-content');
+        const detailSheetGrabber = document.getElementById('detail-sheet-grabber');
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
         const sidebarNearMe = document.getElementById('sidebar-near-me');
@@ -755,6 +756,7 @@
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
         let introSlideIndex = 0;
+        let currentDetailSnap = 'half';
 
         // City coordinates for zoom
         const cityCoordinates = {
@@ -1617,22 +1619,8 @@
                 }
                 const coords = venue.fallbackCoords;
                 const marker = L.marker(coords, { icon: markerIcon });
-                marker.bindPopup(createPopup(venue), {
-                    className: 'custom-popup',
-                    maxWidth: 340,
-                    minWidth: 240,
-                    autoPanPaddingTopLeft: [40, 40],
-                    autoPanPaddingBottomRight: [40, 40]
-                });
-                marker.on('popupopen', (e) => {
-                    const target = e.popup.getLatLng();
-                    map.panTo(target, { animate: true });
-                    // Nudge popup fully into view; try a stronger upward pan
-                    setTimeout(() => map.panBy([0, -140], { animate: true }), 150);
-
-                    const sliderEl = e.popup.getElement()?.querySelector('.slider-container');
-                    attachSliderScrollSync(sliderEl);
-                    attachFavoriteHandlers(e.popup.getElement());
+                marker.on('click', () => {
+                    openDetailModal(venue, 'map_pin');
                 });
 
                 // Add marker to cluster group instead of directly to map
@@ -1860,6 +1848,26 @@
             `;
         }
 
+        function setDetailSnap(snap) {
+            if (!detailModal) return;
+            const card = detailModal.querySelector('.detail-modal-card');
+            if (!card) return;
+            const normalized = ['peek', 'half', 'full'].includes(snap) ? snap : 'half';
+            currentDetailSnap = normalized;
+            card.classList.remove('snap-peek', 'snap-half', 'snap-full');
+            card.classList.add(`snap-${normalized}`);
+            if (normalized !== 'full' && detailModalContent) {
+                detailModalContent.scrollTop = 0;
+            }
+        }
+
+        function stepDetailSnap(direction) {
+            const order = ['peek', 'half', 'full'];
+            const idx = Math.max(0, order.indexOf(currentDetailSnap));
+            const next = Math.min(order.length - 1, Math.max(0, idx + direction));
+            setDetailSnap(order[next]);
+        }
+
         function openDetailModal(venue, source = 'unknown') {
             if (!detailModal || !detailModalContent) return;
 
@@ -1874,14 +1882,13 @@
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
 
-            // Trigger slide-in animation
-            detailModal.classList.add('entering');
+            // Trigger sheet animation
             detailModal.setAttribute('aria-hidden', 'false');
 
-            // Force reflow then add active class for animation
+            // Force reflow then activate
             detailModal.offsetHeight;
             detailModal.classList.add('active');
-            detailModal.classList.remove('entering');
+            setDetailSnap(source === 'map_pin' ? 'half' : 'full');
 
             // Prevent body scroll
             document.body.classList.add('detail-open');
@@ -1922,22 +1929,13 @@
         function closeDetailModal() {
             if (!detailModal) return;
 
-            // Animate out - different animation for mobile vs desktop
-            if (isMobile()) {
-                detailModal.style.transform = 'translateX(100%)';
-            } else {
-                detailModal.style.opacity = '0';
-                const card = detailModal.querySelector('.detail-modal-card');
-                if (card) card.style.transform = 'scale(0.95)';
-            }
+            detailModal.style.opacity = '0';
+            if (isMobile()) setDetailSnap('peek');
 
             setTimeout(() => {
                 detailModal.classList.remove('active');
                 detailModal.setAttribute('aria-hidden', 'true');
-                detailModal.style.transform = '';
                 detailModal.style.opacity = '';
-                const card = detailModal.querySelector('.detail-modal-card');
-                if (card) card.style.transform = '';
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
@@ -2328,15 +2326,42 @@
             modalClose.addEventListener('click', closeDetailModal);
         }
 
+        let detailDragStartY = 0;
+        let detailDragging = false;
+        if (detailSheetGrabber) {
+            detailSheetGrabber.addEventListener('touchstart', (event) => {
+                if (!isMobile()) return;
+                detailDragStartY = event.touches[0].clientY;
+                detailDragging = true;
+            }, { passive: true });
+
+            detailSheetGrabber.addEventListener('touchmove', (event) => {
+                if (!isMobile() || !detailDragging) return;
+                const deltaY = event.touches[0].clientY - detailDragStartY;
+                if (Math.abs(deltaY) < 36) return;
+                event.preventDefault();
+            }, { passive: false });
+
+            detailSheetGrabber.addEventListener('touchend', (event) => {
+                if (!isMobile() || !detailDragging) return;
+                const endY = event.changedTouches[0].clientY;
+                const deltaY = endY - detailDragStartY;
+                detailDragging = false;
+
+                if (deltaY < -44) {
+                    stepDetailSnap(1);
+                    return;
+                }
+                if (deltaY > 44) {
+                    if (currentDetailSnap === 'peek') closeDetailModal();
+                    else stepDetailSnap(-1);
+                }
+            }, { passive: true });
+        }
+
         if (detailModal) {
             detailModal.addEventListener('click', (event) => {
-                // Close when clicking backdrop (on desktop) or the modal background on mobile
-                if (event.target === detailModal || event.target.classList.contains('detail-modal-card')) {
-                    // Only close if clicking the card background on mobile, not the modal itself
-                    if (event.target === detailModal && !isMobile()) {
-                        closeDetailModal();
-                    }
-                }
+                if (event.target === detailModal) closeDetailModal();
             });
         }
 
