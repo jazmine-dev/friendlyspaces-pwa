@@ -2328,36 +2328,59 @@
 
         let detailDragStartY = 0;
         let detailDragging = false;
-        if (detailSheetGrabber) {
-            detailSheetGrabber.addEventListener('touchstart', (event) => {
-                if (!isMobile()) return;
+        let detailDragFromContent = false;
+        function handleDetailSheetDrag(deltaY) {
+            if (deltaY < -44) {
+                stepDetailSnap(1);
+                return true;
+            }
+            if (deltaY > 44) {
+                if (currentDetailSnap === 'peek') closeDetailModal();
+                else stepDetailSnap(-1);
+                return true;
+            }
+            return false;
+        }
+
+        function bindDetailSwipeTarget(target, fromContent) {
+            if (!target) return;
+            target.addEventListener('touchstart', (event) => {
+                if (!isMobile() || !detailModal?.classList.contains('active')) return;
+                if (fromContent && currentDetailSnap === 'full' && detailModalContent && detailModalContent.scrollTop > 0) {
+                    detailDragging = false;
+                    return;
+                }
                 detailDragStartY = event.touches[0].clientY;
+                detailDragFromContent = fromContent;
                 detailDragging = true;
             }, { passive: true });
 
-            detailSheetGrabber.addEventListener('touchmove', (event) => {
+            target.addEventListener('touchmove', (event) => {
                 if (!isMobile() || !detailDragging) return;
                 const deltaY = event.touches[0].clientY - detailDragStartY;
-                if (Math.abs(deltaY) < 36) return;
-                event.preventDefault();
+                if (Math.abs(deltaY) < 16) return;
+
+                const pullingFromTop =
+                    !detailDragFromContent ||
+                    !detailModalContent ||
+                    detailModalContent.scrollTop <= 0;
+
+                if (pullingFromTop && (currentDetailSnap !== 'full' || deltaY > 0)) {
+                    event.preventDefault();
+                }
             }, { passive: false });
 
-            detailSheetGrabber.addEventListener('touchend', (event) => {
+            target.addEventListener('touchend', (event) => {
                 if (!isMobile() || !detailDragging) return;
                 const endY = event.changedTouches[0].clientY;
                 const deltaY = endY - detailDragStartY;
                 detailDragging = false;
-
-                if (deltaY < -44) {
-                    stepDetailSnap(1);
-                    return;
-                }
-                if (deltaY > 44) {
-                    if (currentDetailSnap === 'peek') closeDetailModal();
-                    else stepDetailSnap(-1);
-                }
+                handleDetailSheetDrag(deltaY);
             }, { passive: true });
         }
+
+        bindDetailSwipeTarget(detailSheetGrabber, false);
+        bindDetailSwipeTarget(detailModalContent, true);
 
         if (detailModal) {
             detailModal.addEventListener('click', (event) => {

@@ -1184,11 +1184,11 @@
         }
 
         .detail-modal-card.snap-peek {
-            --detail-sheet-offset: 72%;
+            --detail-sheet-offset: 84%;
         }
 
         .detail-modal-card.snap-half {
-            --detail-sheet-offset: 38%;
+            --detail-sheet-offset: 46%;
         }
 
         .detail-modal-card.snap-full {
