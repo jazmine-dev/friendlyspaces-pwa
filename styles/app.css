@@ -1396,6 +1396,14 @@
             background: #ffffff;
         }
 
+        .detail-modal-card.snap-full .detail-content {
+            padding-bottom: 130px;
+        }
+
+        .detail-modal-card.snap-full .detail-content::after {
+            height: calc(22px + env(safe-area-inset-bottom));
+        }
+
         .detail-section {
             margin-bottom: 20px;
         }
@@ -1580,6 +1588,10 @@
 
             .detail-content {
                 padding-bottom: calc(100px + env(safe-area-inset-bottom));
+            }
+
+            .detail-modal-card.snap-full .detail-content {
+                padding-bottom: calc(50px + env(safe-area-inset-bottom));
             }
         }
 
