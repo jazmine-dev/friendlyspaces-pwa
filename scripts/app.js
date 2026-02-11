@@ -551,7 +551,8 @@
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         const { latitude, longitude } = pos.coords;
-                        map.setView([latitude, longitude], 14);
+                        showUserLocation(latitude, longitude);
+                        centerMapWithNearestVenue(latitude, longitude);
                     },
                     () => {
                         // Ignore location errors
@@ -576,6 +577,64 @@
             disableClusteringAtZoom: 13,
             spiderfyDistanceMultiplier: 1.5
         });
+        let userLocationHalo = null;
+        let userLocationDot = null;
+
+        function showUserLocation(lat, lng) {
+            const latLng = L.latLng(lat, lng);
+
+            if (!userLocationHalo) {
+                userLocationHalo = L.circle(latLng, {
+                    radius: 30,
+                    color: '#2F6BE0',
+                    weight: 1,
+                    fillColor: '#2F6BE0',
+                    fillOpacity: 0.18
+                }).addTo(map);
+            } else {
+                userLocationHalo.setLatLng(latLng);
+            }
+
+            if (!userLocationDot) {
+                userLocationDot = L.circleMarker(latLng, {
+                    radius: 7,
+                    color: '#ffffff',
+                    weight: 2,
+                    fillColor: '#2F6BE0',
+                    fillOpacity: 1
+                }).addTo(map);
+            } else {
+                userLocationDot.setLatLng(latLng);
+            }
+        }
+
+        function centerMapWithNearestVenue(lat, lng) {
+            const userLatLng = L.latLng(lat, lng);
+            const candidates = markers
+                .filter(({ coords }) => Array.isArray(coords) && coords.length >= 2)
+                .map(({ coords }) => ({
+                    latLng: L.latLng(coords[0], coords[1]),
+                    distance: map.distance(userLatLng, L.latLng(coords[0], coords[1]))
+                }))
+                .sort((a, b) => a.distance - b.distance);
+
+            if (!candidates.length) {
+                map.setView(userLatLng, 13);
+                return;
+            }
+
+            const nearestDistance = candidates[0].distance;
+            const distanceLimit = Math.max(nearestDistance * 1.6, 300);
+            const nearestGroup = candidates.filter(item => item.distance <= distanceLimit).slice(0, 3);
+            const bounds = L.latLngBounds([userLatLng]);
+            nearestGroup.forEach(item => bounds.extend(item.latLng));
+
+            map.fitBounds(bounds, {
+                paddingTopLeft: [56, 56],
+                paddingBottomRight: [56, 96],
+                maxZoom: 14
+            });
+        }
 
         // Custom marker icon (brand blue gradient)
         const pinSvg = `
