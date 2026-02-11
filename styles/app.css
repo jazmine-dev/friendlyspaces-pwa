@@ -1224,7 +1224,7 @@
         /* Back button */
         .detail-back-button {
             position: absolute;
-            top: 12px;
+            top: 22px;
             left: 16px;
             width: 40px;
             height: 40px;
@@ -1232,7 +1232,7 @@
             background: rgba(0, 0, 0, 0.5);
             border: none;
             cursor: pointer;
-            z-index: 20;
+            z-index: 40;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1262,6 +1262,19 @@
             max-height: 420px;
             flex-shrink: 0;
             background: #f0ebe4;
+            transition: height 0.24s ease, min-height 0.24s ease, max-height 0.24s ease;
+        }
+
+        .detail-modal-card.snap-half .detail-hero {
+            height: 33vh;
+            min-height: 210px;
+            max-height: 290px;
+        }
+
+        .detail-modal-card.snap-full .detail-hero {
+            height: 45vh;
+            min-height: 280px;
+            max-height: 420px;
         }
 
         .detail-hero .venue-slider {
@@ -1562,7 +1575,7 @@
         /* Safe area for notched devices */
         @supports (padding-top: env(safe-area-inset-top)) {
             .detail-back-button {
-                top: calc(16px + env(safe-area-inset-top));
+                top: calc(22px + env(safe-area-inset-top));
             }
 
             .detail-content {
