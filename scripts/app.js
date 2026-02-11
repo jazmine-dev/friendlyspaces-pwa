@@ -704,6 +704,21 @@
             document.documentElement.style.setProperty('--app-height', `${Math.round(viewportHeight)}px`);
         }
 
+        function updateBodyScrollLock() {
+            const overlayOpen = introOverlay && !introOverlay.classList.contains('hidden');
+            const detailOpen = detailModal && detailModal.classList.contains('active');
+            const filterSheetOpen = isMobile() && sidebar && sidebar.classList.contains('show');
+            const drawerOpen = menuDrawer && menuDrawer.classList.contains('open');
+            const fullPanelOpen =
+                (suggestView && suggestView.classList.contains('open')) ||
+                (aboutView && aboutView.classList.contains('open')) ||
+                (bugView && bugView.classList.contains('open')) ||
+                (installHelpView && installHelpView.classList.contains('open'));
+
+            const shouldLock = overlayOpen || detailOpen || filterSheetOpen || drawerOpen || fullPanelOpen;
+            document.body.style.overflow = shouldLock ? 'hidden' : 'auto';
+        }
+
         function trackEvent(name, params = {}) {
             if (!analyticsEnabled) return;
             if (typeof gtag === 'function') {
@@ -935,24 +950,28 @@
             if (!menuDrawer || !menuBackdrop) return;
             menuDrawer.classList.add('open');
             menuBackdrop.classList.add('visible');
+            updateBodyScrollLock();
         }
 
         function closeMenu() {
             if (!menuDrawer || !menuBackdrop) return;
             menuDrawer.classList.remove('open');
             menuBackdrop.classList.remove('visible');
+            updateBodyScrollLock();
         }
 
         function openPanel(panel) {
             if (!panel) return;
             panel.classList.add('open');
             panel.setAttribute('aria-hidden', 'false');
+            updateBodyScrollLock();
         }
 
         function closePanel(panel) {
             if (!panel) return;
             panel.classList.remove('open');
             panel.setAttribute('aria-hidden', 'true');
+            updateBodyScrollLock();
         }
 
         function setSuggestRole(role) {
@@ -1047,6 +1066,7 @@
                 updateIntroSlides();
                 introOverlay.classList.remove('hidden');
                 introOverlay.setAttribute('aria-hidden', 'false');
+                updateBodyScrollLock();
             }
         }
 
@@ -1061,20 +1081,21 @@
             }
             introOverlay.classList.add('hidden');
             introOverlay.setAttribute('aria-hidden', 'true');
+            updateBodyScrollLock();
         }
 
         function openFilterSheet() {
             if (!isMobile()) return;
             sidebar.classList.add('show');
             sheetBackdrop.classList.add('visible');
-            document.body.style.overflow = 'hidden';
+            updateBodyScrollLock();
         }
 
         function closeFilterSheet(force = false) {
             if (!isMobile() && !force) return;
             sidebar.classList.remove('show');
             sheetBackdrop.classList.remove('visible');
-            document.body.style.overflow = 'hidden';
+            updateBodyScrollLock();
         }
 
         function handleResize() {
@@ -1082,7 +1103,7 @@
             if (!isMobile()) {
                 closeFilterSheet(true);
             }
-            document.body.style.overflow = 'hidden';
+            updateBodyScrollLock();
             if (mapPanel && !mapPanel.classList.contains('hidden')) {
                 setTimeout(() => map.invalidateSize(), 100);
             }
@@ -1768,8 +1789,8 @@
             detailModal.classList.remove('entering');
 
             // Prevent body scroll
-            document.body.style.overflow = 'hidden';
             document.body.classList.add('detail-open');
+            updateBodyScrollLock();
 
             // Attach event handlers
             const favoriteBtn = detailModalContent.querySelector('.detail-favorite-btn');
@@ -1825,7 +1846,7 @@
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
-                document.body.style.overflow = 'hidden';
+                updateBodyScrollLock();
             }, 300);
         }
 
@@ -1848,8 +1869,8 @@
                     app_version: APP_VERSION
                 });
             }
-            document.body.style.overflow = 'hidden';
             closeDetailModal();
+            updateBodyScrollLock();
             updateMap();
             updateListView();
         }
@@ -2433,6 +2454,7 @@
             updateQuickFilterLabels();
             syncQuickFilterPills();
             setSuggestRole('owner');
+            updateBodyScrollLock();
 
             if (!hasTrackedInitialMapView) {
                 trackEvent('map_view', {
