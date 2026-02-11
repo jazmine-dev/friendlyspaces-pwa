@@ -86,6 +86,7 @@
                     noFavoritesBody: "Tippe auf das Herz, um Orte zu speichern.",
                     favoritesInstall: "Friendly Spaces installieren",
                     favoritesInstallCta: "Zum Homescreen",
+                    nearMe: "In der Nähe",
                     favoriteAdd: "Merken",
                     favoriteRemove: "Gespeichert",
                     filtersActive: (count) => count === 1 ? "1 Filter aktiv" : `${count} Filter aktiv`,
@@ -222,6 +223,7 @@
                     noFavoritesBody: "Touchez le cœur pour enregistrer.",
                     favoritesInstall: "Installer Friendly Spaces",
                     favoritesInstallCta: "Ajouter à l'écran",
+                    nearMe: "A proximité",
                     favoriteAdd: "Enregistrer",
                     favoriteRemove: "Enregistré",
                     filtersActive: (count) => count === 1 ? "1 filtre actif" : `${count} filtres actifs`,
@@ -358,6 +360,7 @@
                     noFavoritesBody: "Tap the heart to save places.",
                     favoritesInstall: "Install Friendly Spaces",
                     favoritesInstallCta: "Add to Home Screen",
+                    nearMe: "Near Me",
                     favoriteAdd: "Save",
                     favoriteRemove: "Saved",
                     filtersActive: (count) => count === 1 ? "1 filter active" : `${count} filters active`,
@@ -579,9 +582,14 @@
         });
         let userLocationHalo = null;
         let userLocationDot = null;
+        let userLocationLatLng = null;
+        let nearMeRadiusMeters = 0;
+        let nearMeActive = false;
 
         function showUserLocation(lat, lng) {
             const latLng = L.latLng(lat, lng);
+            userLocationLatLng = latLng;
+            nearMeRadiusMeters = getNearMeRadiusMeters();
 
             if (!userLocationHalo) {
                 userLocationHalo = L.circle(latLng, {
@@ -1430,6 +1438,7 @@
                 ageRange: [],
                 amenities: []
             };
+            nearMeActive = false;
             searchQuery = '';
             if (searchInput) searchInput.value = '';
             if (topSearchInput) topSearchInput.value = '';
@@ -1458,6 +1467,17 @@
             }
         }
 
+        function getNearMeRadiusMeters() {
+            if (!userLocationLatLng) return 0;
+            const withCoords = venues
+                .filter(v => Array.isArray(v.fallbackCoords) && v.fallbackCoords.length >= 2)
+                .map(v => map.distance(userLocationLatLng, L.latLng(v.fallbackCoords[0], v.fallbackCoords[1])))
+                .sort((a, b) => a - b);
+            if (!withCoords.length) return 0;
+            const nearest = withCoords[0];
+            return Math.min(Math.max(nearest * 1.8, 1500), 7000);
+        }
+
         // Check if venue matches filters
         function venueMatchesFilters(venue) {
             if (activeTab === 'favorites' && !isFavorite(venue.name)) {
@@ -1483,6 +1503,17 @@
                     );
                     if (!hasAllFilters) return false;
                 }
+            }
+
+            if (nearMeActive) {
+                if (!userLocationLatLng || !Array.isArray(venue.fallbackCoords) || venue.fallbackCoords.length < 2) {
+                    return false;
+                }
+                const distance = map.distance(
+                    userLocationLatLng,
+                    L.latLng(venue.fallbackCoords[0], venue.fallbackCoords[1])
+                );
+                if (distance > nearMeRadiusMeters) return false;
             }
 
             return true;
@@ -2390,6 +2421,7 @@
         // Quick filter pills functionality
         const pillFilters = document.getElementById('pill-filters');
         const pillFavorites = document.getElementById('pill-favorites');
+        const pillNearMe = document.getElementById('pill-near-me');
         const quickFilterPills = document.querySelectorAll('.quick-filter-pill[data-filter-category]');
 
         // Update quick filter pill labels based on current language
@@ -2398,6 +2430,8 @@
                 const key = label.dataset.pillLabel;
                 if (key === 'filters') {
                     label.textContent = translate('ui.filtersLabel', 'Filters');
+                } else if (key === 'near-me') {
+                    label.textContent = translate('ui.nearMe', 'Near Me');
                 } else if (key === 'cafe') {
                     label.textContent = translate('filters.options.venueType.cafe', 'Cafe');
                 } else if (key === 'baby') {
@@ -2422,6 +2456,9 @@
             // Update favorites pill active state
             if (pillFavorites) {
                 pillFavorites.classList.toggle('active', activeTab === 'favorites');
+            }
+            if (pillNearMe) {
+                pillNearMe.classList.toggle('active', nearMeActive);
             }
         }
 
@@ -2472,6 +2509,39 @@
                     setActiveView('favorites');
                 }
                 syncQuickFilterPills();
+            });
+        }
+
+        if (pillNearMe) {
+            pillNearMe.addEventListener('click', () => {
+                const toggleNearMe = () => {
+                    nearMeActive = !nearMeActive;
+                    if (nearMeActive) {
+                        setActiveView('map');
+                    }
+                    updateMap();
+                    updateFilterCount();
+                    syncQuickFilterPills();
+                };
+
+                if (!nearMeActive && !userLocationLatLng) {
+                    if (!navigator.geolocation) return;
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                            const { latitude, longitude } = pos.coords;
+                            showUserLocation(latitude, longitude);
+                            centerMapWithNearestVenue(latitude, longitude);
+                            toggleNearMe();
+                        },
+                        () => {
+                            // Ignore location errors
+                        },
+                        { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+                    );
+                    return;
+                }
+
+                toggleNearMe();
             });
         }
 
