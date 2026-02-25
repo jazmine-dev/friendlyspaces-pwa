@@ -1772,7 +1772,7 @@
             if (venue.images && venue.images.length > 0) {
                 const sliderId = `detail-slider-${venue.name.replace(/\s+/g, '-').toLowerCase()}`;
                 const imagesHtml = venue.images.map((img, i) =>
-                    `<img src="${img}" alt="${venue.name}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">`
+                    `<img src="${img}" alt="${venue.name}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" ${i === 0 ? 'fetchpriority="high"' : 'fetchpriority="low"'} width="1200" height="900">`
                 ).join('');
                 const dotsHtml = venue.images.map((_, i) =>
                     `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`
@@ -1899,6 +1899,21 @@
                     </div>
                 </div>
             `;
+        }
+
+        function preloadVenueHeroImages() {
+            const firstImages = [...new Set(
+                venues
+                    .map((venue) => Array.isArray(venue.images) && venue.images.length ? venue.images[0] : null)
+                    .filter(Boolean)
+            )];
+
+            firstImages.forEach((src) => {
+                const img = new Image();
+                img.decoding = 'async';
+                img.loading = 'eager';
+                img.src = src;
+            });
         }
 
         function setDetailSnap(snap) {
@@ -2683,6 +2698,11 @@
             updateFavoritesBadge();
             setLanguage(currentLang, { skipUrlUpdate: true });
             handleResize();
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(preloadVenueHeroImages, { timeout: 2000 });
+            } else {
+                setTimeout(preloadVenueHeroImages, 300);
+            }
             updateQuickFilterLabels();
             syncQuickFilterPills();
             setSuggestRole('owner');
