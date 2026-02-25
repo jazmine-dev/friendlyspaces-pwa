@@ -1617,6 +1617,7 @@
                 ).join('');
                 sliderHtml = `
                     <div class="venue-slider" id="${sliderId}">
+                        <span class="popup-slider-handle" aria-hidden="true"></span>
                         <div class="slider-container">${imagesHtml}</div>
                         ${venue.images.length > 1 ? `
                             <div class="slider-dots">${venue.images.map((_, i) =>

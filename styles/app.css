@@ -1994,10 +1994,12 @@
         .custom-popup .leaflet-popup-content-wrapper {
             max-width: 340px;
             width: clamp(260px, 70vw, 340px);
+            padding: 0;
+            overflow: hidden;
         }
 
         .custom-popup .leaflet-popup-content {
-            margin: 8px 10px;
+            margin: 0;
             max-height: 360px;
             overflow-y: auto;
             overflow-x: hidden;
@@ -2090,6 +2092,26 @@
         .popup-card {
             min-width: 240px;
             max-width: 300px;
+            overflow: hidden;
+            padding: 0 10px 10px;
+        }
+
+        .popup-card .venue-slider {
+            margin: 0 -10px 10px;
+            border-radius: 0;
+        }
+
+        .popup-slider-handle {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(225, 225, 225, 0.95);
+            z-index: 12;
+            pointer-events: none;
         }
 
         .popup-header {
