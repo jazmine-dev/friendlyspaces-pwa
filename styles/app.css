@@ -1214,7 +1214,7 @@
             width: 38px;
             height: 4px;
             border-radius: 999px;
-            background: #d0cbc3;
+            background: #ffffff;
         }
 
         .detail-peek-title {
@@ -2115,7 +2115,7 @@
             width: 34px;
             height: 4px;
             border-radius: 999px;
-            background: rgba(225, 225, 225, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             z-index: 12;
             pointer-events: none;
         }
