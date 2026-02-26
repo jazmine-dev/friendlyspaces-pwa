@@ -1,0 +1,30 @@
+{
+  "name": "friendlyspaces-pwa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sw.js",
+  "scripts": {
+    "build:web": "rm -rf www && mkdir -p www && cp -R index.html manifest.json sw.js data scripts styles assets icons www/",
+    "cap:sync": "npm run build:web && npx cap sync",
+    "cap:android": "npm run build:web && npx cap open android",
+    "cap:ios": "npm run build:web && npx cap open ios",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazmine-dev/friendlyspaces-pwa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jazmine-dev/friendlyspaces-pwa/issues"
+  },
+  "homepage": "https://github.com/jazmine-dev/friendlyspaces-pwa#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0",
+    "@capacitor/ios": "^8.1.0"
+  }
+}
