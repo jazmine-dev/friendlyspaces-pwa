@@ -8,6 +8,8 @@
     "cap:sync": "npm run build:web && npx cap sync",
     "cap:android": "npm run build:web && npx cap open android",
     "cap:ios": "npm run build:web && npx cap open ios",
+    "android:aab": "npm run cap:sync && cd android && ./gradlew bundleRelease",
+    "android:apk": "npm run cap:sync && cd android && ./gradlew assembleRelease",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
