@@ -549,19 +549,15 @@
             `;
             L.DomEvent.disableClickPropagation(container);
             L.DomEvent.disableScrollPropagation(container);
-            container.querySelector('.locate-button').addEventListener('click', () => {
-                if (!navigator.geolocation) return;
-                navigator.geolocation.getCurrentPosition(
-                    (pos) => {
-                        const { latitude, longitude } = pos.coords;
-                        showUserLocation(latitude, longitude);
-                        centerMapWithNearestVenue(latitude, longitude);
-                    },
-                    () => {
-                        // Ignore location errors
-                    },
-                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-                );
+            container.querySelector('.locate-button').addEventListener('click', async () => {
+                try {
+                    const pos = await getCurrentLocation();
+                    const { latitude, longitude } = pos.coords;
+                    showUserLocation(latitude, longitude);
+                    centerMapWithNearestVenue(latitude, longitude);
+                } catch (err) {
+                    // Ignore location errors
+                }
             });
             return container;
         };
@@ -818,6 +814,35 @@
             if (isNative && isAndroid) {
                 document.body.classList.add('native-android');
             }
+        }
+
+        async function getCurrentLocation() {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const geolocationPlugin = cap?.Plugins?.Geolocation;
+
+            if (isNative && geolocationPlugin?.getCurrentPosition) {
+                if (geolocationPlugin.requestPermissions) {
+                    await geolocationPlugin.requestPermissions();
+                }
+                return geolocationPlugin.getCurrentPosition({
+                    enableHighAccuracy: true,
+                    timeout: 8000,
+                    maximumAge: 60000
+                });
+            }
+
+            if (!navigator.geolocation) {
+                throw new Error('Geolocation is unavailable');
+            }
+
+            return new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(
+                    resolve,
+                    reject,
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+                );
+            });
         }
 
         function setAppShellHeight() {
@@ -2650,21 +2675,17 @@
         };
 
         if (sidebarNearMe) {
-            sidebarNearMe.addEventListener('click', () => {
+            sidebarNearMe.addEventListener('click', async () => {
                 if (!nearMeActive && !userLocationLatLng) {
-                    if (!navigator.geolocation) return;
-                    navigator.geolocation.getCurrentPosition(
-                        (pos) => {
-                            const { latitude, longitude } = pos.coords;
-                            showUserLocation(latitude, longitude);
-                            centerMapWithNearestVenue(latitude, longitude);
-                            toggleNearMe();
-                        },
-                        () => {
-                            // Ignore location errors
-                        },
-                        { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-                    );
+                    try {
+                        const pos = await getCurrentLocation();
+                        const { latitude, longitude } = pos.coords;
+                        showUserLocation(latitude, longitude);
+                        centerMapWithNearestVenue(latitude, longitude);
+                        toggleNearMe();
+                    } catch (err) {
+                        // Ignore location errors
+                    }
                     return;
                 }
 
