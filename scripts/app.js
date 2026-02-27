@@ -320,17 +320,19 @@
                     bugSubmit: "Send",
                     partnerCta: "Inquire about partnerships",
                     partnerSubject: "Partnership Inquiry",
-                    introTitle: "Welcome to Friendly Spaces",
-                    introText: "Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.",
+                    introTitle: "What is Friendly Spaces?",
+                    introText: "Discover certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Every location is audited for play areas, changing facilities, stroller access, and a welcoming atmosphere.",
                     introInstallTitle: "Install for faster access",
                     introInstallIosLabel: "iPhone:",
                     introInstallIosText: "Open in Safari -> tap Share -> Add to Home Screen.",
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
-                    introMapTitle: "Find the right place fast",
-                    introMapText: "Use List view for a quick overview of locations and easy comparison. Select Map view to explore places across cities and discover locations near you. Use the search bar to quickly find places by city, venue name, or address. Use Filters to narrow results to your specific needs.",
-                    introSuggestTitle: "Help us grow Friendly Spaces",
-                    introSuggestText: "Know a great family-friendly place? Open the menu and tap Suggest a space to recommend a new location.",
+                    introMapTitle: "Explore locations",
+                    introMapText: "Toggle between Map view to explore cities and discover places near you, or List view for a quick comparison of locations. Tap any venue to see full details and amenities.",
+                    introSuggestTitle: "Find your perfect spot",
+                    introSuggestText: "Use the search bar to find places by city or venue name. Apply Filters to match your needs, including stroller access, outdoor seating, play areas, and more. Save favorites for easy access.",
+                    introGrowTitle: "Help us grow Friendly Spaces",
+                    introGrowText: "Know a great family-friendly place? Open the menu and tap Suggest a Space to recommend a new location. Your suggestions help other families discover wonderful places.",
                     introBack: "Back",
                     introNext: "Next",
                     introDone: "Done",
@@ -753,6 +755,7 @@
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
         const sidebar = document.getElementById('sidebar');
+        const filtersContainer = document.getElementById('filters-container');
         const sheetBackdrop = document.getElementById('sheet-backdrop');
         const mapPanel = document.getElementById('map');
         const listPanel = document.getElementById('list-view');
@@ -790,6 +793,8 @@
         const bugForm = document.getElementById('bug-form');
         const aboutPartner = document.getElementById('about-partner');
         const introOverlay = document.getElementById('intro-overlay');
+        const introCard = document.querySelector('.intro-card');
+        const introSlidesContainer = document.getElementById('intro-slides');
         const introClose = document.getElementById('intro-close');
         const introSkip = document.getElementById('intro-skip');
         const introSlides = Array.from(document.querySelectorAll('[data-intro-slide]'));
@@ -799,6 +804,9 @@
         const suggestRoleButtons = document.querySelectorAll('[data-suggest-role]');
         const ownerFields = document.getElementById('owner-fields');
         let introSlideIndex = 0;
+        let introTouchStartX = 0;
+        let introTouchStartY = 0;
+        let introWheelLockUntil = 0;
         let currentDetailSnap = 'half';
 
         // City coordinates for zoom
@@ -807,18 +815,47 @@
             'basel': [47.5596, 7.5886, 13]
         };
 
-        const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+        const isMobile = () =>
+            window.matchMedia('(max-width: 768px), (orientation: landscape) and (max-height: 600px)').matches;
+        const isCompactLandscape = () =>
+            window.matchMedia('(orientation: landscape) and (max-height: 600px)').matches;
         const APP_VERSION = 'pwa-1.0';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
+        const BRAND_STATUS_COLOR = '#1E52BA';
 
-        function applyNativeAndroidInsetFallback() {
+        function isNativeAndroidPlatform() {
             const cap = window.Capacitor;
             const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
             const isAndroid = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'android';
-            if (isNative && isAndroid) {
+            return isNative && isAndroid;
+        }
+
+        function getStatusBarPlugin() {
+            return window.Capacitor?.Plugins?.StatusBar;
+        }
+
+        function applyNativeAndroidInsetFallback() {
+            if (isNativeAndroidPlatform()) {
                 document.body.classList.add('native-android');
+            }
+        }
+
+        async function updateNativeStatusBarAppearance() {
+            if (!isNativeAndroidPlatform()) return;
+
+            const statusBar = getStatusBarPlugin();
+            if (!statusBar?.setStyle || !statusBar?.setBackgroundColor) return;
+
+            try {
+                if (statusBar.setOverlaysWebView) {
+                    await statusBar.setOverlaysWebView({ overlay: false });
+                }
+                await statusBar.setStyle({ style: 'DARK' });
+                await statusBar.setBackgroundColor({ color: BRAND_STATUS_COLOR });
+            } catch (err) {
+                // Ignore status bar plugin failures to keep app interactions unaffected.
             }
         }
 
@@ -1059,6 +1096,10 @@
             if (introSuggestTitle) introSuggestTitle.textContent = translate('ui.introSuggestTitle', introSuggestTitle.textContent);
             const introSuggestText = document.getElementById('intro-suggest-text');
             if (introSuggestText) introSuggestText.textContent = translate('ui.introSuggestText', introSuggestText.textContent);
+            const introGrowTitle = document.getElementById('intro-grow-title');
+            if (introGrowTitle) introGrowTitle.textContent = translate('ui.introGrowTitle', introGrowTitle.textContent);
+            const introGrowText = document.getElementById('intro-grow-text');
+            if (introGrowText) introGrowText.textContent = translate('ui.introGrowText', introGrowText.textContent);
             const introSkipLabel = document.getElementById('intro-skip-label');
             if (introSkipLabel) introSkipLabel.textContent = translate('ui.introSkip', introSkipLabel.textContent);
             if (introPrev) introPrev.textContent = translate('ui.introBack', introPrev.textContent);
@@ -1124,6 +1165,7 @@
             panel.classList.add('open');
             panel.setAttribute('aria-hidden', 'false');
             updateBodyScrollLock();
+            updateNativeStatusBarAppearance();
         }
 
         function closePanel(panel) {
@@ -1131,6 +1173,7 @@
             panel.classList.remove('open');
             panel.setAttribute('aria-hidden', 'true');
             updateBodyScrollLock();
+            updateNativeStatusBarAppearance();
         }
 
         function setSuggestRole(role) {
@@ -1243,8 +1286,24 @@
             updateBodyScrollLock();
         }
 
+        function goToPrevIntroSlide() {
+            if (introSlideIndex === 0) return;
+            introSlideIndex -= 1;
+            updateIntroSlides();
+        }
+
+        function goToNextIntroSlide() {
+            if (introSlideIndex >= introSlides.length - 1) {
+                closeIntro();
+                return;
+            }
+            introSlideIndex += 1;
+            updateIntroSlides();
+        }
+
         function openFilterSheet() {
             if (!isMobile()) return;
+            sidebar.classList.remove('expanded');
             sidebar.classList.add('show');
             sheetBackdrop.classList.add('visible');
             updateBodyScrollLock();
@@ -1252,9 +1311,16 @@
 
         function closeFilterSheet(force = false) {
             if (!isMobile() && !force) return;
+            sidebar.classList.remove('expanded');
             sidebar.classList.remove('show');
             sheetBackdrop.classList.remove('visible');
             updateBodyScrollLock();
+        }
+
+        function expandFilterSheet() {
+            if (!isMobile() || !isCompactLandscape()) return;
+            if (!sidebar.classList.contains('show')) return;
+            sidebar.classList.add('expanded');
         }
 
         function handleResize() {
@@ -1964,9 +2030,9 @@
             if (!detailModal) return;
             const card = detailModal.querySelector('.detail-modal-card');
             if (!card) return;
-            const normalized = ['peek', 'half', 'full'].includes(snap) ? snap : 'half';
+            const normalized = ['half', 'full'].includes(snap) ? snap : 'half';
             currentDetailSnap = normalized;
-            card.classList.remove('snap-peek', 'snap-half', 'snap-full');
+            card.classList.remove('snap-half', 'snap-full');
             card.classList.add(`snap-${normalized}`);
             if (normalized !== 'full' && detailModalContent) {
                 detailModalContent.scrollTop = 0;
@@ -1974,7 +2040,7 @@
         }
 
         function stepDetailSnap(direction) {
-            const order = ['peek', 'half', 'full'];
+            const order = ['half', 'full'];
             const idx = Math.max(0, order.indexOf(currentDetailSnap));
             const next = Math.min(order.length - 1, Math.max(0, idx + direction));
             setDetailSnap(order[next]);
@@ -2001,6 +2067,8 @@
             // Force reflow then activate
             detailModal.offsetHeight;
             detailModal.classList.add('active');
+            const card = detailModal.querySelector('.detail-modal-card');
+            if (card) card.classList.remove('closing');
             setDetailSnap(source === 'map_pin' ? 'half' : 'full');
 
             // Prevent body scroll
@@ -2041,14 +2109,13 @@
 
         function closeDetailModal() {
             if (!detailModal) return;
-
-            detailModal.style.opacity = '0';
-            if (isMobile()) setDetailSnap('peek');
+            const card = detailModal.querySelector('.detail-modal-card');
+            if (card) card.classList.add('closing');
 
             setTimeout(() => {
                 detailModal.classList.remove('active');
                 detailModal.setAttribute('aria-hidden', 'true');
-                detailModal.style.opacity = '';
+                if (card) card.classList.remove('closing');
                 if (detailPeekTitle) detailPeekTitle.textContent = '';
 
                 // Restore body scroll
@@ -2099,7 +2166,7 @@
                 const touch = e.touches[0];
                 const sidebarTop = sidebar.getBoundingClientRect().top;
                 const startInHandleZone = touch.clientY <= sidebarTop + 48;
-                const atTop = sidebar.scrollTop <= 0;
+                const atTop = !filtersContainer || filtersContainer.scrollTop <= 0;
                 if (!startInHandleZone || !atTop) {
                     sheetTouchStartY = 0;
                     sheetTouchStartX = 0;
@@ -2138,6 +2205,14 @@
                 sheetTouchStartX = 0;
                 isSheetSwiping = false;
             }, { passive: true });
+        }
+
+        if (filtersContainer) {
+            const expandOnInteraction = () => expandFilterSheet();
+            filtersContainer.addEventListener('touchstart', expandOnInteraction, { passive: true });
+            filtersContainer.addEventListener('scroll', expandOnInteraction, { passive: true });
+            filtersContainer.addEventListener('wheel', expandOnInteraction, { passive: true });
+            filtersContainer.addEventListener('click', expandOnInteraction);
         }
 
         window.addEventListener('resize', handleResize);
@@ -2322,21 +2397,10 @@
             introClose.addEventListener('click', closeIntro);
         }
         if (introPrev) {
-            introPrev.addEventListener('click', () => {
-                if (introSlideIndex === 0) return;
-                introSlideIndex -= 1;
-                updateIntroSlides();
-            });
+            introPrev.addEventListener('click', goToPrevIntroSlide);
         }
         if (introNext) {
-            introNext.addEventListener('click', () => {
-                if (introSlideIndex >= introSlides.length - 1) {
-                    closeIntro();
-                    return;
-                }
-                introSlideIndex += 1;
-                updateIntroSlides();
-            });
+            introNext.addEventListener('click', goToNextIntroSlide);
         }
         introDots.forEach((dot) => {
             dot.addEventListener('click', () => {
@@ -2352,6 +2416,37 @@
                     closeIntro();
                 }
             });
+        }
+        if (introSlidesContainer) {
+            introSlidesContainer.addEventListener('wheel', (event) => {
+                if (!introOverlay || introOverlay.classList.contains('hidden')) return;
+                if (Math.abs(event.deltaY) < 12) return;
+                const now = Date.now();
+                if (now < introWheelLockUntil) return;
+                introWheelLockUntil = now + 320;
+                event.preventDefault();
+                if (event.deltaY > 0) goToNextIntroSlide();
+                else goToPrevIntroSlide();
+            }, { passive: false });
+        }
+        if (introCard) {
+            introCard.addEventListener('touchstart', (event) => {
+                if (!introOverlay || introOverlay.classList.contains('hidden')) return;
+                const touch = event.touches[0];
+                introTouchStartX = touch.clientX;
+                introTouchStartY = touch.clientY;
+            }, { passive: true });
+
+            introCard.addEventListener('touchend', (event) => {
+                if (!introOverlay || introOverlay.classList.contains('hidden')) return;
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - introTouchStartX;
+                const deltaY = touch.clientY - introTouchStartY;
+                const horizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY);
+                if (!horizontalSwipe) return;
+                if (deltaX < 0) goToNextIntroSlide();
+                else goToPrevIntroSlide();
+            }, { passive: true });
         }
         if (bugClose) {
             bugClose.addEventListener('click', () => closePanel(bugView));
@@ -2451,7 +2546,7 @@
                 return true;
             }
             if (deltaY > 44) {
-                if (currentDetailSnap === 'peek') closeDetailModal();
+                if (currentDetailSnap === 'half') closeDetailModal();
                 else stepDetailSnap(-1);
                 return true;
             }
@@ -2729,6 +2824,7 @@
 
         function startApp() {
             applyNativeAndroidInsetFallback();
+            updateNativeStatusBarAppearance();
             setAppShellHeight();
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', setAppShellHeight);

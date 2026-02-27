@@ -31,22 +31,27 @@
             <img class="intro-wordmark" src="assets/FriendlySpaces_blue.png" alt="Friendly Spaces">
             <div class="intro-slides" id="intro-slides">
                 <section class="intro-slide active" data-intro-slide="0">
-                    <h2 id="intro-title">Welcome to Friendly Spaces</h2>
-                    <p id="intro-text">Your guide to certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Check out our map to discover places that truly welcome families with young children, from safe play areas to convenient changing facilities.</p>
+                    <h2 id="intro-title">What is Friendly Spaces?</h2>
+                    <p id="intro-text">Discover certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Every location is audited for play areas, changing facilities, stroller access, and a welcoming atmosphere.</p>
                 </section>
                 <section class="intro-slide" data-intro-slide="1">
-                    <h2 id="intro-map-title">Find the right place fast</h2>
-                    <p id="intro-map-text">Use List view for a quick overview of locations and easy comparison. Select Map view to explore places across cities and discover locations near you. Use the search bar to quickly find places by city, venue name, or address. Use Filters to narrow results to your specific needs.</p>
+                    <h2 id="intro-map-title">Explore locations</h2>
+                    <p id="intro-map-text">Toggle between Map view to explore cities and discover places near you, or List view for a quick comparison of locations. Tap any venue to see full details and amenities.</p>
                 </section>
                 <section class="intro-slide" data-intro-slide="2">
-                    <h2 id="intro-suggest-title">Help us grow Friendly Spaces</h2>
-                    <p id="intro-suggest-text">Know a great family-friendly place? Open the menu and tap Suggest a space to recommend a new location.</p>
+                    <h2 id="intro-suggest-title">Find your perfect spot</h2>
+                    <p id="intro-suggest-text">Use the search bar to find places by city or venue name. Apply Filters to match your needs—stroller access, outdoor seating, play areas, and more. Save favorites for easy access.</p>
+                </section>
+                <section class="intro-slide" data-intro-slide="3">
+                    <h2 id="intro-grow-title">Help us grow Friendly Spaces</h2>
+                    <p id="intro-grow-text">Know a great family-friendly place? Open the menu and tap Suggest a Space to recommend a new location. Your suggestions help other families discover wonderful places.</p>
                 </section>
             </div>
             <div class="intro-dots" role="tablist" aria-label="Onboarding slides">
                 <button class="intro-dot active" type="button" data-intro-dot="0" aria-label="Slide 1"></button>
                 <button class="intro-dot" type="button" data-intro-dot="1" aria-label="Slide 2"></button>
                 <button class="intro-dot" type="button" data-intro-dot="2" aria-label="Slide 3"></button>
+                <button class="intro-dot" type="button" data-intro-dot="3" aria-label="Slide 4"></button>
             </div>
             <div class="intro-actions">
                 <button class="intro-nav" type="button" id="intro-prev">Back</button>
@@ -73,47 +78,49 @@
             </svg>
         </button>
     </header>
-    <div id="top-search-bar">
-        <div id="top-search-container">
-            <input type="text" id="top-search-input" placeholder="Search by name, city, or address...">
-            <span id="top-search-icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
-                </svg>
-            </span>
-            <div id="top-search-dropdown"></div>
+    <div id="top-tools">
+        <div id="top-search-bar">
+            <div id="top-search-container">
+                <input type="text" id="top-search-input" placeholder="Search by name, city, or address...">
+                <span id="top-search-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+                    </svg>
+                </span>
+                <div id="top-search-dropdown"></div>
+            </div>
         </div>
-    </div>
-    <div id="quick-filters-row">
-        <button class="quick-filter-pill" id="pill-filters" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="4" y1="6" x2="20" y2="6"></line>
-                <line x1="4" y1="12" x2="20" y2="12"></line>
-                <line x1="4" y1="18" x2="20" y2="18"></line>
-                <circle cx="8" cy="6" r="2" fill="currentColor"></circle>
-                <circle cx="16" cy="12" r="2" fill="currentColor"></circle>
-                <circle cx="10" cy="18" r="2" fill="currentColor"></circle>
-            </svg>
-            <span data-pill-label="filters">Filters</span>
-        </button>
-        <button class="quick-filter-pill" id="pill-favorites" type="button" aria-label="Favorites">
-            <svg class="quick-filter-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
-            </svg>
-        </button>
-        <button class="quick-filter-pill" id="pill-cafe" data-filter-category="venueType" data-filter-value="cafe" type="button">
-            <span data-pill-label="cafe">Cafe</span>
-        </button>
-        <button class="quick-filter-pill" id="pill-baby" data-filter-category="ageRange" data-filter-value="baby" type="button">
-            <span data-pill-label="baby">Baby</span>
-        </button>
-        <button class="quick-filter-pill" id="pill-toddler" data-filter-category="ageRange" data-filter-value="toddler" type="button">
-            <span data-pill-label="toddler">Toddler</span>
-        </button>
-        <button class="quick-filter-pill" id="pill-play-area" data-filter-category="amenities" data-filter-value="play-area" type="button">
-            <span data-pill-label="play-area">Play Area</span>
-        </button>
+        <div id="quick-filters-row">
+            <button class="quick-filter-pill" id="pill-filters" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                    <circle cx="8" cy="6" r="2" fill="currentColor"></circle>
+                    <circle cx="16" cy="12" r="2" fill="currentColor"></circle>
+                    <circle cx="10" cy="18" r="2" fill="currentColor"></circle>
+                </svg>
+                <span data-pill-label="filters">Filters</span>
+            </button>
+            <button class="quick-filter-pill" id="pill-favorites" type="button" aria-label="Favorites">
+                <svg class="quick-filter-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                </svg>
+            </button>
+            <button class="quick-filter-pill" id="pill-cafe" data-filter-category="venueType" data-filter-value="cafe" type="button">
+                <span data-pill-label="cafe">Cafe</span>
+            </button>
+            <button class="quick-filter-pill" id="pill-baby" data-filter-category="ageRange" data-filter-value="baby" type="button">
+                <span data-pill-label="baby">Baby</span>
+            </button>
+            <button class="quick-filter-pill" id="pill-toddler" data-filter-category="ageRange" data-filter-value="toddler" type="button">
+                <span data-pill-label="toddler">Toddler</span>
+            </button>
+            <button class="quick-filter-pill" id="pill-play-area" data-filter-category="amenities" data-filter-value="play-area" type="button">
+                <span data-pill-label="play-area">Play Area</span>
+            </button>
+        </div>
     </div>
     <div id="sheet-backdrop"></div>
     <div id="container">
@@ -361,19 +368,19 @@
             <p class="suggest-tagline" id="install-help-tagline">Quick tips to get the most from the app.</p>
             <div class="install-help-block">
                 <h3 id="install-help-ios-title">Find places quickly</h3>
-                <ol>
+                <ul>
                     <li id="install-help-ios-step-1">Use Map view to explore pins near you.</li>
                     <li id="install-help-ios-step-2">Switch to List view to scan places faster.</li>
                     <li id="install-help-ios-step-3">Use Search and Filters to narrow results.</li>
-                </ol>
+                </ul>
             </div>
             <div class="install-help-block">
                 <h3 id="install-help-android-title">Save favorites</h3>
-                <ol>
+                <ul>
                     <li id="install-help-android-step-1">Tap the heart on a place to save it.</li>
                     <li id="install-help-android-step-2">Open Favorites to quickly find saved places.</li>
                     <li id="install-help-android-step-3">Tap the heart again to remove a favorite.</li>
-                </ol>
+                </ul>
             </div>
             <div class="install-help-block">
                 <h3 id="install-help-use-title">Suggest a venue</h3>
@@ -412,9 +419,10 @@
                 <span class="detail-sheet-handle"></span>
             </div>
             <div class="detail-peek-title" id="detail-peek-title" aria-hidden="true"></div>
-            <button class="detail-back-button" id="detail-modal-close" type="button" aria-label="Go back">
+            <button class="detail-close-button" id="detail-modal-close" type="button" aria-label="Close profile">
                 <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
             <div id="detail-modal-content"></div>
