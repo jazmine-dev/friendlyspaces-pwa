@@ -1,5 +1,12 @@
 {
   "appId": "ch.friendlyspaces.app",
   "appName": "Friendly Spaces",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false,
+      "backgroundColor": "#1E52BA",
+      "style": "LIGHT"
+    }
+  }
 }
