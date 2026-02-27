@@ -811,6 +811,15 @@
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
 
+        function applyNativeAndroidInsetFallback() {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const isAndroid = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'android';
+            if (isNative && isAndroid) {
+                document.body.classList.add('native-android');
+            }
+        }
+
         function setAppShellHeight() {
             const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
             document.documentElement.style.setProperty('--app-height', `${Math.round(viewportHeight)}px`);
@@ -2688,6 +2697,7 @@
         };
 
         function startApp() {
+            applyNativeAndroidInsetFallback();
             setAppShellHeight();
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', setAppShellHeight);

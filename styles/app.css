@@ -18,6 +18,11 @@
             background: #f7f5f1;
         }
 
+        /* Android native WebView fallback: force content below status bar */
+        body.native-android {
+            padding-top: max(env(safe-area-inset-top, 0px), 24px);
+        }
+
         .intro-overlay {
             position: fixed;
             inset: 0;
