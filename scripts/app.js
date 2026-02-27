@@ -328,7 +328,7 @@
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
                     introMapTitle: "Find the right place fast",
-                    introMapText: "Start in List view, or use Map view to navigate to different cities and explore locations near you. Use Search to quickly find locations in a specific city.",
+                    introMapText: "Use List view for a quick overview of locations and easy comparison. Select Map view to explore places across cities and discover locations near you. Use the search bar to quickly find places by city, venue name, or address. Use Filters to narrow results to your specific needs.",
                     introSuggestTitle: "Help us grow Friendly Spaces",
                     introSuggestText: "Know a great family-friendly place? Open the menu and tap Suggest a space to recommend a new location.",
                     introBack: "Back",
