@@ -5,6 +5,12 @@ def keystorePropertiesFile = rootProject.file('keystore.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
+def appVersionName = "1.0.1"
+def versionParts = appVersionName.tokenize('.').collect { it as int }
+while (versionParts.size() < 3) {
+    versionParts << 0
+}
+def appVersionCode = (versionParts[0] * 10000) + (versionParts[1] * 100) + versionParts[2]
 
 android {
     namespace = "ch.friendlyspaces.app"
@@ -13,8 +19,8 @@ android {
         applicationId "ch.friendlyspaces.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
