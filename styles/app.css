@@ -22,10 +22,12 @@
            move inset into header so status bar area stays brand blue */
         body.native-android {
             padding-top: 0;
+            --native-top-safe: max(env(safe-area-inset-top, 0px), 24px);
+            --native-bottom-safe: max(env(safe-area-inset-bottom, 0px), 10px);
         }
 
         body.native-android #app-header {
-            padding-top: calc(16px + max(env(safe-area-inset-top, 0px), 24px));
+            padding-top: calc(16px + var(--native-top-safe));
         }
 
         .intro-overlay {
@@ -288,8 +290,8 @@
         }
 
         body.native-android #menu-drawer {
-            padding-top: calc(26px + max(env(safe-area-inset-top, 0px), 16px));
-            padding-bottom: calc(22px + max(env(safe-area-inset-bottom, 0px), 10px));
+            padding-top: calc(26px + var(--native-top-safe));
+            padding-bottom: calc(22px + var(--native-bottom-safe));
         }
 
         #menu-drawer.open {
@@ -430,6 +432,10 @@
             background: #ffffff;
         }
 
+        body.native-android .fullscreen-header {
+            padding-top: calc(16px + var(--native-top-safe));
+        }
+
         .suggest-header {
             justify-content: center;
             position: relative;
@@ -478,6 +484,10 @@
             padding: 6px 10px;
             font-size: 16px;
             line-height: 1;
+        }
+
+        body.native-android .suggest-header .fullscreen-close {
+            top: calc(12px + var(--native-top-safe));
         }
 
         .fullscreen-body {
@@ -1180,6 +1190,10 @@
             transition: opacity 0.2s ease;
         }
 
+        body.native-android #detail-modal {
+            padding-top: var(--native-top-safe);
+        }
+
         #detail-modal.active {
             display: flex;
             opacity: 1;
@@ -1201,6 +1215,10 @@
             transform: translateY(var(--detail-sheet-offset, 38%));
             transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
             will-change: transform;
+        }
+
+        body.native-android .detail-modal-card {
+            height: calc(var(--app-height, 100dvh) - var(--native-top-safe));
         }
 
         .detail-modal-card.snap-peek {
@@ -1805,7 +1823,7 @@
             }
 
             body.native-android #app-header {
-                padding-top: calc(12px + max(env(safe-area-inset-top, 0px), 24px));
+                padding-top: calc(12px + var(--native-top-safe));
             }
 
             #app-title {
