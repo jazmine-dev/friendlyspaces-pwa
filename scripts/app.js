@@ -50,7 +50,9 @@
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Oben auf Zum Home-Bildschirm tippen. Die App wird automatisch installiert.",
                     introMapTitle: "Schnell den passenden Ort finden",
-                    introMapText: "Nutze die Listenansicht beim Start oder wechsle zur Kartenansicht für Pins in deiner Nähe. Mit den Filtern findest du schneller passende Orte. Speichere Lieblingsorte als Favoriten, damit du sie jederzeit wiederfindest.",
+                    introMapText: "Starte in der Listenansicht oder nutze die Kartenansicht, um durch verschiedene Städte zu navigieren und Orte in deiner Nähe zu entdecken. Mit der Suche findest du Orte in einer bestimmten Stadt besonders schnell.",
+                    introSuggestTitle: "Hilf uns, Friendly Spaces zu erweitern",
+                    introSuggestText: "Kennst du einen tollen familienfreundlichen Ort? Öffne das Menü und tippe auf Ort vorschlagen, um einen neuen Ort zu empfehlen.",
                     introBack: "Zurück",
                     introNext: "Weiter",
                     introDone: "Fertig",
@@ -187,7 +189,9 @@
                     introInstallAndroidLabel: "Android :",
                     introInstallAndroidText: "Appuyez en haut sur Ajouter à l'écran d'accueil. L'app s'installe automatiquement.",
                     introMapTitle: "Trouvez le bon lieu rapidement",
-                    introMapText: "Utilisez la vue liste au démarrage ou passez à la vue carte pour voir les épingles autour de vous. Les filtres vous aident à trouver plus vite le bon lieu. Enregistrez vos lieux préférés en favoris pour les retrouver facilement.",
+                    introMapText: "Commencez en vue Liste ou utilisez la vue Carte pour naviguer entre les villes et explorer des lieux près de vous. Utilisez la recherche pour trouver rapidement des lieux dans une ville précise.",
+                    introSuggestTitle: "Aidez-nous à faire grandir Friendly Spaces",
+                    introSuggestText: "Vous connaissez un lieu familial génial ? Ouvrez le menu et touchez Suggérer un espace pour recommander un nouveau lieu.",
                     introBack: "Retour",
                     introNext: "Suivant",
                     introDone: "Terminer",
@@ -324,7 +328,9 @@
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
                     introMapTitle: "Find the right place fast",
-                    introMapText: "Browse all our Friendly Spaces in List view, or switch to Map view to explore nearby pins. Use Filters to find the right places faster. Save your beloved spots to Favorites so you can quickly find them again.",
+                    introMapText: "Start in List view, or use Map view to navigate to different cities and explore locations near you. Use Search to quickly find locations in a specific city.",
+                    introSuggestTitle: "Help us grow Friendly Spaces",
+                    introSuggestText: "Know a great family-friendly place? Open the menu and tap Suggest a space to recommend a new location.",
                     introBack: "Back",
                     introNext: "Next",
                     introDone: "Done",
@@ -1049,6 +1055,10 @@
             if (introMapTitle) introMapTitle.textContent = translate('ui.introMapTitle', introMapTitle.textContent);
             const introMapText = document.getElementById('intro-map-text');
             if (introMapText) introMapText.textContent = translate('ui.introMapText', introMapText.textContent);
+            const introSuggestTitle = document.getElementById('intro-suggest-title');
+            if (introSuggestTitle) introSuggestTitle.textContent = translate('ui.introSuggestTitle', introSuggestTitle.textContent);
+            const introSuggestText = document.getElementById('intro-suggest-text');
+            if (introSuggestText) introSuggestText.textContent = translate('ui.introSuggestText', introSuggestText.textContent);
             const introSkipLabel = document.getElementById('intro-skip-label');
             if (introSkipLabel) introSkipLabel.textContent = translate('ui.introSkip', introSkipLabel.textContent);
             if (introPrev) introPrev.textContent = translate('ui.introBack', introPrev.textContent);
