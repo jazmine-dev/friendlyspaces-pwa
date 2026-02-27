@@ -287,6 +287,11 @@
             gap: 16px;
         }
 
+        body.native-android #menu-drawer {
+            padding-top: calc(26px + max(env(safe-area-inset-top, 0px), 16px));
+            padding-bottom: calc(22px + max(env(safe-area-inset-bottom, 0px), 10px));
+        }
+
         #menu-drawer.open {
             transform: translateX(0);
         }
@@ -352,6 +357,10 @@
         .menu-footer {
             margin-top: auto;
             padding-top: 6px;
+        }
+
+        body.native-android .menu-footer {
+            padding-bottom: 12px;
         }
 
         .menu-link {
