@@ -42,17 +42,19 @@
                     bugSubmit: "Senden",
                     partnerCta: "Partnerschaft anfragen",
                     partnerSubject: "Partnerschaftsanfrage",
-                    introTitle: "Willkommen bei Friendly Spaces",
-                    introText: "Dein Guide zu zertifizierten familienfreundlichen Cafés, Restaurants, Geschäften und Kulturorten in der ganzen Schweiz.",
+                    introTitle: "Was ist Friendly Spaces?",
+                    introText: "Entdecke zertifizierte familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz. Jeder Ort wird auf Spielbereiche, Wickelmöglichkeiten, Kinderwagenzugang und eine einladende Atmosphäre geprüft.",
                     introInstallTitle: "Fuer schnelleren Zugriff installieren",
                     introInstallIosLabel: "iPhone:",
                     introInstallIosText: "In Safari öffnen -> auf Teilen tippen -> Zum Home-Bildschirm wählen.",
                     introInstallAndroidLabel: "Android:",
                     introInstallAndroidText: "Oben auf Zum Home-Bildschirm tippen. Die App wird automatisch installiert.",
-                    introMapTitle: "Schnell den passenden Ort finden",
-                    introMapText: "Starte in der Listenansicht oder nutze die Kartenansicht, um durch verschiedene Städte zu navigieren und Orte in deiner Nähe zu entdecken. Mit der Suche findest du Orte in einer bestimmten Stadt besonders schnell.",
-                    introSuggestTitle: "Hilf uns, Friendly Spaces zu erweitern",
-                    introSuggestText: "Kennst du einen tollen familienfreundlichen Ort? Öffne das Menü und tippe auf Ort vorschlagen, um einen neuen Ort zu empfehlen.",
+                    introMapTitle: "Orte entdecken",
+                    introMapText: "Wechsle zwischen Kartenansicht, um Städte und Orte in deiner Nähe zu entdecken, und Listenansicht für einen schnellen Vergleich. Tippe auf einen Ort, um alle Details und Ausstattungen zu sehen.",
+                    introSuggestTitle: "Finde deinen passenden Ort",
+                    introSuggestText: "Nutze die Suchleiste, um Orte nach Stadt oder Namen zu finden. Verwende Filter für Kinderwagenzugang, Aussenplätze, Spielbereiche und mehr. Speichere Favoriten für schnellen Zugriff.",
+                    introGrowTitle: "Hilf uns, Friendly Spaces zu erweitern",
+                    introGrowText: "Kennst du einen tollen familienfreundlichen Ort? Öffne das Menü und tippe auf Ort vorschlagen, um einen neuen Ort zu empfehlen. Deine Vorschläge helfen anderen Familien, wunderbare Orte zu entdecken.",
                     introBack: "Zurück",
                     introNext: "Weiter",
                     introDone: "Fertig",
@@ -181,17 +183,19 @@
                     bugSubmit: "Envoyer",
                     partnerCta: "Demande de partenariat",
                     partnerSubject: "Demande de partenariat",
-                    introTitle: "Bienvenue sur Friendly Spaces",
-                    introText: "Votre guide des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse.",
+                    introTitle: "Qu’est-ce que Friendly Spaces ?",
+                    introText: "Découvrez des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse. Chaque lieu est audité pour les espaces de jeu, les équipements de change, l’accès poussette et une ambiance accueillante.",
                     introInstallTitle: "Installez pour un accès plus rapide",
                     introInstallIosLabel: "iPhone :",
                     introInstallIosText: "Ouvrez dans Safari -> appuyez sur Partager -> Ajouter à l'écran d'accueil.",
                     introInstallAndroidLabel: "Android :",
                     introInstallAndroidText: "Appuyez en haut sur Ajouter à l'écran d'accueil. L'app s'installe automatiquement.",
-                    introMapTitle: "Trouvez le bon lieu rapidement",
-                    introMapText: "Commencez en vue Liste ou utilisez la vue Carte pour naviguer entre les villes et explorer des lieux près de vous. Utilisez la recherche pour trouver rapidement des lieux dans une ville précise.",
-                    introSuggestTitle: "Aidez-nous à faire grandir Friendly Spaces",
-                    introSuggestText: "Vous connaissez un lieu familial génial ? Ouvrez le menu et touchez Suggérer un espace pour recommander un nouveau lieu.",
+                    introMapTitle: "Explorez les lieux",
+                    introMapText: "Basculez entre la vue Carte pour explorer les villes et découvrir des lieux près de vous, et la vue Liste pour comparer rapidement les lieux. Touchez un lieu pour voir tous les détails et équipements.",
+                    introSuggestTitle: "Trouvez votre lieu idéal",
+                    introSuggestText: "Utilisez la barre de recherche pour trouver des lieux par ville ou par nom. Appliquez des filtres selon vos besoins, comme l’accès poussette, les places extérieures, les espaces de jeu, et plus encore. Enregistrez vos favoris pour y accéder facilement.",
+                    introGrowTitle: "Aidez-nous à faire grandir Friendly Spaces",
+                    introGrowText: "Vous connaissez un excellent lieu familial ? Ouvrez le menu et touchez Suggérer un espace pour recommander un nouveau lieu. Vos suggestions aident d’autres familles à découvrir de super endroits.",
                     introBack: "Retour",
                     introNext: "Suivant",
                     introDone: "Terminer",
@@ -842,6 +846,39 @@
             }
         }
 
+        function updateLandscapeNotchMaskSide() {
+            if (!document.body) return;
+            document.body.classList.remove('landscape-notch-left', 'landscape-notch-right');
+            if (!isNativeAndroidPlatform() || !isCompactLandscape()) return;
+
+            const vv = window.visualViewport;
+            if (vv) {
+                const leftInset = Math.round(vv.offsetLeft || 0);
+                const rightInset = Math.round((window.innerWidth - (vv.width + vv.offsetLeft)) || 0);
+                if (leftInset > rightInset && leftInset > 2) {
+                    document.body.classList.add('landscape-notch-left');
+                    return;
+                }
+                if (rightInset > leftInset && rightInset > 2) {
+                    document.body.classList.add('landscape-notch-right');
+                    return;
+                }
+            }
+
+            let angle = 0;
+            if (window.screen?.orientation && typeof window.screen.orientation.angle === 'number') {
+                angle = window.screen.orientation.angle;
+            } else if (typeof window.orientation === 'number') {
+                angle = window.orientation;
+            }
+            const normalized = ((angle % 360) + 360) % 360;
+            if (normalized === 90) {
+                document.body.classList.add('landscape-notch-left');
+            } else {
+                document.body.classList.add('landscape-notch-right');
+            }
+        }
+
         async function updateNativeStatusBarAppearance() {
             if (!isNativeAndroidPlatform()) return;
 
@@ -1325,6 +1362,7 @@
 
         function handleResize() {
             setAppShellHeight();
+            updateLandscapeNotchMaskSide();
             if (!isMobile()) {
                 closeFilterSheet(true);
             }
@@ -2826,11 +2864,13 @@
             applyNativeAndroidInsetFallback();
             updateNativeStatusBarAppearance();
             setAppShellHeight();
+            updateLandscapeNotchMaskSide();
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', setAppShellHeight);
                 window.visualViewport.addEventListener('scroll', setAppShellHeight);
             }
             window.addEventListener('orientationchange', setAppShellHeight);
+            window.addEventListener('orientationchange', updateLandscapeNotchMaskSide);
             loadFavorites();
             updateFavoritesBadge();
             setLanguage(currentLang, { skipUrlUpdate: true });

@@ -24,6 +24,59 @@
             padding-top: 0;
             --native-top-safe: max(env(safe-area-inset-top, 0px), 24px);
             --native-bottom-safe: max(env(safe-area-inset-bottom, 0px), 10px);
+            --native-left-safe: max(env(safe-area-inset-left, 0px), 0px);
+            --native-right-safe: max(env(safe-area-inset-right, 0px), 0px);
+        }
+
+        @media (orientation: landscape) and (max-height: 600px) {
+            body.native-android {
+                --landscape-notch-mask: 62px;
+                --landscape-notch-shift-left: 0px;
+                --landscape-notch-shift-right: 0px;
+            }
+
+            body.native-android.landscape-notch-right {
+                --landscape-notch-shift-right: var(--landscape-notch-mask);
+            }
+
+            body.native-android.landscape-notch-left {
+                --landscape-notch-shift-left: var(--landscape-notch-mask);
+            }
+
+            body.native-android.landscape-notch-right::after,
+            body.native-android.landscape-notch-left::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                width: var(--landscape-notch-mask);
+                background: #000000;
+                pointer-events: none;
+                z-index: 2001;
+            }
+
+            body.native-android.landscape-notch-right::after {
+                right: 0;
+            }
+
+            body.native-android.landscape-notch-left::before {
+                left: 0;
+            }
+
+            body.native-android :is(#app-header, #top-tools, #container) {
+                margin-left: var(--landscape-notch-shift-left);
+                margin-right: var(--landscape-notch-shift-right);
+            }
+
+            body.native-android :is(#menu-backdrop, #sheet-backdrop, .fullscreen-panel, #detail-modal, .intro-overlay, #bottom-tabs) {
+                left: var(--landscape-notch-shift-left);
+                right: var(--landscape-notch-shift-right);
+            }
+
+            body.native-android #menu-drawer {
+                left: auto;
+                right: var(--landscape-notch-shift-right);
+            }
         }
 
         body.native-android #app-header {
@@ -376,6 +429,36 @@
             text-decoration: underline;
             padding: 6px 2px;
             text-align: left;
+        }
+
+        /* Keep the full menu reachable on short landscape phone heights */
+        @media (orientation: landscape) and (max-height: 600px) {
+            #menu-drawer {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                padding-left: 12px;
+                padding-right: 12px;
+                gap: 10px;
+            }
+
+            #menu-header {
+                min-height: 56px;
+            }
+
+            #menu-close {
+                right: 0;
+            }
+
+            .menu-logo {
+                height: 52px;
+            }
+
+            .menu-footer {
+                margin-top: 8px;
+                padding-top: 2px;
+            }
         }
 
         .hidden {
@@ -2464,6 +2547,10 @@
                 box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             }
 
+            #menu-toggle {
+                right: 12px;
+            }
+
             #top-search-bar {
                 flex: 0 0 42%;
                 min-width: 220px;
@@ -2495,5 +2582,29 @@
                 padding: 7px 12px;
                 font-size: 13px;
                 border-radius: 16px;
+            }
+
+            .leaflet-right .leaflet-control {
+                margin-right: 10px !important;
+            }
+
+            .leaflet-left .leaflet-control {
+                margin-left: 10px !important;
+            }
+
+            #list-view {
+                padding: 12px 14px 110px;
+            }
+
+            .venue-list {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+                max-width: 980px;
+                margin: 0 auto;
+            }
+
+            .venue-card-image {
+                height: 132px;
             }
         }
