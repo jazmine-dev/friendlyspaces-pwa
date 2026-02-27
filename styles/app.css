@@ -18,9 +18,14 @@
             background: #f7f5f1;
         }
 
-        /* Android native WebView fallback: force content below status bar */
+        /* Android native WebView fallback:
+           move inset into header so status bar area stays brand blue */
         body.native-android {
-            padding-top: max(env(safe-area-inset-top, 0px), 24px);
+            padding-top: 0;
+        }
+
+        body.native-android #app-header {
+            padding-top: calc(16px + max(env(safe-area-inset-top, 0px), 24px));
         }
 
         .intro-overlay {
@@ -1788,6 +1793,10 @@
                 padding: 12px 16px;
                 position: relative;
                 justify-content: center;
+            }
+
+            body.native-android #app-header {
+                padding-top: calc(12px + max(env(safe-area-inset-top, 0px), 24px));
             }
 
             #app-title {
