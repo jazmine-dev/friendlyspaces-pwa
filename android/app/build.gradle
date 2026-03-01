@@ -5,12 +5,21 @@ def keystorePropertiesFile = rootProject.file('keystore.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-def appVersionName = "1.0.1"
-def versionParts = appVersionName.tokenize('.').collect { it as int }
-while (versionParts.size() < 3) {
-    versionParts << 0
-}
-def appVersionCode = (versionParts[0] * 10000) + (versionParts[1] * 100) + versionParts[2]
+def hasValidReleaseSigning = keystorePropertiesFile.exists()
+        && keystoreProperties['storeFile']
+        && keystoreProperties['storePassword']
+        && keystoreProperties['keyAlias']
+        && keystoreProperties['keyPassword']
+        && !keystoreProperties['storePassword'].toString().startsWith('REPLACE_WITH_')
+        && !keystoreProperties['keyPassword'].toString().startsWith('REPLACE_WITH_')
+def appVersionName = (project.findProperty("appVersionName")
+        ?: System.getenv("APP_VERSION_NAME")
+        ?: "1.0.1").toString()
+def explicitVersionCode = project.findProperty("appVersionCode")
+        ?: System.getenv("APP_VERSION_CODE")
+def appVersionCode = explicitVersionCode
+        ? explicitVersionCode.toString().toInteger()
+        : (System.currentTimeMillis() / 1000L).toInteger()
 
 android {
     namespace = "ch.friendlyspaces.app"
@@ -30,7 +39,7 @@ android {
     }
     signingConfigs {
         release {
-            if (keystorePropertiesFile.exists()) {
+            if (hasValidReleaseSigning) {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
@@ -40,7 +49,7 @@ android {
     }
     buildTypes {
         release {
-            if (keystorePropertiesFile.exists()) {
+            if (hasValidReleaseSigning) {
                 signingConfig signingConfigs.release
             }
             minifyEnabled false
