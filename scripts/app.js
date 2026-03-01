@@ -1,5 +1,5 @@
-        // Language support (German/French) with query param override (?lang=de|fr)
-        const supportedLanguages = ['de', 'fr', 'en'];
+        // Language support with query param override (?lang=de|fr|it|en)
+        const supportedLanguages = ['de', 'fr', 'it', 'en'];
         const translations = {
             de: {
                 ui: {
@@ -14,6 +14,7 @@
                     menuInstall: "App nutzen",
                     menuLanguage: "Sprache",
                     menuBug: "Fehler melden / Feedback geben",
+                    menuPrivacy: "Datenschutz",
                     suggestTitle: "Ort vorschlagen",
                     suggestTagline: "Kennst du Orte, die gut zu Friendly Spaces passen würden?",
                     suggestRoleOwner: "Ich arbeite in einem Friendly Space",
@@ -126,7 +127,7 @@
                             playground: "Spielplatz",
                             "outdoor-seating": "Aussensitzplätze",
                             "play-area": "Spielbereich",
-                            "friendly-spaces": "Friendly Spaces Playbox",
+                            "friendly-spaces": "Playbox Friendly Spaces",
                             "high-chair": "Kinderstuhl",
                             "change-table": "Wickeltisch",
                             "games-room": "Spielzimmer"
@@ -155,6 +156,7 @@
                     menuInstall: "Utiliser l'app",
                     menuLanguage: "Langue",
                     menuBug: "Signaler un bug / Donner un avis",
+                    menuPrivacy: "Politique de confidentialité",
                     suggestTitle: "Suggérer un espace",
                     suggestTagline: "Connais-tu des lieux qui seraient parfaits pour Friendly Spaces ?",
                     suggestRoleOwner: "Je travaille dans un Friendly Space",
@@ -267,7 +269,7 @@
                             playground: "Terrain de jeu",
                             "outdoor-seating": "Terrasse extérieure",
                             "play-area": "Aire de jeux",
-                            "friendly-spaces": "Friendly Spaces Playbox",
+                            "friendly-spaces": "Playbox Friendly Spaces",
                             "high-chair": "Chaise haute",
                             "change-table": "Table à langer",
                             "games-room": "Salle de jeux"
@@ -283,6 +285,148 @@
                     features: "Équipements"
                 }
             },
+            it: {
+                ui: {
+                    title: "Friendly Spaces",
+                    sidebarTitle: "Trova un Friendly Space",
+                    searchPlaceholder: "Cerca per nome, città o indirizzo...",
+                    languageLabel: "Lingua",
+                    menuClose: "Chiudi",
+                    menuSuggest: "Suggerisci uno spazio",
+                    menuShare: "Condividi l'app",
+                    menuAbout: "Chi siamo",
+                    menuInstall: "Come usare l'app",
+                    menuLanguage: "Lingua",
+                    menuBug: "Segnala un bug / Invia feedback",
+                    menuPrivacy: "Informativa sulla privacy",
+                    suggestTitle: "Suggerisci uno spazio",
+                    suggestTagline: "Conosci luoghi che sarebbero perfetti per Friendly Spaces?",
+                    suggestRoleOwner: "Lavoro in un Friendly Space",
+                    suggestRoleFan: "Posso consigliare un Friendly Space",
+                    suggestMessageLabel: "Messaggio (facoltativo)",
+                    suggestVenueNameLabel: "Nome del luogo",
+                    suggestVenueCityLabel: "Città",
+                    suggestWhyLabel: "Perché è adatto alle famiglie? (facoltativo)",
+                    suggestOwnerNameLabel: "Nome",
+                    suggestOwnerEmailLabel: "E-mail",
+                    suggestOwnerPhoneLabel: "Telefono (facoltativo)",
+                    suggestSubmit: "Invia suggerimento",
+                    fanEmailLabel: "E-mail (facoltativo)",
+                    newsletterLabel: "Iscrivimi alla newsletter",
+                    aboutBody: "Friendly Spaces è il primo marchio di certificazione family-friendly in Svizzera e aiuta i genitori a trovare i migliori caffè, ristoranti, negozi e spazi culturali per famiglie con bambini piccoli. Grazie ai nostri rigorosi audit sul posto, ci assicuriamo che ogni luogo certificato accolga davvero le famiglie.",
+                    keepInTouchTitle: "Rimaniamo in contatto",
+                    partnerTitle: "Diventa partner",
+                    partnerBody: "Sostieni il crescente movimento family-friendly in Svizzera. Friendly Spaces offre opportunità di sponsorizzazione e pubblicità a marchi e organizzazioni che condividono la nostra missione di rendere le città svizzere più accoglienti per le famiglie. Raggiungi genitori coinvolti in tutta la Svizzera.",
+                    formSending: "Invio in corso...",
+                    suggestSubmitSuccess: "Grazie! Suggerimento inviato.",
+                    suggestSubmitError: "Qualcosa è andato storto. Riprova.",
+                    bugSubmitSuccess: "Grazie! Segnalazione inviata.",
+                    bugSubmitError: "Qualcosa è andato storto. Riprova.",
+                    bugTitle: "Segnala un bug / Invia feedback",
+                    bugMessageLabel: "Messaggio",
+                    bugSubmit: "Invia",
+                    partnerCta: "Richiedi una partnership",
+                    partnerSubject: "Richiesta di partnership",
+                    introTitle: "Cos'è Friendly Spaces?",
+                    introText: "Scopri caffè, ristoranti, negozi e luoghi culturali certificati family-friendly in tutta la Svizzera. Ogni luogo viene valutato per aree gioco, fasciatoi, accesso con passeggino e un'atmosfera accogliente.",
+                    introInstallTitle: "Installa per un accesso più rapido",
+                    introInstallIosLabel: "iPhone:",
+                    introInstallIosText: "Apri in Safari -> tocca Condividi -> Aggiungi alla schermata Home.",
+                    introInstallAndroidLabel: "Android:",
+                    introInstallAndroidText: "Tocca Aggiungi alla schermata Home in alto. L'app si installa automaticamente.",
+                    introMapTitle: "Esplora i luoghi",
+                    introMapText: "Passa dalla vista Mappa per esplorare le città e trovare luoghi vicino a te, alla vista Elenco per un confronto rapido. Tocca un luogo per vedere tutti i dettagli e i servizi.",
+                    introSuggestTitle: "Trova il luogo perfetto",
+                    introSuggestText: "Usa la barra di ricerca per trovare luoghi per città o nome. Applica i filtri in base alle tue esigenze, come accesso passeggino, posti all'aperto, aree gioco e altro. Salva i preferiti per trovarli facilmente.",
+                    introGrowTitle: "Aiutaci a far crescere Friendly Spaces",
+                    introGrowText: "Conosci un ottimo luogo adatto alle famiglie? Apri il menu e tocca Suggerisci uno spazio per consigliare un nuovo luogo. I tuoi suggerimenti aiutano altre famiglie a scoprire posti meravigliosi.",
+                    introBack: "Indietro",
+                    introNext: "Avanti",
+                    introDone: "Fine",
+                    introSkip: "Non mostrare più",
+                    installHelpTitle: "Come usare Friendly Spaces",
+                    installHelpTagline: "Suggerimenti rapidi per ottenere il massimo dall'app.",
+                    installHelpIosTitle: "Trova luoghi rapidamente",
+                    installHelpIosStep1: "Usa la vista Mappa per esplorare i pin vicino a te.",
+                    installHelpIosStep2: "Passa alla vista Elenco per confrontare i luoghi più velocemente.",
+                    installHelpIosStep3: "Usa Ricerca e Filtri per restringere i risultati.",
+                    installHelpAndroidTitle: "Salva i preferiti",
+                    installHelpAndroidStep1: "Tocca il cuore su un luogo per salvarlo.",
+                    installHelpAndroidStep2: "Apri Preferiti per trovare rapidamente i luoghi salvati.",
+                    installHelpAndroidStep3: "Tocca di nuovo il cuore per rimuovere un preferito.",
+                    installHelpUseTitle: "Suggerisci un luogo",
+                    installHelpUseStep1: "Apri il menu e tocca Suggerisci uno spazio.",
+                    installHelpUseStep2: "Compila i dettagli del luogo e invia il suggerimento.",
+                    installHelpUseStep3: "Nel menu puoi anche usare Segnala un bug / Invia feedback.",
+                    showingLabel: "Mostra",
+                    venuesLabel: "luoghi",
+                    filtersLabel: "Filtri",
+                    clearFilters: "Cancella tutto",
+                    showAllSpaces: "Mostra tutti i luoghi",
+                    showSpaces: "Mostra",
+                    spacesLabel: "luoghi",
+                    allTab: "Tutti",
+                    favoritesTab: "Preferiti",
+                    mapTab: "Mappa",
+                    listTab: "Elenco",
+                    noVenuesTitle: "Nessun luogo trovato",
+                    noVenuesBody: "Prova a cambiare i filtri o a cercare un'altra città.",
+                    noFavoritesTitle: "Ancora nessun preferito",
+                    noFavoritesBody: "Tocca il cuore per salvare i luoghi.",
+                    favoritesInstall: "Installa Friendly Spaces",
+                    favoritesInstallCta: "Aggiungi alla Home",
+                    nearMe: "Vicino a me",
+                    favoriteAdd: "Salva",
+                    favoriteRemove: "Salvato",
+                    filtersActive: (count) => count === 1 ? "1 filtro attivo" : `${count} filtri attivi`,
+                    filtersButton: (count) => count > 0 ? `Filtri (${count})` : "Filtri",
+                    cityCount: (count) => count === 1 ? "1 luogo" : `${count} luoghi`,
+                },
+                filters: {
+                    categories: {
+                        venueType: "Tipo di luogo",
+                        cuisineType: "Tipo di cucina",
+                        ageRange: "Fascia d'età",
+                        amenities: "Servizi"
+                    },
+                    options: {
+                        venueType: {
+                            cafe: "Caffè",
+                            "craft-atelier": "Atelier creativo",
+                            "food-hall": "Food Hall"
+                        },
+                        cuisineType: {
+                            vegan: "Vegano",
+                            bistro: "Bistrò",
+                            patisserie: "Pasticceria",
+                            international: "Internazionale"
+                        },
+                        ageRange: {
+                            baby: "Neonato (0-1)",
+                            toddler: "Prima infanzia (2-3)",
+                            "small-child": "Bambino piccolo (4-6)",
+                            kid: "Bambino (7-12)"
+                        },
+                        amenities: {
+                            playground: "Parco giochi",
+                            "outdoor-seating": "Posti all'aperto",
+                            "play-area": "Area giochi",
+                            "friendly-spaces": "Playbox Friendly Spaces",
+                            "high-chair": "Seggiolone",
+                            "change-table": "Fasciatoio",
+                            "games-room": "Sala giochi"
+                        }
+                    }
+                },
+                popup: {
+                    visitWebsite: "Visita il sito",
+                    hours: "Orari",
+                    specialty: "Specialità",
+                    directions: "Indicazioni",
+                    viewProfile: "Vedi profilo completo",
+                    features: "Servizi"
+                }
+            },
             en: {
                 ui: {
                     title: "Friendly Spaces",
@@ -296,6 +440,7 @@
                     menuInstall: "How to use app",
                     menuLanguage: "Language",
                     menuBug: "Report a bug / Give feedback",
+                    menuPrivacy: "Privacy Policy",
                     suggestTitle: "Suggest a space",
                     suggestTagline: "Do you know of any places that would be a great fit for friendly spaces?",
                     suggestRoleOwner: "I work at a Friendly Space",
@@ -785,6 +930,7 @@
         const menuAbout = document.getElementById('menu-about');
         const menuInstallHelp = document.getElementById('menu-install-help');
         const menuBug = document.getElementById('menu-bug');
+        const menuPrivacy = document.getElementById('menu-privacy');
         const suggestView = document.getElementById('suggest-view');
         const aboutView = document.getElementById('about-view');
         const bugView = document.getElementById('bug-view');
@@ -825,6 +971,7 @@
             window.matchMedia('(orientation: landscape) and (max-height: 600px)').matches;
         const APP_VERSION = 'pwa-1.0';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
+        const PRIVACY_POLICY_URL = 'https://www.friendlyspaces.ch/privacy-policy';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
         const BRAND_STATUS_COLOR = '#1E52BA';
@@ -1058,6 +1205,7 @@
             const menuLanguageTitle = document.getElementById('menu-language-title');
             if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
             if (menuBug) menuBug.textContent = translate('ui.menuBug', menuBug.textContent);
+            if (menuPrivacy) menuPrivacy.textContent = translate('ui.menuPrivacy', menuPrivacy.textContent);
 
             const suggestTitle = document.getElementById('suggest-title');
             if (suggestTitle) suggestTitle.textContent = translate('ui.suggestTitle', suggestTitle.textContent);
@@ -2393,6 +2541,12 @@
                 openPanel(bugView);
             });
         }
+        if (menuPrivacy) {
+            menuPrivacy.addEventListener('click', () => {
+                closeMenu();
+                window.open(PRIVACY_POLICY_URL, '_blank', 'noopener,noreferrer');
+            });
+        }
         const SHARE_URL = window.location.origin;
 
         if (menuShare) {
@@ -2683,11 +2837,13 @@
                 const iosText = {
                     de: 'Tippe auf Teilen □↑ dann "Zum Home-Bildschirm"',
                     fr: 'Appuyez sur Partager □↑ puis "Écran d\'accueil"',
+                    it: 'Tocca Condividi □↑ poi "Aggiungi alla schermata Home"',
                     en: 'Tap Share □↑ then "Add to Home Screen"'
                 };
                 const iosDismiss = {
                     de: 'OK',
                     fr: 'OK', 
+                    it: 'OK',
                     en: 'Got it'
                 };
                 installBannerText.textContent = iosText[currentLang] || iosText.en;
