@@ -307,14 +307,14 @@
         "website": "https://www.collage-remedy.com/crafty-crew",
         "instagram": "https://www.instagram.com/craftycrewworkshops/",
         "images": [
-            "assets/bern/Crafty_Crew/crafty_crew_01.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_02.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_03.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_04.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_05.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_06.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_07.webp",
-            "assets/bern/Crafty_Crew/crafty_crew_08.webp"
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_01.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_02.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_03.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_04.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_05.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_06.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_07.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Crafty_Crew/crafty_crew_08.webp"
         ],
         "fallbackCoords": [
             46.9501037,
