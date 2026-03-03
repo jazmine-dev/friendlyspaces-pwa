@@ -3,3 +3,6 @@
 .env.local
 node_modules
 www
+
+# Keep only optimized Crafty Crew assets in git
+assets/bern/Crafty_Crew/*.jpg
