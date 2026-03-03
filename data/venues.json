@@ -7,15 +7,18 @@
         "i18n": {
             "description": {
                 "de": "Elegantes Café und Bistro in einer historischen Orangerie mit Gartenambiente",
-                "fr": "Café-bistro élégant dans une orangerie historique entourée de jardins"
+                "fr": "Café-bistro élégant dans une orangerie historique entourée de jardins",
+                "it": "Elegante caffè-bistrot in una storica orangerie circondata da splendidi giardini"
             },
             "hours": {
                 "de": "Mi-So: 11-19 Uhr (Saisonzeiten können variieren)",
-                "fr": "Mer-dim : 11h-19h (horaires saisonniers variables)"
+                "fr": "Mer-dim : 11h-19h (horaires saisonniers variables)",
+                "it": "Mer-dom: 11:00-19:00 (gli orari stagionali possono variare)"
             },
             "specialty": {
                 "de": "Gartenterrasse und hausgemachte Kuchen",
-                "fr": "Terrasse jardin et gâteaux maison"
+                "fr": "Terrasse jardin et gâteaux maison",
+                "it": "Terrazza in giardino e torte fatte in casa"
             }
         },
         "hours": "Wed-Sun: 11am-7pm (seasonal hours may vary)",
@@ -23,6 +26,7 @@
         "seasonalNote": {
             "de": "Derzeit geschlossen bis April (Saisonbetrieb)",
             "fr": "Actuellement fermé jusqu'en avril (ouverture saisonnière)",
+            "it": "Attualmente chiuso fino ad aprile (apertura stagionale)",
             "en": "Currently closed until April (seasonal)"
         },
         "phone": "+41 31 350 16 20",
@@ -69,15 +73,18 @@
         "i18n": {
             "description": {
                 "de": "Kreatives Atelier mit Kunstworkshops für Kinder, darunter Schmuck, Keramik, Malen und mehr",
-                "fr": "Atelier créatif proposant des ateliers d'art pour enfants : bijoux, céramique, peinture et plus"
+                "fr": "Atelier créatif proposant des ateliers d'art pour enfants : bijoux, céramique, peinture et plus",
+                "it": "Atelier creativo che propone laboratori artistici per bambini: gioielli, ceramica, pittura e altro"
             },
             "hours": {
                 "de": "Workshop-Zeiten variieren – siehe Website für den Plan",
-                "fr": "Horaires des ateliers variables – consulter le site pour le planning"
+                "fr": "Horaires des ateliers variables – consulter le site pour le planning",
+                "it": "Gli orari dei laboratori variano - consulta il sito per il programma"
             },
             "specialty": {
                 "de": "Kunstworkshops und kreative Aktivitäten für Kinder",
-                "fr": "Ateliers d'art et activités créatives pour enfants"
+                "fr": "Ateliers d'art et activités créatives pour enfants",
+                "it": "Laboratori artistici e attività creative per bambini"
             }
         },
         "hours": "Workshop hours vary - check website for schedule",
@@ -120,15 +127,18 @@
         "i18n": {
             "description": {
                 "de": "Familienfreundliches Café mit hausgemachten Cupcakes, Kaffee und grossem Indoor-Spielbereich",
-                "fr": "Café familial avec cupcakes maison, café et grande aire de jeux intérieure"
+                "fr": "Café familial avec cupcakes maison, café et grande aire de jeux intérieure",
+                "it": "Caffè family-friendly con cupcake fatti in casa, caffè e ampia area giochi interna"
             },
             "hours": {
                 "de": "Di-Fr: 10-17 Uhr (Wochenenden für Privatfeiern reserviert)",
-                "fr": "Mar-ven : 10h-17h (week-ends réservés aux fêtes privées)"
+                "fr": "Mar-ven : 10h-17h (week-ends réservés aux fêtes privées)",
+                "it": "Mar-ven: 10:00-17:00 (weekend riservati a feste private)"
             },
             "specialty": {
                 "de": "Hausgemachte Cupcakes und thematische Geburtstagsfeiern",
-                "fr": "Cupcakes maison et fêtes d'anniversaire à thème"
+                "fr": "Cupcakes maison et fêtes d'anniversaire à thème",
+                "it": "Cupcake fatti in casa e feste di compleanno a tema"
             }
         },
         "hours": "Tue-Fri: 10am-5pm (weekends reserved for private parties)",
@@ -176,15 +186,18 @@
         "i18n": {
             "description": {
                 "de": "Gemeinschaftliche Foodhall und Café am Claraplatz mit Küchen aus 5 Kontinenten und familienfreundlichem Bereich",
-                "fr": "Halle gourmande communautaire et café à Claraplatz avec cuisines variées des 5 continents et espace familial"
+                "fr": "Halle gourmande communautaire et café à Claraplatz avec cuisines variées des 5 continents et espace familial",
+                "it": "Food hall comunitaria e caffè a Claraplatz con cucine di 5 continenti e spazio adatto alle famiglie"
             },
             "hours": {
                 "de": "Mo-So: 10-22 Uhr (Küchenzeiten können variieren)",
-                "fr": "Lun-dim : 10h-22h (horaires des cuisines variables)"
+                "fr": "Lun-dim : 10h-22h (horaires des cuisines variables)",
+                "it": "Tutti i giorni: 10:00-22:00 (gli orari delle cucine possono variare)"
             },
             "specialty": {
                 "de": "Verschiedene Küchen unter einem Dach, zentrale Lage",
-                "fr": "Plusieurs cuisines sous un même toit, emplacement central"
+                "fr": "Plusieurs cuisines sous un même toit, emplacement central",
+                "it": "Più cucine sotto lo stesso tetto, posizione centrale"
             }
         },
         "hours": "Daily: 10am-10pm (kitchen hours may vary)",
@@ -234,15 +247,18 @@
         "i18n": {
             "description": {
                 "de": "Historische Markthalle mit internationalen Food-Ständen, Cafés, offenen Sitzplätzen und einem familienfreundlichen Spielbereich",
-                "fr": "Halle historique avec stands de cuisine internationale, cafés, places assises ouvertes et une aire de jeux familiale"
+                "fr": "Halle historique avec stands de cuisine internationale, cafés, places assises ouvertes et une aire de jeux familiale",
+                "it": "Storica halle del mercato con stand gastronomici internazionali, caffè, posti a sedere aperti e area giochi family-friendly"
             },
             "hours": {
                 "de": "Mo-Sa: 8-23 Uhr (Stände variieren)",
-                "fr": "Lun-sam : 8h-23h (horaires des stands variables)"
+                "fr": "Lun-sam : 8h-23h (horaires des stands variables)",
+                "it": "Lun-sab: 08:00-23:00 (gli orari degli stand possono variare)"
             },
             "specialty": {
                 "de": "Vielfältige Küche unter einer Kuppel, zentrale Lage am Bahnhof SBB",
-                "fr": "Cuisine variée sous un dôme, emplacement central près de la gare CFF"
+                "fr": "Cuisine variée sous un dôme, emplacement central près de la gare CFF",
+                "it": "Cucina varia sotto un'unica cupola, posizione centrale vicino alla stazione Basel SBB"
             }
         },
         "hours": "Mon-Sat: 8am-11pm (stalls vary)",
@@ -291,15 +307,18 @@
         "i18n": {
             "description": {
                 "de": "Prozessorientierte Kunstworkshops für Kleinkinder und ihre Begleitpersonen im Zentrum von Bern. Jede 90-minütige Einheit umfasst ein Warm-up, angeleitete Materialerkundung und offenes kreatives Spielen.",
-                "fr": "Ateliers d'art basés sur le processus pour les tout-petits et leurs accompagnants au centre de Berne. Chaque session de 90 minutes comprend un échauffement, une exploration guidée des matériaux et un jeu créatif libre."
+                "fr": "Ateliers d'art basés sur le processus pour les tout-petits et leurs accompagnants au centre de Berne. Chaque session de 90 minutes comprend un échauffement, une exploration guidée des matériaux et un jeu créatif libre.",
+                "it": "Laboratori artistici basati sul processo per bimbi piccoli e accompagnatori nel centro di Berna. Ogni sessione di 90 minuti include un riscaldamento, esplorazione guidata dei materiali e gioco creativo libero."
             },
             "hours": {
                 "de": "Mo: 10:30-12:00, Mi: 15:00-16:30, Fr Drop-ins: 10:30-12:00",
-                "fr": "Lun : 10h30-12h00, Mer : 15h00-16h30, Ven sans inscription : 10h30-12h00"
+                "fr": "Lun : 10h30-12h00, Mer : 15h00-16h30, Ven sans inscription : 10h30-12h00",
+                "it": "Lunedi 10:30-12:00, Mercoledi 15:00-16:30, Venerdi ingresso libero 10:30-12:00"
             },
             "specialty": {
                 "de": "Kreative Kunst- und Sensorik-Workshops für Babys und Kleinkinder mit Begleitperson",
-                "fr": "Ateliers créatifs d'art et sensoriels pour bébés et tout-petits avec accompagnant"
+                "fr": "Ateliers créatifs d'art et sensoriels pour bébés et tout-petits avec accompagnant",
+                "it": "Laboratori creativi di arte e sensorialita per neonati e bimbi piccoli con accompagnatore"
             }
         },
         "hours": "Mondays 10:30-12:00, Wednesdays 15:00-16:30, Friday drop-ins 10:30-12:00",
