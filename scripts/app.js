@@ -625,18 +625,79 @@
             return venue[field] || '';
         }
 
-        // Venue data loaded from data/venues.json
+        // Venue data: try hosted JSON first, then bundled fallback.
         let venues = [];
+        const REMOTE_VENUES_URL = 'https://app.friendlyspaces.ch/data/venues.json';
+        const LOCAL_VENUES_URL = 'data/venues.json';
+        const VENUES_FETCH_TIMEOUT_MS = 6000;
+        const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v1';
 
-        function loadVenues() {
-            return fetch('data/venues.json')
-                .then((response) => response.json())
-                .then((data) => {
-                    venues = Array.isArray(data) ? data : [];
-                })
-                .catch(() => {
-                    venues = [];
+        async function fetchVenueData(url) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), VENUES_FETCH_TIMEOUT_MS);
+            try {
+                const response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller.signal
                 });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                if (!Array.isArray(data)) {
+                    throw new Error('Invalid venues payload');
+                }
+                return data;
+            } finally {
+                clearTimeout(timeout);
+            }
+        }
+
+        function readCachedVenues() {
+            try {
+                const raw = localStorage.getItem(VENUES_CACHE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed?.venues)) return null;
+                return parsed.venues;
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function writeCachedVenues(nextVenues) {
+            try {
+                localStorage.setItem(VENUES_CACHE_KEY, JSON.stringify({
+                    updatedAt: Date.now(),
+                    venues: nextVenues
+                }));
+            } catch (err) {
+                // Ignore storage quota/private mode issues.
+            }
+        }
+
+        async function loadVenues() {
+            try {
+                const remoteVenues = await fetchVenueData(REMOTE_VENUES_URL);
+                venues = remoteVenues;
+                writeCachedVenues(remoteVenues);
+                return;
+            } catch (err) {
+                // Fall back to bundled venues when offline or remote fetch fails.
+            }
+
+            const cachedVenues = readCachedVenues();
+            if (cachedVenues) {
+                venues = cachedVenues;
+                return;
+            }
+
+            try {
+                venues = await fetchVenueData(LOCAL_VENUES_URL);
+                writeCachedVenues(venues);
+            } catch (err) {
+                venues = [];
+            }
         }
 
         // Filter definitions
