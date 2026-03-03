@@ -141,7 +141,12 @@
                     specialty: "Besonderheit",
                     directions: "Route planen",
                     viewProfile: "Profil anzeigen",
-                    features: "Ausstattung"
+                    features: "Ausstattung",
+                    navigate: "Navigation",
+                    call: "Anrufen",
+                    website: "Webseite",
+                    instagram: "Instagram",
+                    note: "Hinweis"
                 }
             },
             fr: {
@@ -284,7 +289,12 @@
                     specialty: "Spécialité",
                     directions: "Itinéraire",
                     viewProfile: "Voir le profil",
-                    features: "Équipements"
+                    features: "Équipements",
+                    navigate: "Naviguer",
+                    call: "Appeler",
+                    website: "Site web",
+                    instagram: "Instagram",
+                    note: "Remarque"
                 }
             },
             it: {
@@ -427,7 +437,12 @@
                     specialty: "Specialità",
                     directions: "Indicazioni",
                     viewProfile: "Vedi profilo completo",
-                    features: "Servizi"
+                    features: "Servizi",
+                    navigate: "Naviga",
+                    call: "Chiama",
+                    website: "Sito web",
+                    instagram: "Instagram",
+                    note: "Nota"
                 }
             },
             en: {
@@ -570,7 +585,12 @@
                     specialty: "Specialty",
                     directions: "Directions",
                     viewProfile: "View Full Profile",
-                    features: "Features"
+                    features: "Features",
+                    navigate: "Navigate",
+                    call: "Call",
+                    website: "Website",
+                    instagram: "Instagram",
+                    note: "Note"
                 }
             }
         };
@@ -2118,6 +2138,11 @@
         function createDetailProfileContent(venue) {
             const hoursLabel = translate('popup.hours', 'Hours');
             const specialtyLabel = translate('popup.specialty', 'Specialty');
+            const navigateLabel = translate('popup.navigate', 'Navigate');
+            const callLabel = translate('popup.call', 'Call');
+            const websiteLabel = translate('popup.website', 'Website');
+            const instagramLabel = translate('popup.instagram', 'Instagram');
+            const noteLabel = translate('popup.note', 'Note');
 
             const seasonalNote = venue.seasonalNote
                 ? (venue.seasonalNote[currentLang] || venue.seasonalNote.en || venue.seasonalNote.de)
@@ -2179,7 +2204,7 @@
             const actionButtons = [
                 `<a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
                     <span class="icon-circle">${navigateSvg}</span>
-                    <span class="icon-label">Navigate</span>
+                    <span class="icon-label">${navigateLabel}</span>
                 </a>`
             ];
 
@@ -2187,7 +2212,7 @@
                 actionButtons.push(`
                     <a class="detail-icon-btn" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
                         <span class="icon-circle">${callSvg}</span>
-                        <span class="icon-label">Call</span>
+                        <span class="icon-label">${callLabel}</span>
                     </a>
                 `);
             }
@@ -2196,7 +2221,7 @@
                 actionButtons.push(`
                     <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
                         <span class="icon-circle">${websiteSvg}</span>
-                        <span class="icon-label">Website</span>
+                        <span class="icon-label">${websiteLabel}</span>
                     </a>
                 `);
             }
@@ -2205,7 +2230,7 @@
                 actionButtons.push(`
                     <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="instagram">
                         <span class="icon-circle">${instagramSvg}</span>
-                        <span class="icon-label">Instagram</span>
+                        <span class="icon-label">${instagramLabel}</span>
                     </a>
                 `);
             }
@@ -2245,7 +2270,7 @@
                         </div>
                         ${seasonalNote ? `
                             <div class="detail-info-row">
-                                <span class="detail-info-label">Note</span>
+                                <span class="detail-info-label">${noteLabel}</span>
                                 <span class="detail-info-value seasonal">${seasonalNote}</span>
                             </div>
                         ` : ''}
