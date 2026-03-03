@@ -130,7 +130,8 @@
                             "friendly-spaces": "Playbox Friendly Spaces",
                             "high-chair": "Kinderstuhl",
                             "change-table": "Wickeltisch",
-                            "games-room": "Spielzimmer"
+                            "games-room": "Spielzimmer",
+                            "arts-crafts": "Kunst und Basteln"
                         }
                     }
                 },
@@ -272,7 +273,8 @@
                             "friendly-spaces": "Playbox Friendly Spaces",
                             "high-chair": "Chaise haute",
                             "change-table": "Table à langer",
-                            "games-room": "Salle de jeux"
+                            "games-room": "Salle de jeux",
+                            "arts-crafts": "Arts et bricolage"
                         }
                     }
                 },
@@ -414,7 +416,8 @@
                             "friendly-spaces": "Playbox Friendly Spaces",
                             "high-chair": "Seggiolone",
                             "change-table": "Fasciatoio",
-                            "games-room": "Sala giochi"
+                            "games-room": "Sala giochi",
+                            "arts-crafts": "Arte e lavoretti"
                         }
                     }
                 },
@@ -556,7 +559,8 @@
                             "friendly-spaces": "Friendly Spaces Playbox",
                             "high-chair": "High Chair",
                             "change-table": "Change Table",
-                            "games-room": "Games Room"
+                            "games-room": "Games Room",
+                            "arts-crafts": "Arts & Crafts"
                         }
                     }
                 },
@@ -726,7 +730,8 @@
                 { id: "friendly-spaces", label: "Friendly Spaces Playbox" },
                 { id: "high-chair", label: "High Chair" },
                 { id: "change-table", label: "Change Table" },
-                { id: "games-room", label: "Games Room" }
+                { id: "games-room", label: "Games Room" },
+                { id: "arts-crafts", label: "Arts & Crafts" }
             ]
         };
 
@@ -962,6 +967,8 @@
         let searchQuery = '';
         let isInitialLoad = true;
         let activeTab = 'map';
+        let lastPrimaryView = 'map';
+        let favoritesReturnView = 'map';
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
         const sidebar = document.getElementById('sidebar');
@@ -1030,7 +1037,7 @@
             window.matchMedia('(max-width: 768px), (orientation: landscape) and (max-height: 600px)').matches;
         const isCompactLandscape = () =>
             window.matchMedia('(orientation: landscape) and (max-height: 600px)').matches;
-        const APP_VERSION = 'pwa-1.0';
+        const APP_VERSION = 'pwa-1.1';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
         const PRIVACY_POLICY_URL = 'https://www.friendlyspaces.ch/privacy-policy';
         const analyticsEnabled = true;
@@ -2169,45 +2176,43 @@
             // Determine Instagram URL from venue data (use instagram field or fall back to empty)
             const instagramUrl = venue.instagram || '';
 
+            const actionButtons = [
+                `<a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
+                    <span class="icon-circle">${navigateSvg}</span>
+                    <span class="icon-label">Navigate</span>
+                </a>`
+            ];
+
+            if (phoneHref) {
+                actionButtons.push(`
+                    <a class="detail-icon-btn" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
+                        <span class="icon-circle">${callSvg}</span>
+                        <span class="icon-label">Call</span>
+                    </a>
+                `);
+            }
+
+            if (venue.website) {
+                actionButtons.push(`
+                    <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
+                        <span class="icon-circle">${websiteSvg}</span>
+                        <span class="icon-label">Website</span>
+                    </a>
+                `);
+            }
+
+            if (instagramUrl) {
+                actionButtons.push(`
+                    <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="instagram">
+                        <span class="icon-circle">${instagramSvg}</span>
+                        <span class="icon-label">Instagram</span>
+                    </a>
+                `);
+            }
+
             const iconButtonsHtml = `
                 <div class="detail-icon-buttons">
-                    <a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
-                        <span class="icon-circle">${navigateSvg}</span>
-                        <span class="icon-label">Navigate</span>
-                    </a>
-                    ${phoneHref ? `
-                        <a class="detail-icon-btn" href="${phoneHref}" data-analytics-link="true" data-link-type="phone">
-                            <span class="icon-circle">${callSvg}</span>
-                            <span class="icon-label">Call</span>
-                        </a>
-                    ` : `
-                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
-                            <span class="icon-circle">${callSvg}</span>
-                            <span class="icon-label">Call</span>
-                        </span>
-                    `}
-                    ${venue.website ? `
-                        <a class="detail-icon-btn" href="${venue.website}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
-                            <span class="icon-circle">${websiteSvg}</span>
-                            <span class="icon-label">Website</span>
-                        </a>
-                    ` : `
-                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
-                            <span class="icon-circle">${websiteSvg}</span>
-                            <span class="icon-label">Website</span>
-                        </span>
-                    `}
-                    ${instagramUrl ? `
-                        <a class="detail-icon-btn" href="${instagramUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="instagram">
-                            <span class="icon-circle">${instagramSvg}</span>
-                            <span class="icon-label">Instagram</span>
-                        </a>
-                    ` : `
-                        <span class="detail-icon-btn" style="opacity:0.4; pointer-events:none;">
-                            <span class="icon-circle">${instagramSvg}</span>
-                            <span class="icon-label">Instagram</span>
-                        </span>
-                    `}
+                    ${actionButtons.join('')}
                 </div>
             `;
 
@@ -2374,7 +2379,14 @@
         }
 
         function setActiveView(view) {
+            const previousTab = activeTab;
             activeTab = view;
+            if (view === 'favorites' && (previousTab === 'map' || previousTab === 'list')) {
+                favoritesReturnView = previousTab;
+            }
+            if (view === 'map' || view === 'list') {
+                lastPrimaryView = view;
+            }
             bottomTabs.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
             });
@@ -2543,7 +2555,7 @@
         if (sidebarFavorites) {
             sidebarFavorites.addEventListener('click', () => {
                 if (activeTab === 'favorites') {
-                    setActiveView('map');
+                    setActiveView(favoritesReturnView || lastPrimaryView);
                 } else {
                     setActiveView('favorites');
                 }
@@ -2806,10 +2818,26 @@
             return false;
         }
 
-        function bindDetailSwipeTarget(target, fromContent) {
+        function bindDetailSwipeTarget(target, fromContent, topZoneOnly = false) {
             if (!target) return;
             target.addEventListener('touchstart', (event) => {
                 if (!isMobile() || !detailModal?.classList.contains('active')) return;
+                if (topZoneOnly) {
+                    const touch = event.touches?.[0];
+                    if (!touch) return;
+                    const rect = target.getBoundingClientRect();
+                    const inTopZone = touch.clientY <= rect.top + 72;
+                    const onCloseButton = event.target instanceof Element && !!event.target.closest('#detail-modal-close');
+                    if (!inTopZone || onCloseButton) {
+                        detailDragging = false;
+                        return;
+                    }
+                }
+                // Let image carousels handle their own gestures without sheet interference.
+                if (fromContent && event.target instanceof Element && event.target.closest('.venue-slider')) {
+                    detailDragging = false;
+                    return;
+                }
                 if (fromContent && currentDetailSnap === 'full' && detailModalContent && detailModalContent.scrollTop > 0) {
                     detailDragging = false;
                     return;
@@ -2839,11 +2867,23 @@
                 const endY = event.changedTouches[0].clientY;
                 const deltaY = endY - detailDragStartY;
                 detailDragging = false;
+                if (!fromContent) {
+                    if (deltaY > 30) {
+                        closeDetailModal();
+                        return;
+                    }
+                    if (deltaY < -30) {
+                        setDetailSnap('full');
+                        return;
+                    }
+                }
                 handleDetailSheetDrag(deltaY);
             }, { passive: true });
         }
 
         bindDetailSwipeTarget(detailSheetGrabber, false);
+        const detailModalCard = detailModal?.querySelector('.detail-modal-card');
+        bindDetailSwipeTarget(detailModalCard, false, true);
         bindDetailSwipeTarget(detailModalContent, true);
 
         if (detailModal) {
@@ -3016,8 +3056,8 @@
         if (pillFavorites) {
             pillFavorites.addEventListener('click', () => {
                 if (activeTab === 'favorites') {
-                    // Switch back to map view
-                    setActiveView('map');
+                    // Return to the user's previous main view (map or list)
+                    setActiveView(favoritesReturnView || lastPrimaryView);
                 } else {
                     // Switch to favorites view
                     setActiveView('favorites');

@@ -1338,9 +1338,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0;
+            padding: 10px 0 8px;
             background: transparent;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
         .detail-sheet-handle {
@@ -1458,6 +1458,7 @@
         .detail-hero .slider-dots {
             bottom: 96px;
             z-index: 10;
+            pointer-events: none;
         }
 
         .detail-hero .slider-dot {
@@ -1477,6 +1478,7 @@
             align-items: flex-end;
             justify-content: space-between;
             gap: 12px;
+            pointer-events: none;
         }
 
         .detail-hero-info {
@@ -1516,6 +1518,7 @@
             color: #888;
             transition: all 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            pointer-events: auto;
         }
 
         .detail-favorite-btn .favorite-icon {
@@ -2074,7 +2077,10 @@
             min-width: 100%;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
+            touch-action: pan-x;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-x: contain;
         }
 
         .slider-arrow {
