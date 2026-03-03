@@ -282,5 +282,58 @@
                 "outdoor-seating"
             ]
         }
+    },
+    {
+        "name": "Crafty Crew",
+        "address": "Stube im Progr, Atelier 012, Speichergasse 4, 3011 Bern",
+        "city": "Bern",
+        "description": "Process-based art workshops for toddlers and their grown-ups in central Bern. Each 90-minute session includes a warm-up, guided material exploration, and open-ended creative play.",
+        "i18n": {
+            "description": {
+                "de": "Prozessorientierte Kunstworkshops für Kleinkinder und ihre Begleitpersonen im Zentrum von Bern. Jede 90-minütige Einheit umfasst ein Warm-up, angeleitete Materialerkundung und offenes kreatives Spielen.",
+                "fr": "Ateliers d'art basés sur le processus pour les tout-petits et leurs accompagnants au centre de Berne. Chaque session de 90 minutes comprend un échauffement, une exploration guidée des matériaux et un jeu créatif libre."
+            },
+            "hours": {
+                "de": "Mo: 10:30-12:00, Mi: 15:00-16:30, Fr Drop-ins: 10:30-12:00",
+                "fr": "Lun : 10h30-12h00, Mer : 15h00-16h30, Ven sans inscription : 10h30-12h00"
+            },
+            "specialty": {
+                "de": "Kreative Kunst- und Sensorik-Workshops für Babys und Kleinkinder mit Begleitperson",
+                "fr": "Ateliers créatifs d'art et sensoriels pour bébés et tout-petits avec accompagnant"
+            }
+        },
+        "hours": "Mondays 10:30-12:00, Wednesdays 15:00-16:30, Friday drop-ins 10:30-12:00",
+        "specialty": "Art workshops for babies and toddlers",
+        "website": "https://www.collage-remedy.com/crafty-crew",
+        "instagram": "https://www.instagram.com/craftycrewworkshops/",
+        "images": [
+            "assets/bern/Crafty_Crew/crafty_crew_01.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_02.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_03.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_04.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_05.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_06.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_07.webp",
+            "assets/bern/Crafty_Crew/crafty_crew_08.webp"
+        ],
+        "fallbackCoords": [
+            46.9501037,
+            7.4439691
+        ],
+        "filters": {
+            "venueType": [
+                "craft-atelier"
+            ],
+            "cuisineType": [],
+            "ageRange": [
+                "baby",
+                "toddler"
+            ],
+            "amenities": [
+                "play-area",
+                "change-table",
+                "arts-crafts"
+            ]
+        }
     }
 ]
