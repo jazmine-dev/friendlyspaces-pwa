@@ -19,7 +19,7 @@ def explicitVersionCode = project.findProperty("appVersionCode")
         ?: System.getenv("APP_VERSION_CODE")
 def appVersionCode = explicitVersionCode
         ? explicitVersionCode.toString().toInteger()
-        : (System.currentTimeMillis() / 1000L).toInteger()
+        : 1
 
 android {
     namespace = "ch.friendlyspaces.app"
