@@ -2774,7 +2774,7 @@
                 window.open(PRIVACY_POLICY_URL, '_blank', 'noopener,noreferrer');
             });
         }
-        const SHARE_URL = window.location.origin;
+        const SHARE_URL = 'https://www.friendlyspaces.ch/map';
 
         if (menuShare) {
             menuShare.addEventListener('click', async () => {
@@ -2785,13 +2785,13 @@
                     url: shareUrl
                 };
                 try {
-                    if (navigator.share) {
+                    const nativeShare = window.Capacitor?.Plugins?.Share;
+                    if (nativeShare?.share) {
+                        await nativeShare.share(shareData);
+                    } else if (navigator.share) {
                         await navigator.share(shareData);
-                    } else if (navigator.clipboard) {
-                        await navigator.clipboard.writeText(shareUrl);
-                        alert('Link copied to clipboard.');
                     } else {
-                        prompt('Copy this link:', shareUrl);
+                        window.open(shareUrl, '_blank', 'noopener,noreferrer');
                     }
                 } catch (err) {
                     // Ignore cancelled share.

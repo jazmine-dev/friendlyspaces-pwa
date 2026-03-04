@@ -2174,9 +2174,15 @@
 
         .map-attribution {
             margin-top: 80px;
-            font-size: inherit;
-            color: #888;
+            font-size: 11px;
+            color: #9aa0ad;
             text-align: center;
+            opacity: 0.9;
+        }
+
+        .fullscreen-body .map-attribution {
+            font-size: 11px !important;
+            line-height: 1.35;
         }
 
         .map-attribution a {
