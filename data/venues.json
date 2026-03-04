@@ -220,7 +220,8 @@
         ],
         "filters": {
             "venueType": [
-                "food-hall"
+                "food-hall",
+                "restaurant"
             ],
             "cuisineType": [
                 "international"
@@ -280,7 +281,8 @@
         ],
         "filters": {
             "venueType": [
-                "food-hall"
+                "food-hall",
+                "restaurant"
             ],
             "cuisineType": [
                 "international"
@@ -311,17 +313,17 @@
                 "it": "Laboratori artistici basati sul processo per bimbi piccoli e accompagnatori nel centro di Berna. Ogni sessione di 90 minuti include un riscaldamento, esplorazione guidata dei materiali e gioco creativo libero."
             },
             "hours": {
-                "de": "Mo: 10:30-12:00, Mi: 15:00-16:30, Fr Drop-ins: 10:30-12:00",
-                "fr": "Lun : 10h30-12h00, Mer : 15h00-16h30, Ven sans inscription : 10h30-12h00",
-                "it": "Lunedi 10:30-12:00, Mercoledi 15:00-16:30, Venerdi ingresso libero 10:30-12:00"
+                "de": "Mo: 10:30-12:00, Mi: 15:00-16:30, Fr Drop-in: 10:30-12:00 (Website prüfen)",
+                "fr": "Lun : 10h30-12h00, Mer : 15h00-16h30, Ven sans inscription : 10h30-12h00 (voir le site web)",
+                "it": "Lunedì 10:30-12:00, Mercoledì 15:00-16:30, Venerdì ingresso libero 10:30-12:00 (controlla il sito web)"
             },
             "specialty": {
                 "de": "Kreative Kunst- und Sensorik-Workshops für Babys und Kleinkinder mit Begleitperson",
                 "fr": "Ateliers créatifs d'art et sensoriels pour bébés et tout-petits avec accompagnant",
-                "it": "Laboratori creativi di arte e sensorialita per neonati e bimbi piccoli con accompagnatore"
+                "it": "Laboratori creativi di arte e sensorialità per neonati e bimbi piccoli con accompagnatore"
             }
         },
-        "hours": "Mondays 10:30-12:00, Wednesdays 15:00-16:30, Friday drop-ins 10:30-12:00",
+        "hours": "Mondays 10:30-12:00, Wednesdays 15:00-16:30, Friday drop-in 10:30-12:00 (check the website)",
         "specialty": "Art workshops for babies and toddlers",
         "website": "https://www.collage-remedy.com/crafty-crew",
         "instagram": "https://www.instagram.com/craftycrewworkshops/",

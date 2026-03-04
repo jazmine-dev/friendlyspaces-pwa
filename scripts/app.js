@@ -29,7 +29,7 @@
                     suggestSubmit: "Vorschlag senden",
                     fanEmailLabel: "E-Mail (optional)",
                     newsletterLabel: "Newsletter abonnieren",
-                    aboutBody: "Friendly Spaces ist das erste familienfreundliche Zertifikationslabel der Schweiz und hilft Eltern, die besten Cafés, Restaurants, Geschaefte und Kulturorte für Familien mit kleinen Kindern zu finden. Durch unsere strengen Vor-Ort-Audits stellen wir sicher, dass jeder zertifizierte Ort Kinder wirklich willkommen heisst und auf ihre Bedürfnisse eingeht.",
+                    aboutBody: "Friendly Spaces ist das erste familienfreundliche Zertifikationslabel der Schweiz und hilft Eltern, die besten Cafés, Restaurants, Geschäfte und Kulturorte für Familien mit kleinen Kindern zu finden. Durch unsere strengen Vor-Ort-Audits stellen wir sicher, dass jeder zertifizierte Ort Kinder wirklich willkommen heisst und auf ihre Bedürfnisse eingeht.",
                     keepInTouchTitle: "In Kontakt bleiben",
                     partnerTitle: "Partner werden",
                     partnerBody: "Unterstützen Sie die wachsende familienfreundliche Bewegung in der Schweiz. Friendly Spaces bietet Sponsoring- und Werbemöglichkeiten für Marken und Organisationen, die unsere Mission teilen, Schweizer Städte familienfreundlicher zu machen. Erreichen Sie engagierte Eltern in der ganzen Schweiz.",
@@ -45,7 +45,7 @@
                     partnerSubject: "Partnerschaftsanfrage",
                     introTitle: "Was ist Friendly Spaces?",
                     introText: "Entdecke zertifizierte familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz. Jeder Ort wird auf Spielbereiche, Wickelmöglichkeiten, Kinderwagenzugang und eine einladende Atmosphäre geprüft.",
-                    introInstallTitle: "Fuer schnelleren Zugriff installieren",
+                    introInstallTitle: "Für schnelleren Zugriff installieren",
                     introInstallIosLabel: "iPhone:",
                     introInstallIosText: "In Safari öffnen -> auf Teilen tippen -> Zum Home-Bildschirm wählen.",
                     introInstallAndroidLabel: "Android:",
@@ -108,6 +108,7 @@
                     options: {
                         venueType: {
                             cafe: "Café",
+                            restaurant: "Restaurant",
                             "craft-atelier": "Kreativ-Atelier",
                             "food-hall": "Food Hall"
                         },
@@ -256,6 +257,7 @@
                     options: {
                         venueType: {
                             cafe: "Café",
+                            restaurant: "Restaurant",
                             "craft-atelier": "Atelier créatif",
                             "food-hall": "Food Hall"
                         },
@@ -404,6 +406,7 @@
                     options: {
                         venueType: {
                             cafe: "Caffè",
+                            restaurant: "Ristorante",
                             "craft-atelier": "Atelier creativo",
                             "food-hall": "Food Hall"
                         },
@@ -552,6 +555,7 @@
                     options: {
                         venueType: {
                             cafe: "Cafe",
+                            restaurant: "Restaurant",
                             "craft-atelier": "Creative Atelier",
                             "food-hall": "Food Hall"
                         },
@@ -649,12 +653,95 @@
             return venue[field] || '';
         }
 
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatHoursForProfile(hoursText) {
+            if (!hoursText || typeof hoursText !== 'string') return '';
+            const lines = hoursText
+                .split(/\s*,\s*/)
+                .filter(Boolean);
+            return lines.map((line) => `<span class="detail-hours-line">${escapeHtml(line)}</span>`).join('');
+        }
+
         // Venue data: try hosted JSON first, then bundled fallback.
         let venues = [];
         const REMOTE_VENUES_URL = 'https://app.friendlyspaces.ch/data/venues.json';
         const LOCAL_VENUES_URL = 'data/venues.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
-        const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v1';
+        const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
+
+        function normalizeVenueFilters(list) {
+            if (!Array.isArray(list)) return [];
+            return list.map((venue) => {
+                const venueType = Array.isArray(venue?.filters?.venueType) ? [...venue.filters.venueType] : [];
+                if (venueType.includes('food-hall') && !venueType.includes('restaurant')) {
+                    venueType.push('restaurant');
+                }
+                return {
+                    ...venue,
+                    filters: {
+                        ...(venue.filters || {}),
+                        venueType
+                    }
+                };
+            });
+        }
+
+        function mergeVenueTranslations(primaryList, fallbackList) {
+            const fallbackByName = new Map(
+                (Array.isArray(fallbackList) ? fallbackList : []).map((venue) => [venue.name, venue])
+            );
+
+            return (Array.isArray(primaryList) ? primaryList : []).map((venue) => {
+                const fallback = fallbackByName.get(venue.name);
+                if (!fallback) return venue;
+
+                const mergedDescription = fallback.description || venue.description || '';
+                const mergedHours = fallback.hours || venue.hours || '';
+                const mergedSpecialty = fallback.specialty || venue.specialty || '';
+
+                const mergedI18n = {
+                    ...(venue.i18n || {}),
+                    ...(fallback.i18n || {}),
+                    description: {
+                        ...(venue.i18n?.description || {}),
+                        ...(fallback.i18n?.description || {}),
+                        en: fallback.i18n?.description?.en || fallback.description || venue.i18n?.description?.en || venue.description || ''
+                    },
+                    hours: {
+                        ...(venue.i18n?.hours || {}),
+                        ...(fallback.i18n?.hours || {}),
+                        en: fallback.i18n?.hours?.en || fallback.hours || venue.i18n?.hours?.en || venue.hours || ''
+                    },
+                    specialty: {
+                        ...(venue.i18n?.specialty || {}),
+                        ...(fallback.i18n?.specialty || {}),
+                        en: fallback.i18n?.specialty?.en || fallback.specialty || venue.i18n?.specialty?.en || venue.specialty || ''
+                    }
+                };
+
+                const mergedSeasonalNote = {
+                    ...(venue.seasonalNote || {}),
+                    ...(fallback.seasonalNote || {})
+                };
+
+                return {
+                    ...venue,
+                    description: mergedDescription,
+                    hours: mergedHours,
+                    specialty: mergedSpecialty,
+                    i18n: mergedI18n,
+                    seasonalNote: Object.keys(mergedSeasonalNote).length ? mergedSeasonalNote : undefined
+                };
+            });
+        }
 
         async function fetchVenueData(url) {
             const controller = new AbortController();
@@ -703,8 +790,16 @@
         async function loadVenues() {
             try {
                 const remoteVenues = await fetchVenueData(REMOTE_VENUES_URL);
-                venues = remoteVenues;
-                writeCachedVenues(remoteVenues);
+                let localFallback = [];
+                try {
+                    localFallback = await fetchVenueData(LOCAL_VENUES_URL);
+                } catch (err) {
+                    localFallback = [];
+                }
+                const mergedRemote = mergeVenueTranslations(remoteVenues, localFallback);
+                const normalizedRemote = normalizeVenueFilters(mergedRemote);
+                venues = normalizedRemote;
+                writeCachedVenues(normalizedRemote);
                 return;
             } catch (err) {
                 // Fall back to bundled venues when offline or remote fetch fails.
@@ -712,12 +807,12 @@
 
             const cachedVenues = readCachedVenues();
             if (cachedVenues) {
-                venues = cachedVenues;
+                venues = normalizeVenueFilters(cachedVenues);
                 return;
             }
 
             try {
-                venues = await fetchVenueData(LOCAL_VENUES_URL);
+                venues = normalizeVenueFilters(await fetchVenueData(LOCAL_VENUES_URL));
                 writeCachedVenues(venues);
             } catch (err) {
                 venues = [];
@@ -728,6 +823,7 @@
         const filterDefinitions = {
             venueType: [
                 { id: "cafe", label: "Cafe" },
+                { id: "restaurant", label: "Restaurant" },
                 { id: "craft-atelier", label: "Creative Atelier" },
                 { id: "food-hall", label: "Food Hall" }
             ],
@@ -986,9 +1082,28 @@
         };
         let searchQuery = '';
         let isInitialLoad = true;
-        let activeTab = 'map';
-        let lastPrimaryView = 'map';
-        let favoritesReturnView = 'map';
+        const viewStateKey = 'friendlyspaces_active_view';
+        const allowedViews = new Set(['map', 'list', 'favorites']);
+        function loadSavedView() {
+            try {
+                const saved = localStorage.getItem(viewStateKey);
+                return allowedViews.has(saved) ? saved : 'map';
+            } catch (err) {
+                return 'map';
+            }
+        }
+        function saveActiveView(view) {
+            if (!allowedViews.has(view)) return;
+            try {
+                localStorage.setItem(viewStateKey, view);
+            } catch (err) {
+                // Ignore storage issues.
+            }
+        }
+
+        let activeTab = loadSavedView();
+        let lastPrimaryView = activeTab === 'list' ? 'list' : 'map';
+        let favoritesReturnView = lastPrimaryView;
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
         const sidebar = document.getElementById('sidebar');
@@ -1608,9 +1723,21 @@
             }
         }
 
+        function venueHasCategoryFilter(venue, category, filterId) {
+            const values = venue?.filters?.[category] || [];
+            if (values.includes(filterId)) return true;
+
+            // Backward-compatible alias: treat food halls as restaurants.
+            if (category === 'venueType' && filterId === 'restaurant') {
+                return values.includes('food-hall');
+            }
+
+            return false;
+        }
+
         // Helper: Count venues with specific filter
         function countVenuesWithFilter(category, filterId) {
-            return venues.filter(v => v.filters[category].includes(filterId)).length;
+            return venues.filter(v => venueHasCategoryFilter(v, category, filterId)).length;
         }
 
         // Create filter buttons
@@ -1931,7 +2058,7 @@
                 if (selectedFilters.length > 0) {
                     // Check if venue has ALL selected filters in this category
                     const hasAllFilters = selectedFilters.every(filter =>
-                        venue.filters[category].includes(filter)
+                        venueHasCategoryFilter(venue, category, filter)
                     );
                     if (!hasAllFilters) return false;
                 }
@@ -2150,6 +2277,7 @@
 
             const localizedDescription = getVenueText(venue, 'description');
             const localizedHours = getVenueText(venue, 'hours');
+            const formattedHours = formatHoursForProfile(localizedHours);
             const localizedSpecialty = getVenueText(venue, 'specialty');
 
             const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venue.address)}`;
@@ -2266,7 +2394,7 @@
                     <div class="detail-section">
                         <div class="detail-info-row">
                             <span class="detail-info-label">${hoursLabel}</span>
-                            <span class="detail-info-value">${localizedHours}</span>
+                            <div class="detail-info-value detail-info-hours">${formattedHours}</div>
                         </div>
                         ${seasonalNote ? `
                             <div class="detail-info-row">
@@ -2406,6 +2534,7 @@
         function setActiveView(view) {
             const previousTab = activeTab;
             activeTab = view;
+            saveActiveView(view);
             if (view === 'favorites' && (previousTab === 'map' || previousTab === 'list')) {
                 favoritesReturnView = previousTab;
             }
@@ -2848,18 +2977,25 @@
             target.addEventListener('touchstart', (event) => {
                 if (!isMobile() || !detailModal?.classList.contains('active')) return;
                 if (topZoneOnly) {
+                    if (event.target instanceof Element && event.target.closest('#detail-modal-content')) {
+                        return;
+                    }
                     const touch = event.touches?.[0];
                     if (!touch) return;
                     const rect = target.getBoundingClientRect();
                     const inTopZone = touch.clientY <= rect.top + 72;
                     const onCloseButton = event.target instanceof Element && !!event.target.closest('#detail-modal-close');
                     if (!inTopZone || onCloseButton) {
-                        detailDragging = false;
                         return;
                     }
                 }
-                // Let image carousels handle their own gestures without sheet interference.
-                if (fromContent && event.target instanceof Element && event.target.closest('.venue-slider')) {
+                // Let image carousels handle their own gestures in full mode without sheet interference.
+                if (
+                    fromContent &&
+                    currentDetailSnap === 'full' &&
+                    event.target instanceof Element &&
+                    event.target.closest('.venue-slider')
+                ) {
                     detailDragging = false;
                     return;
                 }
@@ -2907,8 +3043,6 @@
         }
 
         bindDetailSwipeTarget(detailSheetGrabber, false);
-        const detailModalCard = detailModal?.querySelector('.detail-modal-card');
-        bindDetailSwipeTarget(detailModalCard, false, true);
         bindDetailSwipeTarget(detailModalContent, true);
 
         if (detailModal) {
@@ -3015,10 +3149,14 @@
                     label.textContent = translate('ui.filtersLabel', 'Filters');
                 } else if (key === 'cafe') {
                     label.textContent = translate('filters.options.venueType.cafe', 'Cafe');
+                } else if (key === 'restaurant') {
+                    label.textContent = translate('filters.options.venueType.restaurant', 'Restaurant');
                 } else if (key === 'baby') {
                     label.textContent = translate('filters.options.ageRange.baby', 'Baby');
                 } else if (key === 'toddler') {
                     label.textContent = translate('filters.options.ageRange.toddler', 'Toddler');
+                } else if (key === 'small-child') {
+                    label.textContent = translate('filters.options.ageRange.small-child', 'Small Child');
                 } else if (key === 'play-area') {
                     label.textContent = translate('filters.options.amenities.play-area', 'Play Area');
                 }
@@ -3156,6 +3294,7 @@
             loadFavorites();
             updateFavoritesBadge();
             setLanguage(currentLang, { skipUrlUpdate: true });
+            setActiveView(activeTab);
             handleResize();
             if ('requestIdleCallback' in window) {
                 window.requestIdleCallback(preloadVenueHeroImages, { timeout: 2000 });

@@ -1654,6 +1654,16 @@
             color: #333;
         }
 
+        .detail-info-hours {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .detail-hours-line {
+            display: block;
+        }
+
         .detail-info-value.seasonal {
             color: #BA1E1E;
             font-weight: 600;
