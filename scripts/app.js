@@ -642,10 +642,10 @@
 
         function isApplePlatform() {
             const cap = window.Capacitor;
-            const isNativeIos = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'ios';
-            if (isNativeIos) return true;
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            return typeof cap?.isNativePlatform === 'function' &&
+                cap.isNativePlatform() &&
+                typeof cap?.getPlatform === 'function' &&
+                cap.getPlatform() === 'ios';
         }
 
         function getDirectionsUrl(venue) {
