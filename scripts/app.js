@@ -640,6 +640,22 @@
             return `tel:${normalized}`;
         }
 
+        function isApplePlatform() {
+            const cap = window.Capacitor;
+            const isNativeIos = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'ios';
+            if (isNativeIos) return true;
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        }
+
+        function getDirectionsUrl(venue) {
+            const destination = encodeURIComponent(venue.address);
+            if (isApplePlatform()) {
+                return `https://maps.apple.com/?daddr=${destination}`;
+            }
+            return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+        }
+
         // Helper to get localized venue text fields
         function getVenueText(venue, field) {
             const localized = venue.i18n?.[field];
@@ -1244,6 +1260,44 @@
                 await statusBar.setBackgroundColor({ color: BRAND_STATUS_COLOR });
             } catch (err) {
                 // Ignore status bar plugin failures to keep app interactions unaffected.
+            }
+        }
+
+        async function getCurrentLocation() {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const geolocationPlugin = cap?.Plugins?.Geolocation;
+
+            if (isNative && geolocationPlugin?.getCurrentPosition) {
+                if (geolocationPlugin.requestPermissions) {
+                    await geolocationPlugin.requestPermissions();
+                }
+                return geolocationPlugin.getCurrentPosition({
+                    enableHighAccuracy: true,
+                    timeout: 8000,
+                    maximumAge: 60000
+                });
+            }
+
+            if (!navigator.geolocation) {
+                throw new Error('Geolocation is unavailable');
+            }
+
+            return new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(
+                    resolve,
+                    reject,
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+                );
+            });
+        }
+
+        function applyNativeAndroidInsetFallback() {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const isAndroid = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'android';
+            if (isNative && isAndroid) {
+                document.body.classList.add('native-android');
             }
         }
 
@@ -2115,8 +2169,7 @@
                 })
                 .join('');
 
-            // Create Google Maps directions link
-            const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venue.address)}`;
+            const mapsUrl = getDirectionsUrl(venue);
             const phoneHref = formatPhoneHref(venue.phone);
             const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
 
@@ -2281,7 +2334,7 @@
             const formattedHours = formatHoursForProfile(localizedHours);
             const localizedSpecialty = getVenueText(venue, 'specialty');
 
-            const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(venue.address)}`;
+            const mapsUrl = getDirectionsUrl(venue);
             const phoneHref = formatPhoneHref(venue.phone);
             const isFav = isFavorite(venue.name);
 
