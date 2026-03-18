@@ -2115,8 +2115,7 @@
             return Math.min(Math.max(nearest * 1.8, 1500), 7000);
         }
 
-        // Check if venue matches filters
-        function venueMatchesFilters(venue) {
+        function venueMatchesBaseFilters(venue) {
             if (activeTab === 'favorites' && !isFavorite(venue.name)) {
                 return false;
             }
@@ -2142,22 +2141,46 @@
                 }
             }
 
-            if (nearMeActive) {
-                if (!userLocationLatLng || !Array.isArray(venue.fallbackCoords) || venue.fallbackCoords.length < 2) {
-                    return false;
-                }
-                const distance = map.distance(
-                    userLocationLatLng,
-                    L.latLng(venue.fallbackCoords[0], venue.fallbackCoords[1])
-                );
-                if (distance > nearMeRadiusMeters) return false;
+            return true;
+        }
+
+        // Check if venue matches filters
+        function venueMatchesFilters(venue) {
+            if (!venueMatchesBaseFilters(venue)) {
+                return false;
+            }
+
+            if (nearMeActive && (!userLocationLatLng || !Array.isArray(venue.fallbackCoords) || venue.fallbackCoords.length < 2)) {
+                return false;
             }
 
             return true;
         }
 
         function getVisibleVenues() {
-            return venues.filter(venueMatchesFilters);
+            const filtered = venues.filter(venueMatchesFilters);
+
+            if (!nearMeActive || !userLocationLatLng) {
+                return filtered;
+            }
+
+            const withDistance = filtered
+                .map((venue) => ({
+                    venue,
+                    distance: map.distance(
+                        userLocationLatLng,
+                        L.latLng(venue.fallbackCoords[0], venue.fallbackCoords[1])
+                    )
+                }))
+                .sort((a, b) => a.distance - b.distance);
+
+            const withinRadius = withDistance.filter(({ distance }) => distance <= nearMeRadiusMeters);
+
+            if (withinRadius.length > 0) {
+                return withinRadius.map(({ venue }) => venue);
+            }
+
+            return withDistance.map(({ venue }) => venue);
         }
 
         function applySelectedMarkerStyle() {
@@ -2999,7 +3022,11 @@
 
         function handleNetlifySubmit(form, statusEl, successKey, errorKey) {
             const submitBtn = form.querySelector('button[type="submit"]');
-            if (statusEl) statusEl.textContent = translate('ui.formSending', 'Sending...');
+            if (statusEl) {
+                statusEl.textContent = translate('ui.formSending', 'Sending...');
+                statusEl.classList.add('visible', 'is-pending');
+                statusEl.classList.remove('is-success', 'is-error');
+            }
             if (submitBtn) submitBtn.disabled = true;
 
             const submitConfig = getFormSubmitConfig();
@@ -3010,11 +3037,19 @@
                 ...submitConfig.options
             })
                 .then(() => {
-                    if (statusEl) statusEl.textContent = translate(successKey, 'Thanks! Sent.');
+                    if (statusEl) {
+                        statusEl.textContent = translate(successKey, 'Thanks! Sent.');
+                        statusEl.classList.add('visible', 'is-success');
+                        statusEl.classList.remove('is-pending', 'is-error');
+                    }
                     form.reset();
                 })
                 .catch(() => {
-                    if (statusEl) statusEl.textContent = translate(errorKey, 'Something went wrong. Please try again.');
+                    if (statusEl) {
+                        statusEl.textContent = translate(errorKey, 'Something went wrong. Please try again.');
+                        statusEl.classList.add('visible', 'is-error');
+                        statusEl.classList.remove('is-pending', 'is-success');
+                    }
                 })
                 .finally(() => {
                     if (submitBtn) submitBtn.disabled = false;

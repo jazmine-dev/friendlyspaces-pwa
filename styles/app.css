@@ -730,9 +730,43 @@
         }
 
         .form-status {
-            min-height: 18px;
-            font-size: 12px;
-            color: #6f6b65;
+            min-height: 48px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-align: center;
+            color: #1E52BA;
+            background: rgba(30, 82, 186, 0.08);
+            border: 1px solid rgba(30, 82, 186, 0.16);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+        }
+
+        .form-status.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-status.is-pending {
+            color: #3b3834;
+            background: #f5f0e8;
+            border-color: #e6ddd1;
+        }
+
+        .form-status.is-success {
+            color: #1E52BA;
+            background: rgba(30, 82, 186, 0.08);
+            border-color: rgba(30, 82, 186, 0.18);
+        }
+
+        .form-status.is-error {
+            color: #a23b2a;
+            background: rgba(162, 59, 42, 0.08);
+            border-color: rgba(162, 59, 42, 0.18);
         }
 
         .suggest-submit {
