@@ -51,7 +51,6 @@
                 "bistro"
             ],
             "ageRange": [
-                "baby",
                 "toddler",
                 "small-child",
                 "kid"
@@ -109,6 +108,7 @@
             ],
             "cuisineType": [],
             "ageRange": [
+                "baby",
                 "toddler",
                 "small-child",
                 "kid"
@@ -354,6 +354,68 @@
                 "play-area",
                 "change-table",
                 "arts-crafts"
+            ]
+        }
+    },
+    {
+        "name": "Caffè Bar Sempre Berna",
+        "address": "Schwarztorstrasse 102, 3007 Bern",
+        "city": "Bern",
+        "description": "Neighborhood cafe with Italian-style drinks, small bites, and a welcoming space for conversation, support, advice, and free coaching.",
+        "i18n": {
+            "description": {
+                "de": "Quartiercafé mit italienisch inspirierten Getränken, kleinen Speisen und einem offenen Ort für Gespräche, Unterstützung, Beratung und kostenloses Coaching.",
+                "fr": "Café de quartier avec boissons d'inspiration italienne, petites bouchées et un lieu accueillant pour l'échange, le soutien, le conseil et un coaching gratuit.",
+                "it": "Caffe di quartiere con bevande in stile italiano, piccoli spuntini e uno spazio accogliente per conversazione, sostegno, consulenza e coaching gratuito."
+            },
+            "hours": {
+                "de": "Montag-Freitag: 09:00-20:00 Uhr (aktuelle Infos auf Instagram)",
+                "fr": "Lundi-vendredi : 09h00-20h00 (infos actuelles sur Instagram)",
+                "it": "Lunedì-venerdì: 09:00-20:00 (aggiornamenti su Instagram)"
+            },
+            "specialty": {
+                "de": "Espresso, Cappuccino, heisse Schokolade, Pasticceria und Apéroplättli in einem sozialen Quartiercafé",
+                "fr": "Espresso, cappuccino, chocolat chaud, pasticceria et planchettes apéro dans un café de quartier social",
+                "it": "Espresso, cappuccino, cioccolata calda, pasticceria e taglieri da aperitivo in un caffe di quartiere sociale"
+            }
+        },
+        "hours": "Mon-Fri: 9am-8pm (check Instagram for current updates)",
+        "specialty": "Espresso, cappuccino, hot chocolate, pasticceria, and apero platters in a social neighborhood cafe",
+        "phone": "+41 31 543 54 47",
+        "website": "https://www.sempreberna.ch/caffebar",
+        "instagram": "https://www.instagram.com/sempre.berna",
+        "images": [
+            "assets/bern/Sempre_Berna/Sempre_Berna_01.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_02.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_03.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_04.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_05.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_06.webp",
+            "assets/bern/Sempre_Berna/Sempre_Berna_07.webp"
+        ],
+        "fallbackCoords": [
+            46.9447911,
+            7.4256921
+        ],
+        "filters": {
+            "venueType": [
+                "cafe"
+            ],
+            "cuisineType": [
+                "bistro"
+            ],
+            "ageRange": [
+                "baby",
+                "toddler",
+                "small-child",
+                "kid"
+            ],
+            "amenities": [
+                "playground",
+                "outdoor-seating",
+                "play-area",
+                "high-chair",
+                "change-table"
             ]
         }
     }
