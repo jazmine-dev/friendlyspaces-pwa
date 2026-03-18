@@ -385,13 +385,13 @@
         "website": "https://www.sempreberna.ch/caffebar",
         "instagram": "https://www.instagram.com/sempre.berna",
         "images": [
-            "assets/bern/Sempre_Berna/Sempre_Berna_01.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_02.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_03.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_04.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_05.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_06.webp",
-            "assets/bern/Sempre_Berna/Sempre_Berna_07.webp"
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_01.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_02.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_03.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_04.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_05.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_06.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Sempre_Berna/Sempre_Berna_07.webp"
         ],
         "fallbackCoords": [
             46.9447911,
