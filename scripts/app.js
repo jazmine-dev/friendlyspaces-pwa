@@ -711,6 +711,7 @@
         // Venue data: try hosted JSON first, then bundled fallback.
         let venues = [];
         const REMOTE_VENUES_URL = 'https://app.friendlyspaces.ch/data/venues.json';
+        const REMOTE_FORM_SUBMIT_URL = 'https://app.friendlyspaces.ch/';
         const LOCAL_VENUES_URL = 'data/venues.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
@@ -2973,15 +2974,40 @@
             return params.toString();
         }
 
+        function getFormSubmitConfig() {
+            const isHostedWebApp =
+                window.location.protocol === 'https:' &&
+                window.location.hostname === 'app.friendlyspaces.ch';
+
+            if (isHostedWebApp) {
+                return {
+                    url: '/',
+                    options: {}
+                };
+            }
+
+            // Native app/webview builds need to post directly to the Netlify site.
+            // `no-cors` avoids the response being blocked while still sending the form.
+            return {
+                url: REMOTE_FORM_SUBMIT_URL,
+                options: {
+                    mode: 'no-cors',
+                    credentials: 'omit'
+                }
+            };
+        }
+
         function handleNetlifySubmit(form, statusEl, successKey, errorKey) {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (statusEl) statusEl.textContent = translate('ui.formSending', 'Sending...');
             if (submitBtn) submitBtn.disabled = true;
 
-            fetch('/', {
+            const submitConfig = getFormSubmitConfig();
+            fetch(submitConfig.url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: encodeFormData(form)
+                body: encodeFormData(form),
+                ...submitConfig.options
             })
                 .then(() => {
                     if (statusEl) statusEl.textContent = translate(successKey, 'Thanks! Sent.');
