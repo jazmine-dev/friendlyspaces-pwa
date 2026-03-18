@@ -711,7 +711,7 @@
         // Venue data: try hosted JSON first, then bundled fallback.
         let venues = [];
         const REMOTE_VENUES_URL = 'https://app.friendlyspaces.ch/data/venues.json';
-        const REMOTE_FORM_SUBMIT_URL = 'https://app.friendlyspaces.ch/';
+        const REMOTE_FUNCTIONS_BASE_URL = 'https://app.friendlyspaces.ch/.netlify/functions';
         const LOCAL_VENUES_URL = 'data/venues.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
@@ -2965,60 +2965,56 @@
         suggestRoleButtons.forEach(btn => {
             btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
         });
-        function encodeFormData(form) {
-            const data = new FormData(form);
-            const params = new URLSearchParams();
-            for (const [key, value] of data.entries()) {
-                params.append(key, value.toString());
-            }
-            return params.toString();
-        }
-
-        function getFormSubmitConfig() {
+        function getFunctionsBaseUrl() {
             const isHostedWebApp =
                 window.location.protocol === 'https:' &&
                 window.location.hostname === 'app.friendlyspaces.ch';
 
             if (isHostedWebApp) {
-                return {
-                    url: '/',
-                    options: {}
-                };
+                return '/.netlify/functions';
             }
 
-            // Native app/webview builds need to post directly to the Netlify site.
-            // `no-cors` avoids the response being blocked while still sending the form.
-            return {
-                url: REMOTE_FORM_SUBMIT_URL,
-                options: {
-                    mode: 'no-cors',
-                    credentials: 'omit'
-                }
-            };
+            return REMOTE_FUNCTIONS_BASE_URL;
         }
 
-        function handleNetlifySubmit(form, statusEl, successKey, errorKey) {
+        function formToObject(form) {
+            const data = new FormData(form);
+            const payload = {};
+            for (const [key, value] of data.entries()) {
+                payload[key] = value.toString();
+            }
+            if (!Object.prototype.hasOwnProperty.call(payload, 'newsletterOptIn')) {
+                payload.newsletterOptIn = false;
+            } else {
+                payload.newsletterOptIn = true;
+            }
+            return payload;
+        }
+
+        async function handleFunctionSubmit(form, endpoint, statusEl, successKey, errorKey) {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (statusEl) statusEl.textContent = translate('ui.formSending', 'Sending...');
             if (submitBtn) submitBtn.disabled = true;
 
-            const submitConfig = getFormSubmitConfig();
-            fetch(submitConfig.url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: encodeFormData(form),
-                ...submitConfig.options
-            })
-                .then(() => {
-                    if (statusEl) statusEl.textContent = translate(successKey, 'Thanks! Sent.');
-                    form.reset();
-                })
-                .catch(() => {
-                    if (statusEl) statusEl.textContent = translate(errorKey, 'Something went wrong. Please try again.');
-                })
-                .finally(() => {
-                    if (submitBtn) submitBtn.disabled = false;
+            try {
+                const response = await fetch(`${getFunctionsBaseUrl()}/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formToObject(form))
                 });
+
+                if (!response.ok) {
+                    throw new Error(`Submission failed with status ${response.status}`);
+                }
+
+                if (statusEl) statusEl.textContent = translate(successKey, 'Thanks! Sent.');
+                form.reset();
+            } catch (error) {
+                console.error(`Failed to submit ${endpoint}`, error);
+                if (statusEl) statusEl.textContent = translate(errorKey, 'Something went wrong. Please try again.');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
         }
 
         if (suggestForm) {
@@ -3032,7 +3028,7 @@
                 suggestForm.appendChild(roleField);
 
                 const statusEl = document.getElementById('suggest-status');
-                handleNetlifySubmit(suggestForm, statusEl, 'ui.suggestSubmitSuccess', 'ui.suggestSubmitError');
+                handleFunctionSubmit(suggestForm, 'suggest', statusEl, 'ui.suggestSubmitSuccess', 'ui.suggestSubmitError');
 
                 roleField.remove();
             });
@@ -3042,7 +3038,7 @@
             bugForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const statusEl = document.getElementById('bug-status');
-                handleNetlifySubmit(bugForm, statusEl, 'ui.bugSubmitSuccess', 'ui.bugSubmitError');
+                handleFunctionSubmit(bugForm, 'bug', statusEl, 'ui.bugSubmitSuccess', 'ui.bugSubmitError');
             });
         }
 
