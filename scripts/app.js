@@ -144,6 +144,8 @@
                     viewProfile: "Profil anzeigen",
                     features: "Ausstattung",
                     navigate: "Navigation",
+                    appleMaps: "Apple Maps",
+                    googleMaps: "Google Maps",
                     call: "Anrufen",
                     website: "Webseite",
                     instagram: "Instagram",
@@ -293,6 +295,8 @@
                     viewProfile: "Voir le profil",
                     features: "Équipements",
                     navigate: "Naviguer",
+                    appleMaps: "Apple Maps",
+                    googleMaps: "Google Maps",
                     call: "Appeler",
                     website: "Site web",
                     instagram: "Instagram",
@@ -442,6 +446,8 @@
                     viewProfile: "Vedi profilo completo",
                     features: "Servizi",
                     navigate: "Naviga",
+                    appleMaps: "Apple Maps",
+                    googleMaps: "Google Maps",
                     call: "Chiama",
                     website: "Sito web",
                     instagram: "Instagram",
@@ -591,6 +597,8 @@
                     viewProfile: "View Full Profile",
                     features: "Features",
                     navigate: "Navigate",
+                    appleMaps: "Apple Maps",
+                    googleMaps: "Google Maps",
                     call: "Call",
                     website: "Website",
                     instagram: "Instagram",
@@ -642,18 +650,32 @@
 
         function isApplePlatform() {
             const cap = window.Capacitor;
-            return typeof cap?.isNativePlatform === 'function' &&
-                cap.isNativePlatform() &&
+            const isNativeIOS =
                 typeof cap?.getPlatform === 'function' &&
                 cap.getPlatform() === 'ios';
+            const userAgent = navigator.userAgent || '';
+            const isIOSBrowser =
+                /iPad|iPhone|iPod/.test(userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+            return isNativeIOS || isIOSBrowser;
+        }
+
+        function getAppleMapsUrl(venue) {
+            const destination = encodeURIComponent(venue.address);
+            return `https://maps.apple.com/?daddr=${destination}`;
+        }
+
+        function getGoogleMapsUrl(venue) {
+            const destination = encodeURIComponent(venue.address);
+            return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
         }
 
         function getDirectionsUrl(venue) {
-            const destination = encodeURIComponent(venue.address);
             if (isApplePlatform()) {
-                return `https://maps.apple.com/?daddr=${destination}`;
+                return getAppleMapsUrl(venue);
             }
-            return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+            return getGoogleMapsUrl(venue);
         }
 
         // Helper to get localized venue text fields
@@ -2148,6 +2170,7 @@
         // Create popup content with color-coded tags and image slider
         function createPopup(venue) {
             const hoursLabel = translate('popup.hours', 'Hours');
+            const appleMapsLabel = translate('popup.appleMaps', 'Apple Maps');
             const favoriteAddLabel = translate('ui.favoriteAdd', 'Save');
             const favoriteRemoveLabel = translate('ui.favoriteRemove', 'Saved');
             const seasonalNote = venue.seasonalNote
@@ -2170,6 +2193,7 @@
                 .join('');
 
             const mapsUrl = getDirectionsUrl(venue);
+            const useExplicitAppleMapsOption = isApplePlatform();
             const phoneHref = formatPhoneHref(venue.phone);
             const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
 
@@ -2205,7 +2229,7 @@
                             <span class="favorite-label">${isFavorite(venue.name) ? favoriteRemoveLabel : favoriteAddLabel}</span>
                         </button>
                     </div>
-                    <p class="popup-address"><span class="popup-icon">${navigateSvg}</span> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}</a></p>
+                    <p class="popup-address"><span class="popup-icon">${navigateSvg}</span> <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${venue.address}${useExplicitAppleMapsOption ? ` · ${appleMapsLabel}` : ''}</a></p>
                     ${localizedHours ? `<p class="popup-hours"><strong>${hoursLabel}:</strong> ${localizedHours}</p>` : ''}
                     ${seasonalNote ? `<p class="popup-seasonal">${seasonalNote}</p>` : ''}
                     <p class="popup-desc">${localizedDescription}</p>
@@ -2320,6 +2344,7 @@
             const hoursLabel = translate('popup.hours', 'Hours');
             const specialtyLabel = translate('popup.specialty', 'Specialty');
             const navigateLabel = translate('popup.navigate', 'Navigate');
+            const appleMapsLabel = translate('popup.appleMaps', 'Apple Maps');
             const callLabel = translate('popup.call', 'Call');
             const websiteLabel = translate('popup.website', 'Website');
             const instagramLabel = translate('popup.instagram', 'Instagram');
@@ -2335,6 +2360,8 @@
             const localizedSpecialty = getVenueText(venue, 'specialty');
 
             const mapsUrl = getDirectionsUrl(venue);
+            const appleMapsUrl = getAppleMapsUrl(venue);
+            const useExplicitAppleMapsOption = isApplePlatform();
             const phoneHref = formatPhoneHref(venue.phone);
             const isFav = isFavorite(venue.name);
 
@@ -2383,12 +2410,19 @@
             // Determine Instagram URL from venue data (use instagram field or fall back to empty)
             const instagramUrl = venue.instagram || '';
 
-            const actionButtons = [
-                `<a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
-                    <span class="icon-circle">${navigateSvg}</span>
-                    <span class="icon-label">${navigateLabel}</span>
-                </a>`
-            ];
+            const actionButtons = useExplicitAppleMapsOption
+                ? [
+                    `<a class="detail-icon-btn" href="${appleMapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="apple-maps">
+                        <span class="icon-circle">${navigateSvg}</span>
+                        <span class="icon-label">${appleMapsLabel}</span>
+                    </a>`
+                ]
+                : [
+                    `<a class="detail-icon-btn" href="${mapsUrl}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="directions">
+                        <span class="icon-circle">${navigateSvg}</span>
+                        <span class="icon-label">${navigateLabel}</span>
+                    </a>`
+                ];
 
             if (phoneHref) {
                 actionButtons.push(`
