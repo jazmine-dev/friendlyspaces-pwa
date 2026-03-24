@@ -14,12 +14,12 @@ def hasValidReleaseSigning = keystorePropertiesFile.exists()
         && !keystoreProperties['keyPassword'].toString().startsWith('REPLACE_WITH_')
 def appVersionName = (project.findProperty("appVersionName")
         ?: System.getenv("APP_VERSION_NAME")
-        ?: "1.0.1").toString()
+        ?: "1.0.4").toString()
 def explicitVersionCode = project.findProperty("appVersionCode")
         ?: System.getenv("APP_VERSION_CODE")
 def appVersionCode = explicitVersionCode
         ? explicitVersionCode.toString().toInteger()
-        : 1
+        : 7
 
 android {
     namespace = "ch.friendlyspaces.app"
