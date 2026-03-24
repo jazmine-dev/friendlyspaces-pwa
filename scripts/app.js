@@ -92,6 +92,13 @@
                     favoritesInstall: "Friendly Spaces installieren",
                     favoritesInstallCta: "Zum Homescreen",
                     nearMe: "In der Nähe",
+                    locationBlockedTitle: "Standort aktivieren",
+                    locationBlockedBodyNative: "Friendly Spaces braucht Standortzugriff fuer In der Naehe. Wenn kein weiterer Dialog erscheint, oeffne die Geraete-Einstellungen, erlaube den Standort fuer Friendly Spaces und versuche es erneut.",
+                    locationBlockedBodyWeb: "Friendly Spaces braucht Standortzugriff fuer In der Naehe. Erlaube den Standort in deinen Browser- oder Website-Einstellungen und versuche es erneut.",
+                    locationUnavailableTitle: "Standort nicht verfuegbar",
+                    locationUnavailableBody: "Dein Standort konnte gerade nicht geladen werden. Pruefe GPS oder Verbindung und versuche es erneut.",
+                    locationRetry: "Erneut versuchen",
+                    locationDismiss: "OK",
                     favoriteAdd: "Merken",
                     favoriteRemove: "Gespeichert",
                     filtersActive: (count) => count === 1 ? "1 Filter aktiv" : `${count} Filter aktiv`,
@@ -243,6 +250,13 @@
                     favoritesInstall: "Installer Friendly Spaces",
                     favoritesInstallCta: "Ajouter à l'écran",
                     nearMe: "A proximité",
+                    locationBlockedTitle: "Activer la localisation",
+                    locationBlockedBodyNative: "Friendly Spaces a besoin de la localisation pour A proximite. Si aucune autre demande n'apparait, ouvre les reglages de ton appareil, autorise la localisation pour Friendly Spaces puis reessaie.",
+                    locationBlockedBodyWeb: "Friendly Spaces a besoin de la localisation pour A proximite. Autorise la localisation dans les reglages du navigateur ou du site puis reessaie.",
+                    locationUnavailableTitle: "Localisation indisponible",
+                    locationUnavailableBody: "Nous n'avons pas pu recuperer ta position pour le moment. Verifie le GPS ou la connexion puis reessaie.",
+                    locationRetry: "Reessayer",
+                    locationDismiss: "OK",
                     favoriteAdd: "Enregistrer",
                     favoriteRemove: "Enregistré",
                     filtersActive: (count) => count === 1 ? "1 filtre actif" : `${count} filtres actifs`,
@@ -394,6 +408,13 @@
                     favoritesInstall: "Installa Friendly Spaces",
                     favoritesInstallCta: "Aggiungi alla Home",
                     nearMe: "Vicino a me",
+                    locationBlockedTitle: "Attiva la posizione",
+                    locationBlockedBodyNative: "Friendly Spaces ha bisogno della posizione per Vicino a me. Se non compare un altro avviso, apri le impostazioni del dispositivo, consenti la posizione per Friendly Spaces e riprova.",
+                    locationBlockedBodyWeb: "Friendly Spaces ha bisogno della posizione per Vicino a me. Consenti la posizione nelle impostazioni del browser o del sito e riprova.",
+                    locationUnavailableTitle: "Posizione non disponibile",
+                    locationUnavailableBody: "Non siamo riusciti a ottenere la tua posizione in questo momento. Controlla GPS o connessione e riprova.",
+                    locationRetry: "Riprova",
+                    locationDismiss: "OK",
                     favoriteAdd: "Salva",
                     favoriteRemove: "Salvato",
                     filtersActive: (count) => count === 1 ? "1 filtro attivo" : `${count} filtri attivi`,
@@ -545,6 +566,13 @@
                     favoritesInstall: "Install Friendly Spaces",
                     favoritesInstallCta: "Add to Home Screen",
                     nearMe: "Near Me",
+                    locationBlockedTitle: "Enable location",
+                    locationBlockedBodyNative: "Friendly Spaces needs location access for Near Me. If no prompt appears again, open your device settings, allow location for Friendly Spaces, then try again.",
+                    locationBlockedBodyWeb: "Friendly Spaces needs location access for Near Me. Allow location in your browser or site settings, then try again.",
+                    locationUnavailableTitle: "Location unavailable",
+                    locationUnavailableBody: "We could not get your location right now. Check your GPS or connection and try again.",
+                    locationRetry: "Try again",
+                    locationDismiss: "OK",
                     favoriteAdd: "Save",
                     favoriteRemove: "Saved",
                     filtersActive: (count) => count === 1 ? "1 filter active" : `${count} filters active`,
@@ -928,14 +956,7 @@
             L.DomEvent.disableClickPropagation(container);
             L.DomEvent.disableScrollPropagation(container);
             container.querySelector('.locate-button').addEventListener('click', async () => {
-                try {
-                    const pos = await getCurrentLocation();
-                    const { latitude, longitude } = pos.coords;
-                    showUserLocation(latitude, longitude);
-                    centerMapWithNearestVenue(latitude, longitude);
-                } catch (err) {
-                    // Ignore location errors
-                }
+                await requestNearMeLocation({ activateNearMe: false });
             });
             return container;
         };
@@ -1201,6 +1222,11 @@
         let introTouchStartY = 0;
         let introWheelLockUntil = 0;
         let currentDetailSnap = 'half';
+        let locationNotice = null;
+        let locationNoticeTitle = null;
+        let locationNoticeBody = null;
+        let locationNoticeRetry = null;
+        let locationNoticeDismiss = null;
 
         // City coordinates for zoom
         const cityCoordinates = {
@@ -1351,6 +1377,119 @@
                     { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
                 );
             });
+        }
+
+        function ensureLocationNotice() {
+            if (locationNotice) return;
+
+            locationNotice = document.createElement('div');
+            locationNotice.className = 'location-permission-toast hidden';
+            locationNotice.innerHTML = `
+                <div class="location-permission-toast-card" role="dialog" aria-modal="false">
+                    <div class="location-permission-toast-copy">
+                        <strong class="location-permission-toast-title"></strong>
+                        <p class="location-permission-toast-body"></p>
+                    </div>
+                    <div class="location-permission-toast-actions">
+                        <button type="button" class="location-permission-toast-btn secondary" data-location-action="dismiss"></button>
+                        <button type="button" class="location-permission-toast-btn primary" data-location-action="retry"></button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(locationNotice);
+            locationNoticeTitle = locationNotice.querySelector('.location-permission-toast-title');
+            locationNoticeBody = locationNotice.querySelector('.location-permission-toast-body');
+            locationNoticeRetry = locationNotice.querySelector('[data-location-action="retry"]');
+            locationNoticeDismiss = locationNotice.querySelector('[data-location-action="dismiss"]');
+
+            if (locationNoticeDismiss) {
+                locationNoticeDismiss.addEventListener('click', hideLocationNotice);
+            }
+
+            if (locationNoticeRetry) {
+                locationNoticeRetry.addEventListener('click', async () => {
+                    await requestNearMeLocation();
+                });
+            }
+        }
+
+        function hideLocationNotice() {
+            if (!locationNotice) return;
+            locationNotice.classList.add('hidden');
+        }
+
+        function isPermissionDeniedError(err) {
+            const code = Number(err?.code);
+            const message = String(err?.message || err || '').toLowerCase();
+            return (
+                code === 1 ||
+                message.includes('permission') ||
+                message.includes('denied') ||
+                message.includes('not allowed') ||
+                message.includes('unauthorized')
+            );
+        }
+
+        function showLocationNotice(err) {
+            ensureLocationNotice();
+
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const permissionBlocked = isPermissionDeniedError(err);
+
+            if (locationNoticeTitle) {
+                locationNoticeTitle.textContent = permissionBlocked
+                    ? translate('ui.locationBlockedTitle', 'Enable location')
+                    : translate('ui.locationUnavailableTitle', 'Location unavailable');
+            }
+
+            if (locationNoticeBody) {
+                locationNoticeBody.textContent = permissionBlocked
+                    ? translate(
+                        isNative ? 'ui.locationBlockedBodyNative' : 'ui.locationBlockedBodyWeb',
+                        isNative
+                            ? 'Friendly Spaces needs location access for Near Me. If no prompt appears again, open your device settings, allow location for Friendly Spaces, then try again.'
+                            : 'Friendly Spaces needs location access for Near Me. Allow location in your browser or site settings, then try again.'
+                    )
+                    : translate(
+                        'ui.locationUnavailableBody',
+                        'We could not get your location right now. Check your GPS or connection and try again.'
+                    );
+            }
+
+            if (locationNoticeDismiss) {
+                locationNoticeDismiss.textContent = translate('ui.locationDismiss', 'OK');
+            }
+
+            if (locationNoticeRetry) {
+                locationNoticeRetry.textContent = translate('ui.locationRetry', 'Try again');
+            }
+
+            locationNotice.classList.remove('hidden');
+        }
+
+        async function requestNearMeLocation({ activateNearMe = true } = {}) {
+            try {
+                hideLocationNotice();
+                const pos = await getCurrentLocation();
+                const { latitude, longitude } = pos.coords;
+                showUserLocation(latitude, longitude);
+                centerMapWithNearestVenue(latitude, longitude);
+
+                if (activateNearMe && !nearMeActive) {
+                    toggleNearMe();
+                } else if (nearMeActive) {
+                    updateMap();
+                    updateFilterCount();
+                    syncQuickFilterPills();
+                }
+
+                return true;
+            } catch (err) {
+                showLocationNotice(err);
+                return false;
+            }
         }
 
         function setAppShellHeight() {
@@ -3389,18 +3528,11 @@
         if (sidebarNearMe) {
             sidebarNearMe.addEventListener('click', async () => {
                 if (!nearMeActive && !userLocationLatLng) {
-                    try {
-                        const pos = await getCurrentLocation();
-                        const { latitude, longitude } = pos.coords;
-                        showUserLocation(latitude, longitude);
-                        centerMapWithNearestVenue(latitude, longitude);
-                        toggleNearMe();
-                    } catch (err) {
-                        // Ignore location errors
-                    }
+                    await requestNearMeLocation();
                     return;
                 }
 
+                hideLocationNotice();
                 toggleNearMe();
             });
         }
