@@ -20,10 +20,6 @@
     <link rel="stylesheet" href="styles/app.css" />
 </head>
 <body>
-    <div id="install-banner" class="install-banner hidden">
-        <span id="install-banner-text">Install Friendly Spaces for quick access.</span>
-        <button id="install-button">Add to Home Screen</button>
-    </div>
     <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true">
         <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="intro-title">
             <button class="intro-close" type="button" id="intro-close" aria-label="Close">✕</button>
@@ -219,7 +215,7 @@
         <button class="menu-button" id="menu-about" type="button">
             <span class="menu-label">About us</span>
         </button>
-        <button class="menu-button" id="menu-install-help" type="button">
+        <button class="menu-button" id="menu-help" type="button">
             <span class="menu-label">How to use app</span>
         </button>
         <p class="menu-section-title" id="menu-language-title">Language</p>
@@ -366,36 +362,36 @@
             </form>
         </div>
     </section>
-    <section id="install-help-view" class="fullscreen-panel" aria-hidden="true">
+    <section id="help-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="install-help-close" aria-label="Close">✕</button>
+            <button class="fullscreen-close" type="button" id="help-close" aria-label="Close">✕</button>
         </div>
         <div class="fullscreen-body">
-            <h2 class="suggest-title" id="install-help-title">How to use Friendly Spaces</h2>
-            <p class="suggest-tagline" id="install-help-tagline">Quick tips to get the most from the app.</p>
-            <div class="install-help-block">
-                <h3 id="install-help-ios-title">Find places quickly</h3>
+            <h2 class="suggest-title" id="help-title">How to use Friendly Spaces</h2>
+            <p class="suggest-tagline" id="help-tagline">Quick tips to get the most from the app.</p>
+            <div class="help-panel-block">
+                <h3 id="help-find-title">Find places quickly</h3>
                 <ul>
-                    <li id="install-help-ios-step-1">Use Map view to explore pins near you.</li>
-                    <li id="install-help-ios-step-2">Switch to List view to scan places faster.</li>
-                    <li id="install-help-ios-step-3">Use Search and Filters to narrow results.</li>
+                    <li id="help-find-step-1">Use Map view to explore pins near you.</li>
+                    <li id="help-find-step-2">Switch to List view to scan places faster.</li>
+                    <li id="help-find-step-3">Use Search and Filters to narrow results.</li>
                 </ul>
             </div>
-            <div class="install-help-block">
-                <h3 id="install-help-android-title">Save favorites</h3>
+            <div class="help-panel-block">
+                <h3 id="help-favorites-title">Save favorites</h3>
                 <ul>
-                    <li id="install-help-android-step-1">Tap the heart on a place to save it.</li>
-                    <li id="install-help-android-step-2">Open Favorites to quickly find saved places.</li>
-                    <li id="install-help-android-step-3">Tap the heart again to remove a favorite.</li>
+                    <li id="help-favorites-step-1">Tap the heart on a place to save it.</li>
+                    <li id="help-favorites-step-2">Open Favorites to quickly find saved places.</li>
+                    <li id="help-favorites-step-3">Tap the heart again to remove a favorite.</li>
                 </ul>
             </div>
-            <div class="install-help-block">
-                <h3 id="install-help-use-title">Suggest a venue</h3>
+            <div class="help-panel-block">
+                <h3 id="help-suggest-title">Suggest a venue</h3>
                 <ul>
-                    <li id="install-help-use-step-1">Open the menu and tap Suggest a space.</li>
-                    <li id="install-help-use-step-2">Fill in the venue details and send your suggestion.</li>
-                    <li id="install-help-use-step-3">You can also use Report a bug / Give feedback in the menu.</li>
+                    <li id="help-suggest-step-1">Open the menu and tap Suggest a space.</li>
+                    <li id="help-suggest-step-2">Fill in the venue details and send your suggestion.</li>
+                    <li id="help-suggest-step-3">You can also use Report a bug / Give feedback in the menu.</li>
                 </ul>
             </div>
         </div>

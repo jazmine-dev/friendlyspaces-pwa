@@ -11,7 +11,7 @@
                     menuSuggest: "Ort vorschlagen",
                     menuShare: "App teilen",
                     menuAbout: "Über uns",
-                    menuInstall: "App nutzen",
+                    menuHelp: "App nutzen",
                     menuLanguage: "Sprache",
                     menuBug: "Fehler melden / Feedback geben",
                     menuPrivacy: "Datenschutz",
@@ -45,11 +45,6 @@
                     partnerSubject: "Partnerschaftsanfrage",
                     introTitle: "Was ist Friendly Spaces?",
                     introText: "Entdecke zertifizierte familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz. Jeder Ort wird auf Spielbereiche, Wickelmöglichkeiten, Kinderwagenzugang und eine einladende Atmosphäre geprüft.",
-                    introInstallTitle: "Für schnelleren Zugriff installieren",
-                    introInstallIosLabel: "iPhone:",
-                    introInstallIosText: "In Safari öffnen -> auf Teilen tippen -> Zum Home-Bildschirm wählen.",
-                    introInstallAndroidLabel: "Android:",
-                    introInstallAndroidText: "Oben auf Zum Home-Bildschirm tippen. Die App wird automatisch installiert.",
                     introMapTitle: "Orte entdecken",
                     introMapText: "Wechsle zwischen Kartenansicht, um Städte und Orte in deiner Nähe zu entdecken, und Listenansicht für einen schnellen Vergleich. Tippe auf einen Ort, um alle Details und Ausstattungen zu sehen.",
                     introSuggestTitle: "Finde deinen passenden Ort",
@@ -60,20 +55,20 @@
                     introNext: "Weiter",
                     introDone: "Fertig",
                     introSkip: "Nicht mehr anzeigen",
-                    installHelpTitle: "So nutzt du Friendly Spaces",
-                    installHelpTagline: "Kurze Tipps für die wichtigsten Funktionen.",
-                    installHelpIosTitle: "Orte schnell finden",
-                    installHelpIosStep1: "Nutze die Kartenansicht, um Pins in deiner Nähe zu sehen.",
-                    installHelpIosStep2: "Wechsle zur Listenansicht, um Orte schneller zu vergleichen.",
-                    installHelpIosStep3: "Verwende Suche und Filter, um Ergebnisse einzugrenzen.",
-                    installHelpAndroidTitle: "Favoriten speichern",
-                    installHelpAndroidStep1: "Tippe auf das Herz bei einem Ort, um ihn zu speichern.",
-                    installHelpAndroidStep2: "Öffne Favoriten, um gespeicherte Orte schnell zu finden.",
-                    installHelpAndroidStep3: "Tippe erneut auf das Herz, um den Favoriten zu entfernen.",
-                    installHelpUseTitle: "Ort vorschlagen",
-                    installHelpUseStep1: "Öffne das Menü und tippe auf Ort vorschlagen.",
-                    installHelpUseStep2: "Fülle die Angaben aus und sende deinen Vorschlag.",
-                    installHelpUseStep3: "Im Menü findest du auch Fehler melden / Feedback geben.",
+                    helpTitle: "So nutzt du Friendly Spaces",
+                    helpTagline: "Kurze Tipps für die wichtigsten Funktionen.",
+                    helpFindTitle: "Orte schnell finden",
+                    helpFindStep1: "Nutze die Kartenansicht, um Pins in deiner Nähe zu sehen.",
+                    helpFindStep2: "Wechsle zur Listenansicht, um Orte schneller zu vergleichen.",
+                    helpFindStep3: "Verwende Suche und Filter, um Ergebnisse einzugrenzen.",
+                    helpFavoritesTitle: "Favoriten speichern",
+                    helpFavoritesStep1: "Tippe auf das Herz bei einem Ort, um ihn zu speichern.",
+                    helpFavoritesStep2: "Öffne Favoriten, um gespeicherte Orte schnell zu finden.",
+                    helpFavoritesStep3: "Tippe erneut auf das Herz, um den Favoriten zu entfernen.",
+                    helpSuggestTitle: "Ort vorschlagen",
+                    helpSuggestStep1: "Öffne das Menü und tippe auf Ort vorschlagen.",
+                    helpSuggestStep2: "Fülle die Angaben aus und sende deinen Vorschlag.",
+                    helpSuggestStep3: "Im Menü findest du auch Fehler melden / Feedback geben.",
                     showingLabel: "Zeige",
                     venuesLabel: "Orte",
                     filtersLabel: "Filter",
@@ -89,8 +84,6 @@
                     noVenuesBody: "Versuche andere Filter oder eine neue Suche.",
                     noFavoritesTitle: "Noch keine Favoriten",
                     noFavoritesBody: "Tippe auf das Herz, um Orte zu speichern.",
-                    favoritesInstall: "Friendly Spaces installieren",
-                    favoritesInstallCta: "Zum Homescreen",
                     nearMe: "In der Nähe",
                     locationBlockedTitle: "Standort aktivieren",
                     locationBlockedBodyNative: "Friendly Spaces braucht Standortzugriff fuer In der Naehe. Wenn kein weiterer Dialog erscheint, oeffne die Geraete-Einstellungen, erlaube den Standort fuer Friendly Spaces und versuche es erneut.",
@@ -169,7 +162,7 @@
                     menuSuggest: "Suggérer un espace",
                     menuShare: "Partager l'app",
                     menuAbout: "À propos",
-                    menuInstall: "Utiliser l'app",
+                    menuHelp: "Utiliser l'app",
                     menuLanguage: "Langue",
                     menuBug: "Signaler un bug / Donner un avis",
                     menuPrivacy: "Politique de confidentialité",
@@ -203,11 +196,6 @@
                     partnerSubject: "Demande de partenariat",
                     introTitle: "Qu’est-ce que Friendly Spaces ?",
                     introText: "Découvrez des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse. Chaque lieu est audité pour les espaces de jeu, les équipements de change, l’accès poussette et une ambiance accueillante.",
-                    introInstallTitle: "Installez pour un accès plus rapide",
-                    introInstallIosLabel: "iPhone :",
-                    introInstallIosText: "Ouvrez dans Safari -> appuyez sur Partager -> Ajouter à l'écran d'accueil.",
-                    introInstallAndroidLabel: "Android :",
-                    introInstallAndroidText: "Appuyez en haut sur Ajouter à l'écran d'accueil. L'app s'installe automatiquement.",
                     introMapTitle: "Explorez les lieux",
                     introMapText: "Basculez entre la vue Carte pour explorer les villes et découvrir des lieux près de vous, et la vue Liste pour comparer rapidement les lieux. Touchez un lieu pour voir tous les détails et équipements.",
                     introSuggestTitle: "Trouvez votre lieu idéal",
@@ -218,20 +206,20 @@
                     introNext: "Suivant",
                     introDone: "Terminer",
                     introSkip: "Ne plus afficher",
-                    installHelpTitle: "Comment utiliser Friendly Spaces",
-                    installHelpTagline: "Conseils rapides pour bien utiliser l'app.",
-                    installHelpIosTitle: "Trouver des lieux rapidement",
-                    installHelpIosStep1: "Utilisez la vue Carte pour explorer les épingles autour de vous.",
-                    installHelpIosStep2: "Passez à la vue Liste pour comparer les lieux plus vite.",
-                    installHelpIosStep3: "Utilisez Recherche et Filtres pour affiner les résultats.",
-                    installHelpAndroidTitle: "Enregistrer des favoris",
-                    installHelpAndroidStep1: "Touchez le cœur sur un lieu pour l'enregistrer.",
-                    installHelpAndroidStep2: "Ouvrez Favoris pour retrouver vos lieux enregistrés.",
-                    installHelpAndroidStep3: "Touchez à nouveau le cœur pour retirer un favori.",
-                    installHelpUseTitle: "Suggérer un lieu",
-                    installHelpUseStep1: "Ouvrez le menu puis touchez Suggérer un espace.",
-                    installHelpUseStep2: "Remplissez les informations et envoyez votre suggestion.",
-                    installHelpUseStep3: "Vous pouvez aussi utiliser Signaler un bug / Donner un avis.",
+                    helpTitle: "Comment utiliser Friendly Spaces",
+                    helpTagline: "Conseils rapides pour bien utiliser l'app.",
+                    helpFindTitle: "Trouver des lieux rapidement",
+                    helpFindStep1: "Utilisez la vue Carte pour explorer les épingles autour de vous.",
+                    helpFindStep2: "Passez à la vue Liste pour comparer les lieux plus vite.",
+                    helpFindStep3: "Utilisez Recherche et Filtres pour affiner les résultats.",
+                    helpFavoritesTitle: "Enregistrer des favoris",
+                    helpFavoritesStep1: "Touchez le cœur sur un lieu pour l'enregistrer.",
+                    helpFavoritesStep2: "Ouvrez Favoris pour retrouver vos lieux enregistrés.",
+                    helpFavoritesStep3: "Touchez à nouveau le cœur pour retirer un favori.",
+                    helpSuggestTitle: "Suggérer un lieu",
+                    helpSuggestStep1: "Ouvrez le menu puis touchez Suggérer un espace.",
+                    helpSuggestStep2: "Remplissez les informations et envoyez votre suggestion.",
+                    helpSuggestStep3: "Vous pouvez aussi utiliser Signaler un bug / Donner un avis.",
                     showingLabel: "Afficher",
                     venuesLabel: "lieux",
                     filtersLabel: "Filtres",
@@ -247,8 +235,6 @@
                     noVenuesBody: "Essayez d'autres filtres ou une nouvelle recherche.",
                     noFavoritesTitle: "Pas encore de favoris",
                     noFavoritesBody: "Touchez le cœur pour enregistrer.",
-                    favoritesInstall: "Installer Friendly Spaces",
-                    favoritesInstallCta: "Ajouter à l'écran",
                     nearMe: "A proximité",
                     locationBlockedTitle: "Activer la localisation",
                     locationBlockedBodyNative: "Friendly Spaces a besoin de la localisation pour A proximite. Si aucune autre demande n'apparait, ouvre les reglages de ton appareil, autorise la localisation pour Friendly Spaces puis reessaie.",
@@ -327,7 +313,7 @@
                     menuSuggest: "Suggerisci uno spazio",
                     menuShare: "Condividi l'app",
                     menuAbout: "Chi siamo",
-                    menuInstall: "Come usare l'app",
+                    menuHelp: "Come usare l'app",
                     menuLanguage: "Lingua",
                     menuBug: "Segnala un bug / Invia feedback",
                     menuPrivacy: "Informativa sulla privacy",
@@ -361,11 +347,6 @@
                     partnerSubject: "Richiesta di partnership",
                     introTitle: "Cos'è Friendly Spaces?",
                     introText: "Scopri caffè, ristoranti, negozi e luoghi culturali certificati family-friendly in tutta la Svizzera. Ogni luogo viene valutato per aree gioco, fasciatoi, accesso con passeggino e un'atmosfera accogliente.",
-                    introInstallTitle: "Installa per un accesso più rapido",
-                    introInstallIosLabel: "iPhone:",
-                    introInstallIosText: "Apri in Safari -> tocca Condividi -> Aggiungi alla schermata Home.",
-                    introInstallAndroidLabel: "Android:",
-                    introInstallAndroidText: "Tocca Aggiungi alla schermata Home in alto. L'app si installa automaticamente.",
                     introMapTitle: "Esplora i luoghi",
                     introMapText: "Passa dalla vista Mappa per esplorare le città e trovare luoghi vicino a te, alla vista Elenco per un confronto rapido. Tocca un luogo per vedere tutti i dettagli e i servizi.",
                     introSuggestTitle: "Trova il luogo perfetto",
@@ -376,20 +357,20 @@
                     introNext: "Avanti",
                     introDone: "Fine",
                     introSkip: "Non mostrare più",
-                    installHelpTitle: "Come usare Friendly Spaces",
-                    installHelpTagline: "Suggerimenti rapidi per ottenere il massimo dall'app.",
-                    installHelpIosTitle: "Trova luoghi rapidamente",
-                    installHelpIosStep1: "Usa la vista Mappa per esplorare i pin vicino a te.",
-                    installHelpIosStep2: "Passa alla vista Elenco per confrontare i luoghi più velocemente.",
-                    installHelpIosStep3: "Usa Ricerca e Filtri per restringere i risultati.",
-                    installHelpAndroidTitle: "Salva i preferiti",
-                    installHelpAndroidStep1: "Tocca il cuore su un luogo per salvarlo.",
-                    installHelpAndroidStep2: "Apri Preferiti per trovare rapidamente i luoghi salvati.",
-                    installHelpAndroidStep3: "Tocca di nuovo il cuore per rimuovere un preferito.",
-                    installHelpUseTitle: "Suggerisci un luogo",
-                    installHelpUseStep1: "Apri il menu e tocca Suggerisci uno spazio.",
-                    installHelpUseStep2: "Compila i dettagli del luogo e invia il suggerimento.",
-                    installHelpUseStep3: "Nel menu puoi anche usare Segnala un bug / Invia feedback.",
+                    helpTitle: "Come usare Friendly Spaces",
+                    helpTagline: "Suggerimenti rapidi per ottenere il massimo dall'app.",
+                    helpFindTitle: "Trova luoghi rapidamente",
+                    helpFindStep1: "Usa la vista Mappa per esplorare i pin vicino a te.",
+                    helpFindStep2: "Passa alla vista Elenco per confrontare i luoghi più velocemente.",
+                    helpFindStep3: "Usa Ricerca e Filtri per restringere i risultati.",
+                    helpFavoritesTitle: "Salva i preferiti",
+                    helpFavoritesStep1: "Tocca il cuore su un luogo per salvarlo.",
+                    helpFavoritesStep2: "Apri Preferiti per trovare rapidamente i luoghi salvati.",
+                    helpFavoritesStep3: "Tocca di nuovo il cuore per rimuovere un preferito.",
+                    helpSuggestTitle: "Suggerisci un luogo",
+                    helpSuggestStep1: "Apri il menu e tocca Suggerisci uno spazio.",
+                    helpSuggestStep2: "Compila i dettagli del luogo e invia il suggerimento.",
+                    helpSuggestStep3: "Nel menu puoi anche usare Segnala un bug / Invia feedback.",
                     showingLabel: "Mostra",
                     venuesLabel: "luoghi",
                     filtersLabel: "Filtri",
@@ -405,8 +386,6 @@
                     noVenuesBody: "Prova a cambiare i filtri o a cercare un'altra città.",
                     noFavoritesTitle: "Ancora nessun preferito",
                     noFavoritesBody: "Tocca il cuore per salvare i luoghi.",
-                    favoritesInstall: "Installa Friendly Spaces",
-                    favoritesInstallCta: "Aggiungi alla Home",
                     nearMe: "Vicino a me",
                     locationBlockedTitle: "Attiva la posizione",
                     locationBlockedBodyNative: "Friendly Spaces ha bisogno della posizione per Vicino a me. Se non compare un altro avviso, apri le impostazioni del dispositivo, consenti la posizione per Friendly Spaces e riprova.",
@@ -485,7 +464,7 @@
                     menuSuggest: "Suggest a space",
                     menuShare: "Share the app",
                     menuAbout: "About us",
-                    menuInstall: "How to use app",
+                    menuHelp: "How to use app",
                     menuLanguage: "Language",
                     menuBug: "Report a bug / Give feedback",
                     menuPrivacy: "Privacy Policy",
@@ -519,11 +498,6 @@
                     partnerSubject: "Partnership Inquiry",
                     introTitle: "What is Friendly Spaces?",
                     introText: "Discover certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Every location is audited for play areas, changing facilities, stroller access, and a welcoming atmosphere.",
-                    introInstallTitle: "Install for faster access",
-                    introInstallIosLabel: "iPhone:",
-                    introInstallIosText: "Open in Safari -> tap Share -> Add to Home Screen.",
-                    introInstallAndroidLabel: "Android:",
-                    introInstallAndroidText: "Tap Add to Home screen at the top. The app installs automatically.",
                     introMapTitle: "Explore locations",
                     introMapText: "Toggle between Map view to explore cities and discover places near you, or List view for a quick comparison of locations. Tap any venue to see full details and amenities.",
                     introSuggestTitle: "Find your perfect spot",
@@ -534,20 +508,20 @@
                     introNext: "Next",
                     introDone: "Done",
                     introSkip: "Do not show again",
-                    installHelpTitle: "How to use Friendly Spaces",
-                    installHelpTagline: "Quick tips to get the most from the app.",
-                    installHelpIosTitle: "Find places quickly",
-                    installHelpIosStep1: "Use Map view to explore pins near you.",
-                    installHelpIosStep2: "Switch to List view to scan places faster.",
-                    installHelpIosStep3: "Use Search and Filters to narrow results.",
-                    installHelpAndroidTitle: "Save favorites",
-                    installHelpAndroidStep1: "Tap the heart on a place to save it.",
-                    installHelpAndroidStep2: "Open Favorites to quickly find saved places.",
-                    installHelpAndroidStep3: "Tap the heart again to remove a favorite.",
-                    installHelpUseTitle: "Suggest a venue",
-                    installHelpUseStep1: "Open the menu and tap Suggest a space.",
-                    installHelpUseStep2: "Fill in the venue details and send your suggestion.",
-                    installHelpUseStep3: "You can also use Report a bug / Give feedback in the menu.",
+                    helpTitle: "How to use Friendly Spaces",
+                    helpTagline: "Quick tips to get the most from the app.",
+                    helpFindTitle: "Find places quickly",
+                    helpFindStep1: "Use Map view to explore pins near you.",
+                    helpFindStep2: "Switch to List view to scan places faster.",
+                    helpFindStep3: "Use Search and Filters to narrow results.",
+                    helpFavoritesTitle: "Save favorites",
+                    helpFavoritesStep1: "Tap the heart on a place to save it.",
+                    helpFavoritesStep2: "Open Favorites to quickly find saved places.",
+                    helpFavoritesStep3: "Tap the heart again to remove a favorite.",
+                    helpSuggestTitle: "Suggest a venue",
+                    helpSuggestStep1: "Open the menu and tap Suggest a space.",
+                    helpSuggestStep2: "Fill in the venue details and send your suggestion.",
+                    helpSuggestStep3: "You can also use Report a bug / Give feedback in the menu.",
                     showingLabel: "Showing",
                     venuesLabel: "venues",
                     filtersLabel: "Filters",
@@ -563,8 +537,6 @@
                     noVenuesBody: "Try clearing filters or searching another city.",
                     noFavoritesTitle: "No favorites yet",
                     noFavoritesBody: "Tap the heart to save places.",
-                    favoritesInstall: "Install Friendly Spaces",
-                    favoritesInstallCta: "Add to Home Screen",
                     nearMe: "Near Me",
                     locationBlockedTitle: "Enable location",
                     locationBlockedBodyNative: "Friendly Spaces needs location access for Near Me. If no prompt appears again, open your device settings, allow location for Friendly Spaces, then try again.",
@@ -1192,17 +1164,17 @@
         const menuSuggest = document.getElementById('menu-suggest');
         const menuShare = document.getElementById('menu-share');
         const menuAbout = document.getElementById('menu-about');
-        const menuInstallHelp = document.getElementById('menu-install-help');
+        const menuHelp = document.getElementById('menu-help');
         const menuBug = document.getElementById('menu-bug');
         const menuPrivacy = document.getElementById('menu-privacy');
         const suggestView = document.getElementById('suggest-view');
         const aboutView = document.getElementById('about-view');
         const bugView = document.getElementById('bug-view');
-        const installHelpView = document.getElementById('install-help-view');
+        const helpView = document.getElementById('help-view');
         const suggestClose = document.getElementById('suggest-close');
         const aboutClose = document.getElementById('about-close');
         const bugClose = document.getElementById('bug-close');
-        const installHelpClose = document.getElementById('install-help-close');
+        const helpClose = document.getElementById('help-close');
         const suggestForm = document.getElementById('suggest-form');
         const bugForm = document.getElementById('bug-form');
         const aboutPartner = document.getElementById('about-partner');
@@ -1238,22 +1210,23 @@
             window.matchMedia('(max-width: 768px), (orientation: landscape) and (max-height: 600px)').matches;
         const isCompactLandscape = () =>
             window.matchMedia('(orientation: landscape) and (max-height: 600px)').matches;
+        const isNativeIOSPlatform = () => {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const isIOS = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'ios';
+            return isNative && isIOS;
+        };
         const APP_VERSION = 'pwa-1.1';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
         const PRIVACY_POLICY_URL = 'https://www.friendlyspaces.ch/privacy-policy';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
-        const BRAND_STATUS_COLOR = '#1E52BA';
 
         function isNativeAndroidPlatform() {
             const cap = window.Capacitor;
             const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
             const isAndroid = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'android';
             return isNative && isAndroid;
-        }
-
-        function getStatusBarPlugin() {
-            return window.Capacitor?.Plugins?.StatusBar;
         }
 
         function applyNativeAndroidInsetFallback() {
@@ -1295,23 +1268,6 @@
             }
         }
 
-        async function updateNativeStatusBarAppearance() {
-            if (!isNativeAndroidPlatform()) return;
-
-            const statusBar = getStatusBarPlugin();
-            if (!statusBar?.setStyle || !statusBar?.setBackgroundColor) return;
-
-            try {
-                if (statusBar.setOverlaysWebView) {
-                    await statusBar.setOverlaysWebView({ overlay: false });
-                }
-                await statusBar.setStyle({ style: 'DARK' });
-                await statusBar.setBackgroundColor({ color: BRAND_STATUS_COLOR });
-            } catch (err) {
-                // Ignore status bar plugin failures to keep app interactions unaffected.
-            }
-        }
-
         async function getCurrentLocation() {
             const cap = window.Capacitor;
             const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
@@ -1344,7 +1300,11 @@
         function applyNativeAndroidInsetFallback() {
             const cap = window.Capacitor;
             const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            const isIOS = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'ios';
             const isAndroid = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'android';
+            if (isNative && isIOS) {
+                document.body.classList.add('native-ios');
+            }
             if (isNative && isAndroid) {
                 document.body.classList.add('native-android');
             }
@@ -1506,7 +1466,7 @@
                 (suggestView && suggestView.classList.contains('open')) ||
                 (aboutView && aboutView.classList.contains('open')) ||
                 (bugView && bugView.classList.contains('open')) ||
-                (installHelpView && installHelpView.classList.contains('open'));
+                (helpView && helpView.classList.contains('open'));
 
             const shouldLock = overlayOpen || detailOpen || filterSheetOpen || drawerOpen || fullPanelOpen;
             document.body.style.overflow = shouldLock ? 'hidden' : 'auto';
@@ -1600,11 +1560,6 @@
                 sidebarNearMeLabel.textContent = translate('ui.nearMe', sidebarNearMeLabel.textContent);
             }
 
-            const installBannerText = document.getElementById('install-banner-text');
-            if (installBannerText) installBannerText.textContent = translate('ui.favoritesInstall', installBannerText.textContent);
-            const installButton = document.getElementById('install-button');
-            if (installButton) installButton.textContent = translate('ui.favoritesInstallCta', installButton.textContent);
-
             if (menuClose) menuClose.setAttribute('aria-label', translate('ui.menuClose', menuClose.getAttribute('aria-label') || 'Close menu'));
             if (menuSuggest) {
                 const label = menuSuggest.querySelector('.menu-label');
@@ -1618,9 +1573,9 @@
                 const label = menuAbout.querySelector('.menu-label');
                 if (label) label.textContent = translate('ui.menuAbout', label.textContent);
             }
-            if (menuInstallHelp) {
-                const label = menuInstallHelp.querySelector('.menu-label');
-                if (label) label.textContent = translate('ui.menuInstall', label.textContent);
+            if (menuHelp) {
+                const label = menuHelp.querySelector('.menu-label');
+                if (label) label.textContent = translate('ui.menuHelp', label.textContent);
             }
             const menuLanguageTitle = document.getElementById('menu-language-title');
             if (menuLanguageTitle) menuLanguageTitle.textContent = translate('ui.menuLanguage', menuLanguageTitle.textContent);
@@ -1664,7 +1619,7 @@
             const bugSubmit = document.getElementById('bug-submit');
             if (bugSubmit) bugSubmit.textContent = translate('ui.bugSubmit', bugSubmit.textContent);
             if (bugClose) bugClose.setAttribute('aria-label', translate('ui.menuClose', bugClose.getAttribute('aria-label') || 'Close'));
-            if (installHelpClose) installHelpClose.setAttribute('aria-label', translate('ui.menuClose', installHelpClose.getAttribute('aria-label') || 'Close'));
+            if (helpClose) helpClose.setAttribute('aria-label', translate('ui.menuClose', helpClose.getAttribute('aria-label') || 'Close'));
 
             const suggestStatus = document.getElementById('suggest-status');
             if (suggestStatus) suggestStatus.textContent = '';
@@ -1683,16 +1638,6 @@
             if (introTitle) introTitle.textContent = translate('ui.introTitle', introTitle.textContent);
             const introText = document.getElementById('intro-text');
             if (introText) introText.textContent = translate('ui.introText', introText.textContent);
-            const introInstallTitle = document.getElementById('intro-install-title');
-            if (introInstallTitle) introInstallTitle.textContent = translate('ui.introInstallTitle', introInstallTitle.textContent);
-            const introInstallIosLabel = document.getElementById('intro-install-ios-label');
-            if (introInstallIosLabel) introInstallIosLabel.textContent = translate('ui.introInstallIosLabel', introInstallIosLabel.textContent);
-            const introInstallIosText = document.getElementById('intro-install-ios-text');
-            if (introInstallIosText) introInstallIosText.textContent = translate('ui.introInstallIosText', introInstallIosText.textContent);
-            const introInstallAndroidLabel = document.getElementById('intro-install-android-label');
-            if (introInstallAndroidLabel) introInstallAndroidLabel.textContent = translate('ui.introInstallAndroidLabel', introInstallAndroidLabel.textContent);
-            const introInstallAndroidText = document.getElementById('intro-install-android-text');
-            if (introInstallAndroidText) introInstallAndroidText.textContent = translate('ui.introInstallAndroidText', introInstallAndroidText.textContent);
             const introMapTitle = document.getElementById('intro-map-title');
             if (introMapTitle) introMapTitle.textContent = translate('ui.introMapTitle', introMapTitle.textContent);
             const introMapText = document.getElementById('intro-map-text');
@@ -1714,34 +1659,34 @@
                 introNext.textContent = translate('ui.introDone', introNext.textContent);
             }
 
-            const installHelpTitle = document.getElementById('install-help-title');
-            if (installHelpTitle) installHelpTitle.textContent = translate('ui.installHelpTitle', installHelpTitle.textContent);
-            const installHelpTagline = document.getElementById('install-help-tagline');
-            if (installHelpTagline) installHelpTagline.textContent = translate('ui.installHelpTagline', installHelpTagline.textContent);
-            const installHelpIosTitle = document.getElementById('install-help-ios-title');
-            if (installHelpIosTitle) installHelpIosTitle.textContent = translate('ui.installHelpIosTitle', installHelpIosTitle.textContent);
-            const installHelpIosStep1 = document.getElementById('install-help-ios-step-1');
-            if (installHelpIosStep1) installHelpIosStep1.textContent = translate('ui.installHelpIosStep1', installHelpIosStep1.textContent);
-            const installHelpIosStep2 = document.getElementById('install-help-ios-step-2');
-            if (installHelpIosStep2) installHelpIosStep2.textContent = translate('ui.installHelpIosStep2', installHelpIosStep2.textContent);
-            const installHelpIosStep3 = document.getElementById('install-help-ios-step-3');
-            if (installHelpIosStep3) installHelpIosStep3.textContent = translate('ui.installHelpIosStep3', installHelpIosStep3.textContent);
-            const installHelpAndroidTitle = document.getElementById('install-help-android-title');
-            if (installHelpAndroidTitle) installHelpAndroidTitle.textContent = translate('ui.installHelpAndroidTitle', installHelpAndroidTitle.textContent);
-            const installHelpAndroidStep1 = document.getElementById('install-help-android-step-1');
-            if (installHelpAndroidStep1) installHelpAndroidStep1.textContent = translate('ui.installHelpAndroidStep1', installHelpAndroidStep1.textContent);
-            const installHelpAndroidStep2 = document.getElementById('install-help-android-step-2');
-            if (installHelpAndroidStep2) installHelpAndroidStep2.textContent = translate('ui.installHelpAndroidStep2', installHelpAndroidStep2.textContent);
-            const installHelpAndroidStep3 = document.getElementById('install-help-android-step-3');
-            if (installHelpAndroidStep3) installHelpAndroidStep3.textContent = translate('ui.installHelpAndroidStep3', installHelpAndroidStep3.textContent);
-            const installHelpUseTitle = document.getElementById('install-help-use-title');
-            if (installHelpUseTitle) installHelpUseTitle.textContent = translate('ui.installHelpUseTitle', installHelpUseTitle.textContent);
-            const installHelpUseStep1 = document.getElementById('install-help-use-step-1');
-            if (installHelpUseStep1) installHelpUseStep1.textContent = translate('ui.installHelpUseStep1', installHelpUseStep1.textContent);
-            const installHelpUseStep2 = document.getElementById('install-help-use-step-2');
-            if (installHelpUseStep2) installHelpUseStep2.textContent = translate('ui.installHelpUseStep2', installHelpUseStep2.textContent);
-            const installHelpUseStep3 = document.getElementById('install-help-use-step-3');
-            if (installHelpUseStep3) installHelpUseStep3.textContent = translate('ui.installHelpUseStep3', installHelpUseStep3.textContent);
+            const helpTitle = document.getElementById('help-title');
+            if (helpTitle) helpTitle.textContent = translate('ui.helpTitle', helpTitle.textContent);
+            const helpTagline = document.getElementById('help-tagline');
+            if (helpTagline) helpTagline.textContent = translate('ui.helpTagline', helpTagline.textContent);
+            const helpFindTitle = document.getElementById('help-find-title');
+            if (helpFindTitle) helpFindTitle.textContent = translate('ui.helpFindTitle', helpFindTitle.textContent);
+            const helpFindStep1 = document.getElementById('help-find-step-1');
+            if (helpFindStep1) helpFindStep1.textContent = translate('ui.helpFindStep1', helpFindStep1.textContent);
+            const helpFindStep2 = document.getElementById('help-find-step-2');
+            if (helpFindStep2) helpFindStep2.textContent = translate('ui.helpFindStep2', helpFindStep2.textContent);
+            const helpFindStep3 = document.getElementById('help-find-step-3');
+            if (helpFindStep3) helpFindStep3.textContent = translate('ui.helpFindStep3', helpFindStep3.textContent);
+            const helpFavoritesTitle = document.getElementById('help-favorites-title');
+            if (helpFavoritesTitle) helpFavoritesTitle.textContent = translate('ui.helpFavoritesTitle', helpFavoritesTitle.textContent);
+            const helpFavoritesStep1 = document.getElementById('help-favorites-step-1');
+            if (helpFavoritesStep1) helpFavoritesStep1.textContent = translate('ui.helpFavoritesStep1', helpFavoritesStep1.textContent);
+            const helpFavoritesStep2 = document.getElementById('help-favorites-step-2');
+            if (helpFavoritesStep2) helpFavoritesStep2.textContent = translate('ui.helpFavoritesStep2', helpFavoritesStep2.textContent);
+            const helpFavoritesStep3 = document.getElementById('help-favorites-step-3');
+            if (helpFavoritesStep3) helpFavoritesStep3.textContent = translate('ui.helpFavoritesStep3', helpFavoritesStep3.textContent);
+            const helpSuggestTitle = document.getElementById('help-suggest-title');
+            if (helpSuggestTitle) helpSuggestTitle.textContent = translate('ui.helpSuggestTitle', helpSuggestTitle.textContent);
+            const helpSuggestStep1 = document.getElementById('help-suggest-step-1');
+            if (helpSuggestStep1) helpSuggestStep1.textContent = translate('ui.helpSuggestStep1', helpSuggestStep1.textContent);
+            const helpSuggestStep2 = document.getElementById('help-suggest-step-2');
+            if (helpSuggestStep2) helpSuggestStep2.textContent = translate('ui.helpSuggestStep2', helpSuggestStep2.textContent);
+            const helpSuggestStep3 = document.getElementById('help-suggest-step-3');
+            if (helpSuggestStep3) helpSuggestStep3.textContent = translate('ui.helpSuggestStep3', helpSuggestStep3.textContent);
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
@@ -1770,7 +1715,6 @@
             panel.classList.add('open');
             panel.setAttribute('aria-hidden', 'false');
             updateBodyScrollLock();
-            updateNativeStatusBarAppearance();
         }
 
         function closePanel(panel) {
@@ -1778,7 +1722,6 @@
             panel.classList.remove('open');
             panel.setAttribute('aria-hidden', 'true');
             updateBodyScrollLock();
-            updateNativeStatusBarAppearance();
         }
 
         function setSuggestRole(role) {
@@ -2251,7 +2194,7 @@
                 .sort((a, b) => a - b);
             if (!withCoords.length) return 0;
             const nearest = withCoords[0];
-            return Math.min(Math.max(nearest * 1.8, 1500), 7000);
+            return Math.min(Math.max(nearest * 1.8, 2000), 7000);
         }
 
         function venueMatchesBaseFilters(venue) {
@@ -3007,10 +2950,10 @@
                 openPanel(aboutView);
             });
         }
-        if (menuInstallHelp) {
-            menuInstallHelp.addEventListener('click', () => {
+        if (menuHelp) {
+            menuHelp.addEventListener('click', () => {
                 closeMenu();
-                openPanel(installHelpView);
+                openPanel(helpView);
             });
         }
         if (menuBug) {
@@ -3121,8 +3064,8 @@
         if (bugClose) {
             bugClose.addEventListener('click', () => closePanel(bugView));
         }
-        if (installHelpClose) {
-            installHelpClose.addEventListener('click', () => closePanel(installHelpView));
+        if (helpClose) {
+            helpClose.addEventListener('click', () => closePanel(helpView));
         }
         suggestRoleButtons.forEach(btn => {
             btn.addEventListener('click', () => setSuggestRole(btn.dataset.suggestRole));
@@ -3248,11 +3191,13 @@
         let detailDragging = false;
         let detailDragFromContent = false;
         function handleDetailSheetDrag(deltaY) {
-            if (deltaY < -44) {
+            const upwardThreshold = isNativeIOSPlatform() ? -36 : -44;
+            const downwardThreshold = isNativeIOSPlatform() ? 32 : 44;
+            if (deltaY < upwardThreshold) {
                 stepDetailSnap(1);
                 return true;
             }
-            if (deltaY > 44) {
+            if (deltaY > downwardThreshold) {
                 if (currentDetailSnap === 'half') closeDetailModal();
                 else stepDetailSnap(-1);
                 return true;
@@ -3304,7 +3249,7 @@
                 const pullingFromTop =
                     !detailDragFromContent ||
                     !detailModalContent ||
-                    detailModalContent.scrollTop <= 0;
+                    detailModalContent.scrollTop <= (isNativeIOSPlatform() ? 8 : 0);
 
                 if (pullingFromTop && (currentDetailSnap !== 'full' || deltaY > 0)) {
                     event.preventDefault();
@@ -3353,76 +3298,6 @@
                 openDetailModal(venue, 'map_popup');
             }
         };
-
-        // Install prompt banner
-        let deferredPrompt = null;
-        const installBanner = document.getElementById('install-banner');
-        const installButton = document.getElementById('install-button');
-        const installBannerText = document.getElementById('install-banner-text');
-
-        // Detect iOS (any browser on iOS uses WebKit)
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || 
-                                   window.navigator.standalone === true;
-        
-        // Check if iOS banner was previously dismissed
-        let iosBannerDismissed = false;
-        try {
-            iosBannerDismissed = localStorage.getItem('friendlyspaces_ios_install_dismissed') === 'true';
-        } catch (e) {}
-
-        // Android/Chrome install prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (installBanner) installBanner.classList.remove('hidden');
-        });
-
-        // iOS - show manual instructions (if not dismissed and not already installed)
-        if (isIOS && !isInStandaloneMode && !iosBannerDismissed) {
-            if (installBanner && installBannerText && installButton) {
-                const iosText = {
-                    de: 'Tippe auf Teilen □↑ dann "Zum Home-Bildschirm"',
-                    fr: 'Appuyez sur Partager □↑ puis "Écran d\'accueil"',
-                    it: 'Tocca Condividi □↑ poi "Aggiungi alla schermata Home"',
-                    en: 'Tap Share □↑ then "Add to Home Screen"'
-                };
-                const iosDismiss = {
-                    de: 'OK',
-                    fr: 'OK', 
-                    it: 'OK',
-                    en: 'Got it'
-                };
-                installBannerText.textContent = iosText[currentLang] || iosText.en;
-                installButton.textContent = iosDismiss[currentLang] || iosDismiss.en;
-                installBanner.classList.remove('hidden');
-                installBanner.classList.add('ios-install');
-            }
-        }
-
-        if (installButton) {
-            installButton.addEventListener('click', async () => {
-                // iOS - just dismiss
-                if (isIOS) {
-                    if (installBanner) installBanner.classList.add('hidden');
-                    try {
-                        localStorage.setItem('friendlyspaces_ios_install_dismissed', 'true');
-                    } catch (e) {}
-                    return;
-                }
-                // Android - trigger install prompt
-                if (!deferredPrompt) return;
-                deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                if (installBanner) installBanner.classList.add('hidden');
-            });
-        }
-
-        window.addEventListener('appinstalled', () => {
-            if (installBanner) installBanner.classList.add('hidden');
-        });
 
         // Quick filter pills functionality
         const pillFilters = document.getElementById('pill-filters');
@@ -3563,7 +3438,6 @@
 
         function startApp() {
             applyNativeAndroidInsetFallback();
-            updateNativeStatusBarAppearance();
             setAppShellHeight();
             updateLandscapeNotchMaskSide();
             if (window.visualViewport) {

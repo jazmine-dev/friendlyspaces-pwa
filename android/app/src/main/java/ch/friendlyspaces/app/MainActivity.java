@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import androidx.core.graphics.Insets;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -39,7 +38,7 @@ public class MainActivity extends BridgeActivity {
                 WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout()
             );
 
-            // Keep top/bottom handled by existing status/nav behavior; only protect cutout sides.
+            // Let the web layer keep handling top/bottom layout while we still protect horizontal cutouts.
             webView.setPadding(safeInsets.left, 0, safeInsets.right, 0);
             return insets;
         });
@@ -47,29 +46,16 @@ public class MainActivity extends BridgeActivity {
         ViewCompat.requestApplyInsets(contentRoot);
     }
 
-    private void enforceCutoutSafeArea() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return;
+    private void enforceEdgeToEdgeChrome() {
         Window window = getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
-        window.setAttributes(params);
-    }
-
-    private void enforceStatusBarStyle() {
-        Window window = getWindow();
-        WindowCompat.setDecorFitsSystemWindows(window, true);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#1E52BA"));
+        WindowCompat.setDecorFitsSystemWindows(window, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.setStatusBarContrastEnforced(false);
+            window.setNavigationBarContrastEnforced(false);
         }
-        int flags = window.getDecorView().getSystemUiVisibility();
-        flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        window.getDecorView().setSystemUiVisibility(flags);
         WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(window, window.getDecorView());
         if (controller != null) {
             controller.setAppearanceLightStatusBars(false);
+            controller.setAppearanceLightNavigationBars(false);
         }
     }
 
@@ -77,8 +63,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         enforcePinkBackgroundSurface();
-        enforceCutoutSafeArea();
-        enforceStatusBarStyle();
+        enforceEdgeToEdgeChrome();
         enforceWebViewSafeInsets();
     }
 
@@ -86,20 +71,16 @@ public class MainActivity extends BridgeActivity {
     public void onResume() {
         super.onResume();
         enforcePinkBackgroundSurface();
-        enforceCutoutSafeArea();
-        enforceStatusBarStyle();
+        enforceEdgeToEdgeChrome();
         enforceWebViewSafeInsets();
         Window window = getWindow();
         window.getDecorView().post(this::enforcePinkBackgroundSurface);
-        window.getDecorView().post(this::enforceCutoutSafeArea);
         window.getDecorView().post(this::enforceWebViewSafeInsets);
-        window.getDecorView().postDelayed(this::enforceStatusBarStyle, 120);
+        window.getDecorView().postDelayed(this::enforceEdgeToEdgeChrome, 120);
         window.getDecorView().postDelayed(this::enforcePinkBackgroundSurface, 120);
-        window.getDecorView().postDelayed(this::enforceCutoutSafeArea, 120);
         window.getDecorView().postDelayed(this::enforceWebViewSafeInsets, 120);
-        window.getDecorView().postDelayed(this::enforceStatusBarStyle, 450);
+        window.getDecorView().postDelayed(this::enforceEdgeToEdgeChrome, 450);
         window.getDecorView().postDelayed(this::enforcePinkBackgroundSurface, 450);
-        window.getDecorView().postDelayed(this::enforceCutoutSafeArea, 450);
         window.getDecorView().postDelayed(this::enforceWebViewSafeInsets, 450);
     }
 }
