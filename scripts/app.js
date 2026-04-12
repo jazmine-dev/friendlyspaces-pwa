@@ -710,8 +710,9 @@
 
         // Venue data: try hosted JSON first, then bundled fallback.
         let venues = [];
-        const REMOTE_VENUES_URL = 'https://app.friendlyspaces.ch/data/venues.json';
-        const REMOTE_FORM_SUBMIT_URL = 'https://app.friendlyspaces.ch/';
+        const REMOTE_APP_ORIGIN = 'https://app.friendlyspaces.ch/';
+        const REMOTE_VENUES_URL = new URL('data/venues.json', REMOTE_APP_ORIGIN).toString();
+        const REMOTE_FORM_SUBMIT_URL = REMOTE_APP_ORIGIN;
         const LOCAL_VENUES_URL = 'data/venues.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
@@ -731,6 +732,27 @@
                     }
                 };
             });
+        }
+
+        function resolveVenueAssetUrl(assetPath) {
+            if (typeof assetPath !== 'string' || !assetPath.trim()) return '';
+            try {
+                return new URL(assetPath, REMOTE_APP_ORIGIN).toString();
+            } catch (err) {
+                return assetPath;
+            }
+        }
+
+        function normalizeVenueMedia(list) {
+            if (!Array.isArray(list)) return [];
+            return list.map((venue) => ({
+                ...venue,
+                images: Array.isArray(venue.images)
+                    ? venue.images
+                        .map(resolveVenueAssetUrl)
+                        .filter(Boolean)
+                    : []
+            }));
         }
 
         function mergeVenueTranslations(primaryList, fallbackList) {
@@ -836,7 +858,7 @@
                     localFallback = [];
                 }
                 const mergedRemote = mergeVenueTranslations(remoteVenues, localFallback);
-                const normalizedRemote = normalizeVenueFilters(mergedRemote);
+                const normalizedRemote = normalizeVenueMedia(normalizeVenueFilters(mergedRemote));
                 venues = normalizedRemote;
                 writeCachedVenues(normalizedRemote);
                 return;
@@ -846,12 +868,12 @@
 
             const cachedVenues = readCachedVenues();
             if (cachedVenues) {
-                venues = normalizeVenueFilters(cachedVenues);
+                venues = normalizeVenueMedia(normalizeVenueFilters(cachedVenues));
                 return;
             }
 
             try {
-                venues = normalizeVenueFilters(await fetchVenueData(LOCAL_VENUES_URL));
+                venues = normalizeVenueMedia(normalizeVenueFilters(await fetchVenueData(LOCAL_VENUES_URL)));
                 writeCachedVenues(venues);
             } catch (err) {
                 venues = [];
@@ -2262,7 +2284,16 @@
                 return withinRadius.map(({ venue }) => venue);
             }
 
-            return withDistance.map(({ venue }) => venue);
+            const normalizeCity = (city) => (city || '').trim().toLowerCase();
+            const nearestCity = normalizeCity(withDistance[0]?.venue?.city);
+
+            if (!nearestCity) {
+                return [withDistance[0].venue];
+            }
+
+            return withDistance
+                .filter(({ venue }) => normalizeCity(venue.city) === nearestCity)
+                .map(({ venue }) => venue);
         }
 
         function applySelectedMarkerStyle() {
@@ -2610,6 +2641,32 @@
             `;
         }
 
+        const preloadedVenueImageUrls = new Set();
+
+        function preloadImageUrl(src, { eager = false } = {}) {
+            if (!src || preloadedVenueImageUrls.has(src)) return;
+            preloadedVenueImageUrls.add(src);
+
+            const img = new Image();
+            img.decoding = 'async';
+            img.loading = eager ? 'eager' : 'lazy';
+            img.fetchPriority = eager ? 'high' : 'low';
+            img.src = src;
+        }
+
+        function shouldLimitDeferredImagePrefetch() {
+            const connection =
+                navigator.connection ||
+                navigator.mozConnection ||
+                navigator.webkitConnection;
+
+            if (!connection) return false;
+            if (connection.saveData) return true;
+
+            const effectiveType = (connection.effectiveType || '').toLowerCase();
+            return effectiveType === 'slow-2g' || effectiveType === '2g';
+        }
+
         function preloadVenueHeroImages() {
             const firstImages = [...new Set(
                 venues
@@ -2617,12 +2674,25 @@
                     .filter(Boolean)
             )];
 
-            firstImages.forEach((src) => {
-                const img = new Image();
-                img.decoding = 'async';
-                img.loading = 'eager';
-                img.src = src;
-            });
+            firstImages.forEach((src) => preloadImageUrl(src, { eager: true }));
+        }
+
+        function preloadVenueGalleryImages(venue) {
+            if (shouldLimitDeferredImagePrefetch()) return;
+            if (!Array.isArray(venue?.images) || venue.images.length <= 1) return;
+
+            const galleryImages = [...new Set(venue.images.slice(1).filter(Boolean))];
+            if (!galleryImages.length) return;
+
+            const preloadAll = () => {
+                galleryImages.forEach((src) => preloadImageUrl(src));
+            };
+
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(preloadAll, { timeout: 1200 });
+            } else {
+                setTimeout(preloadAll, 150);
+            }
         }
 
         function setDetailSnap(snap) {
@@ -2659,6 +2729,7 @@
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
             if (detailPeekTitle) detailPeekTitle.textContent = venue.name;
+            preloadVenueGalleryImages(venue);
 
             // Trigger sheet animation
             detailModal.setAttribute('aria-hidden', 'false');
