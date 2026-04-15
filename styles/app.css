@@ -28,6 +28,13 @@
             --native-right-safe: max(env(safe-area-inset-right, 0px), 0px);
         }
 
+        body.native-ios {
+            --native-top-safe: env(safe-area-inset-top, 0px);
+            --native-bottom-safe: env(safe-area-inset-bottom, 0px);
+            --native-left-safe: env(safe-area-inset-left, 0px);
+            --native-right-safe: env(safe-area-inset-right, 0px);
+        }
+
         @media (orientation: landscape) and (max-height: 600px) {
             body.native-android {
                 --landscape-notch-mask: 62px;
@@ -83,6 +90,9 @@
             padding-top: calc(16px + var(--native-top-safe));
         }
 
+        body.native-ios #app-header {
+            padding-top: calc(16px + max(var(--native-top-safe), 26px));
+        }
 
         .intro-overlay {
             position: fixed;
@@ -93,6 +103,12 @@
             justify-content: center;
             z-index: 1200;
             padding: 20px;
+        }
+
+        body.native-ios .intro-overlay {
+            align-items: center;
+            padding-top: calc(20px + max(var(--native-top-safe), 20px));
+            padding-bottom: calc(20px + var(--native-bottom-safe));
         }
 
         .intro-overlay.hidden {
@@ -293,7 +309,7 @@
         }
 
         body.native-ios #menu-toggle {
-            right: calc(16px + env(safe-area-inset-right, 0px));
+            right: calc(16px + var(--native-right-safe));
         }
 
         #menu-toggle svg {
@@ -338,6 +354,11 @@
             padding-bottom: calc(22px + var(--native-bottom-safe));
         }
 
+        body.native-ios #menu-drawer {
+            padding-top: calc(22px + max(var(--native-top-safe), 20px));
+            padding-bottom: calc(18px + var(--native-bottom-safe));
+        }
+
         #menu-drawer.open {
             transform: translateX(0);
         }
@@ -348,6 +369,10 @@
             justify-content: center;
             gap: 12px;
             position: relative;
+        }
+
+        body.native-ios #menu-header {
+            min-height: 72px;
         }
 
         .menu-brand {
@@ -375,6 +400,10 @@
             line-height: 1;
             position: absolute;
             right: 0;
+        }
+
+        body.native-ios #menu-close {
+            right: calc(2px + var(--native-right-safe));
         }
 
         .menu-button {
@@ -573,7 +602,8 @@
         }
 
         body.native-ios .suggest-header .fullscreen-close {
-            right: calc(18px + env(safe-area-inset-right, 0px));
+            right: calc(18px + var(--native-right-safe));
+            top: calc(16px + max(var(--native-top-safe), 24px));
         }
 
         body.native-android .suggest-header .fullscreen-close {
@@ -594,6 +624,7 @@
             top: 0;
             z-index: 3;
             background: #ffffff;
+            padding-top: calc(16px + max(var(--native-top-safe), 20px));
         }
 
         body.native-ios .suggest-header {
@@ -1279,6 +1310,11 @@
             z-index: 1002;
         }
 
+        body.native-ios #bottom-tabs {
+            height: calc(58px + var(--native-bottom-safe));
+            padding-bottom: var(--native-bottom-safe);
+        }
+
         .bottom-tab-button {
             border: none;
             background: transparent;
@@ -1362,6 +1398,11 @@
             height: calc(var(--app-height, 100dvh) - var(--native-top-safe));
         }
 
+        body.native-ios .detail-modal-card {
+            margin-top: max(var(--native-top-safe), 40px);
+            height: calc(var(--app-height, 100dvh) - max(var(--native-top-safe), 40px));
+        }
+
         .detail-modal-card.closing {
             transform: translateY(100%) !important;
         }
@@ -1420,8 +1461,8 @@
         }
 
         body.native-ios .detail-modal-card.snap-half .detail-peek-title {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 0;
+            transform: translateY(-8px);
         }
 
         #detail-modal-content {
@@ -1453,8 +1494,8 @@
         }
 
         body.native-ios .detail-close-button {
-            top: 16px;
-            right: calc(16px + env(safe-area-inset-right, 0px));
+            top: 18px;
+            right: calc(16px + max(var(--native-right-safe), 0px));
         }
 
         .detail-close-button:hover {
@@ -1543,8 +1584,8 @@
         }
 
         body.native-ios .detail-modal-card.snap-half .detail-hero-overlay {
-            padding-top: 90px;
-            padding-bottom: 30px;
+            padding: 86px 18px 34px;
+            gap: 10px;
         }
 
         .detail-hero-info {
@@ -1554,7 +1595,7 @@
         }
 
         body.native-ios .detail-modal-card.snap-half .detail-hero-info {
-            opacity: 0;
+            opacity: 1;
         }
 
         .detail-hero-name {
@@ -1629,6 +1670,25 @@
 
         body.native-ios .detail-modal-card.snap-half .detail-content {
             margin-top: -16px;
+        }
+
+        .detail-summary {
+            display: none;
+        }
+
+        .detail-summary-name {
+            margin: 0 0 4px;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #1c1b19;
+        }
+
+        .detail-summary-address {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #66625d;
         }
 
         .detail-content::after {
@@ -1981,6 +2041,10 @@
                 padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
                 flex: 1;
                 min-height: 0;
+            }
+
+            body.native-ios #container {
+                padding-bottom: 0;
             }
 
             #sidebar {
@@ -2732,15 +2796,21 @@
 
         @media (max-width: 768px) {
             body.native-ios .detail-modal-card.snap-half .detail-hero .slider-dots {
+                display: flex;
+                bottom: 82px;
+                z-index: 12;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-summary {
                 display: none;
             }
 
             body.native-ios .detail-modal-card.snap-full .detail-hero .slider-dots {
-                bottom: 124px;
+                bottom: 88px;
             }
 
             body.native-ios .detail-modal-card.snap-full .detail-hero-overlay {
-                padding: 74px 18px 28px;
+                padding: 86px 18px 42px;
                 gap: 10px;
             }
 

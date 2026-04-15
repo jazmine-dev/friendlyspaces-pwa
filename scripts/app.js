@@ -1484,6 +1484,29 @@
             document.documentElement.style.setProperty('--app-height', `${Math.round(viewportHeight)}px`);
         }
 
+        function syncNativeIOSSafeArea() {
+            if (!isNativeIOSPlatform()) {
+                return;
+            }
+
+            const vv = window.visualViewport;
+            const topInset = Math.max(Math.round(vv?.offsetTop || 0), 0);
+            const leftInset = Math.max(Math.round(vv?.offsetLeft || 0), 0);
+            const rightInset = Math.max(
+                Math.round((window.innerWidth - ((vv?.width || window.innerWidth) + (vv?.offsetLeft || 0))) || 0),
+                0
+            );
+            const bottomInset = Math.max(
+                Math.round((window.innerHeight - ((vv?.height || window.innerHeight) + (vv?.offsetTop || 0))) || 0),
+                0
+            );
+
+            document.body.style.setProperty('--native-top-safe', `${topInset}px`);
+            document.body.style.setProperty('--native-bottom-safe', `${bottomInset}px`);
+            document.body.style.setProperty('--native-left-safe', `${leftInset}px`);
+            document.body.style.setProperty('--native-right-safe', `${rightInset}px`);
+        }
+
         function updateBodyScrollLock() {
             const overlayOpen = introOverlay && !introOverlay.classList.contains('hidden');
             const detailOpen = detailModal && detailModal.classList.contains('active');
@@ -2615,6 +2638,10 @@
                     </div>
                 </div>
                 <div class="detail-content">
+                    <div class="detail-summary">
+                        <h2 class="detail-summary-name">${venue.name}</h2>
+                        <p class="detail-summary-address">${venue.address}</p>
+                    </div>
                     ${iconButtonsHtml}
 
                     <div class="detail-section">
@@ -3515,12 +3542,16 @@
         function startApp() {
             applyNativeAndroidInsetFallback();
             setAppShellHeight();
+            syncNativeIOSSafeArea();
             updateLandscapeNotchMaskSide();
             if (window.visualViewport) {
                 window.visualViewport.addEventListener('resize', setAppShellHeight);
                 window.visualViewport.addEventListener('scroll', setAppShellHeight);
+                window.visualViewport.addEventListener('resize', syncNativeIOSSafeArea);
+                window.visualViewport.addEventListener('scroll', syncNativeIOSSafeArea);
             }
             window.addEventListener('orientationchange', setAppShellHeight);
+            window.addEventListener('orientationchange', syncNativeIOSSafeArea);
             window.addEventListener('orientationchange', updateLandscapeNotchMaskSide);
             loadFavorites();
             updateFavoritesBadge();
