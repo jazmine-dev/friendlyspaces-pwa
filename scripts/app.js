@@ -788,10 +788,13 @@
                     }
                 };
 
-                const mergedSeasonalNote = {
-                    ...(venue.seasonalNote || {}),
-                    ...(fallback.seasonalNote || {})
-                };
+                const hasPrimarySeasonalNote = Object.prototype.hasOwnProperty.call(venue, 'seasonalNote');
+                const mergedSeasonalNote = hasPrimarySeasonalNote && venue.seasonalNote
+                    ? {
+                        ...(fallback.seasonalNote || {}),
+                        ...(venue.seasonalNote || {})
+                    }
+                    : undefined;
 
                 return {
                     ...venue,
@@ -799,7 +802,9 @@
                     hours: mergedHours,
                     specialty: mergedSpecialty,
                     i18n: mergedI18n,
-                    seasonalNote: Object.keys(mergedSeasonalNote).length ? mergedSeasonalNote : undefined
+                    seasonalNote: mergedSeasonalNote && Object.keys(mergedSeasonalNote).length
+                        ? mergedSeasonalNote
+                        : undefined
                 };
             });
         }
