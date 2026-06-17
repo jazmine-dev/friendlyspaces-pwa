@@ -11,9 +11,9 @@
                 "it": "Elegante caffè-bistrot in una storica orangerie circondata da splendidi giardini"
             },
             "hours": {
-                "de": "Mo-Fr: 9-18 Uhr",
-                "fr": "Lun-ven : 9h-18h",
-                "it": "Lun-ven: 9:00-18:00"
+                "de": "Täglich: 9-18 Uhr (Fr-Sa bis 21 Uhr, April bis Oktober)",
+                "fr": "Tous les jours : 9h-18h (ven-sam jusqu'à 21h, avril à octobre)",
+                "it": "Tutti i giorni: 9:00-18:00 (ven-sab fino alle 21:00, aprile-ottobre)"
             },
             "specialty": {
                 "de": "Gartenterrasse und hausgemachte Kuchen",
@@ -21,7 +21,7 @@
                 "it": "Terrazza in giardino e torte fatte in casa"
             }
         },
-        "hours": "Mon-Fri: 9am-6pm",
+        "hours": "Daily: 9am-6pm (Fri-Sat until 9pm, April-October)",
         "specialty": "Garden terrace and homemade cakes",
         "phone": "+41 31 350 16 20",
         "website": "https://orangerieelfenau.ch/",
