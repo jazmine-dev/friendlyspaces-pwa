@@ -91,7 +91,7 @@
         }
 
         body.native-ios #app-header {
-            padding-top: calc(16px + max(var(--native-top-safe), 26px));
+            padding-top: calc(24px + max(var(--native-top-safe), 34px));
         }
 
         .intro-overlay {
@@ -107,7 +107,7 @@
 
         body.native-ios .intro-overlay {
             align-items: center;
-            padding-top: calc(20px + max(var(--native-top-safe), 20px));
+            padding-top: calc(26px + max(var(--native-top-safe), 26px));
             padding-bottom: calc(20px + var(--native-bottom-safe));
         }
 
@@ -135,8 +135,14 @@
             border-radius: 999px;
             width: 30px;
             height: 30px;
-            font-size: 16px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
             font-weight: 700;
+            font-family: Arial, Helvetica, sans-serif;
             cursor: pointer;
         }
 
@@ -372,7 +378,7 @@
         }
 
         body.native-ios #menu-header {
-            min-height: 72px;
+            min-height: 84px;
         }
 
         .menu-brand {
@@ -392,12 +398,18 @@
             border: none;
             background: #ffffff;
             color: #2d3588;
-            padding: 6px 10px;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 999px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 800;
             line-height: 1;
+            font-family: Arial, Helvetica, sans-serif;
             position: absolute;
             right: 0;
         }
@@ -584,11 +596,18 @@
             border: none;
             background: #f0ebe4;
             color: #3b3834;
-            padding: 6px 12px;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 12px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 700;
+            line-height: 1;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .suggest-header .fullscreen-close {
@@ -596,14 +615,12 @@
             right: 18px;
             top: 12px;
             border-radius: 999px;
-            padding: 6px 10px;
-            font-size: 16px;
-            line-height: 1;
+            font-size: 14px;
         }
 
         body.native-ios .suggest-header .fullscreen-close {
             right: calc(18px + var(--native-right-safe));
-            top: calc(16px + max(var(--native-top-safe), 24px));
+            top: calc(24px + max(var(--native-top-safe), 32px));
         }
 
         body.native-android .suggest-header .fullscreen-close {
@@ -624,7 +641,7 @@
             top: 0;
             z-index: 3;
             background: #ffffff;
-            padding-top: calc(16px + max(var(--native-top-safe), 20px));
+            padding-top: calc(24px + max(var(--native-top-safe), 30px));
         }
 
         body.native-ios .suggest-header {
@@ -1399,8 +1416,8 @@
         }
 
         body.native-ios .detail-modal-card {
-            margin-top: max(var(--native-top-safe), 40px);
-            height: calc(var(--app-height, 100dvh) - max(var(--native-top-safe), 40px));
+            margin-top: calc(max(var(--native-top-safe), 40px) + 8px);
+            height: calc(var(--app-height, 100dvh) - (max(var(--native-top-safe), 40px) + 8px));
         }
 
         .detail-modal-card.closing {
@@ -1409,6 +1426,7 @@
 
         .detail-modal-card.snap-half {
             --detail-sheet-offset: 46%;
+            --detail-half-hero-height: clamp(210px, 33vh, 290px);
         }
 
         .detail-modal-card.snap-full {
@@ -1494,7 +1512,7 @@
         }
 
         body.native-ios .detail-close-button {
-            top: 18px;
+            top: 24px;
             right: calc(16px + max(var(--native-right-safe), 0px));
         }
 
@@ -1510,6 +1528,10 @@
             fill: none;
         }
 
+        .detail-half-band {
+            display: none;
+        }
+
         /* Hero image section */
         .detail-hero {
             position: relative;
@@ -1523,7 +1545,7 @@
         }
 
         .detail-modal-card.snap-half .detail-hero {
-            height: 33vh;
+            height: var(--detail-half-hero-height);
             min-height: 210px;
             max-height: 290px;
         }
@@ -1674,6 +1696,22 @@
 
         .detail-summary {
             display: none;
+        }
+
+        .detail-summary-dots {
+            display: none;
+        }
+
+        .detail-summary-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .detail-summary-copy {
+            flex: 1;
+            min-width: 0;
         }
 
         .detail-summary-name {
@@ -2115,6 +2153,11 @@
                 padding-top: calc(12px + var(--native-top-safe));
             }
 
+            body.native-ios #app-header {
+                padding-top: calc(24px + max(var(--native-top-safe), 34px));
+                padding-bottom: 12px;
+            }
+
             #app-title {
                 font-size: 17px;
             }
@@ -2388,6 +2431,14 @@
 
         .locate-control {
             margin-bottom: 10px;
+        }
+
+        body.native-ios .leaflet-bottom {
+            bottom: calc(58px + var(--native-bottom-safe));
+        }
+
+        body.native-ios .leaflet-right {
+            right: 10px;
         }
 
         .locate-button {
@@ -2796,13 +2847,67 @@
 
         @media (max-width: 768px) {
             body.native-ios .detail-modal-card.snap-half .detail-hero .slider-dots {
-                display: flex;
-                bottom: 82px;
-                z-index: 12;
+                display: none;
             }
 
             body.native-ios .detail-modal-card.snap-half .detail-summary {
                 display: none;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-hero-overlay {
+                display: none;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band {
+                position: absolute;
+                top: calc(var(--detail-half-hero-height) - 88px);
+                left: 18px;
+                right: 18px;
+                display: block;
+                z-index: 34;
+                pointer-events: none;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band::before {
+                content: "";
+                position: absolute;
+                inset: -30px -18px -26px -18px;
+                background: linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.84) 0%,
+                    rgba(0,0,0,0.58) 34%,
+                    rgba(0,0,0,0.24) 68%,
+                    rgba(0,0,0,0.06) 86%,
+                    transparent 100%
+                );
+                z-index: -1;
+                pointer-events: none;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band .detail-summary-dots {
+                display: flex;
+                justify-content: center;
+                gap: 6px;
+                margin: 0 0 14px;
+                pointer-events: none;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band .detail-summary-name {
+                color: #ffffff;
+                text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+                font-size: 18px;
+                line-height: 1.16;
+                margin-bottom: 2px;
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band .detail-summary-address {
+                color: rgba(255,255,255,0.92);
+                text-shadow: 0 1px 2px rgba(0,0,0,0.28);
+            }
+
+            body.native-ios .detail-modal-card.snap-half .detail-half-band .detail-summary-favorite {
+                flex-shrink: 0;
+                pointer-events: auto;
             }
 
             body.native-ios .detail-modal-card.snap-full .detail-hero .slider-dots {

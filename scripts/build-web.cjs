@@ -6,10 +6,11 @@ const WWW_DIR = path.join(ROOT, 'www');
 
 const STATIC_FILES = ['index.html', 'manifest.json', 'sw.js'];
 const STATIC_DIRS = ['scripts', 'styles', 'icons'];
-const STATIC_ASSET_JPG_ALLOWLIST = new Set([
+const STATIC_ASSET_IMAGE_ALLOWLIST = new Set([
   path.normalize('assets/icon-shop.jpg'),
   path.normalize('assets/icon-family.jpg')
 ]);
+const REMOTE_VENUE_IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.webp']);
 
 async function removeDir(targetPath) {
   await fs.rm(targetPath, { recursive: true, force: true });
@@ -48,10 +49,10 @@ async function copyAssetsRelative(relativePath = 'assets') {
     }
 
     const extension = path.extname(entry.name).toLowerCase();
-    const isLargeSourceJpg = (extension === '.jpg' || extension === '.jpeg')
-      && !STATIC_ASSET_JPG_ALLOWLIST.has(normalizedRelativePath);
+    const isRemoteVenueImage = REMOTE_VENUE_IMAGE_EXTENSIONS.has(extension)
+      && !STATIC_ASSET_IMAGE_ALLOWLIST.has(normalizedRelativePath);
 
-    if (isLargeSourceJpg) {
+    if (isRemoteVenueImage) {
       continue;
     }
 

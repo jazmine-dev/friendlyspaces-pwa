@@ -721,9 +721,6 @@
             if (!Array.isArray(list)) return [];
             return list.map((venue) => {
                 const venueType = Array.isArray(venue?.filters?.venueType) ? [...venue.filters.venueType] : [];
-                if (venueType.includes('food-hall') && !venueType.includes('restaurant')) {
-                    venueType.push('restaurant');
-                }
                 return {
                     ...venue,
                     filters: {
@@ -753,60 +750,6 @@
                         .filter(Boolean)
                     : []
             }));
-        }
-
-        function mergeVenueTranslations(primaryList, fallbackList) {
-            const fallbackByName = new Map(
-                (Array.isArray(fallbackList) ? fallbackList : []).map((venue) => [venue.name, venue])
-            );
-
-            return (Array.isArray(primaryList) ? primaryList : []).map((venue) => {
-                const fallback = fallbackByName.get(venue.name);
-                if (!fallback) return venue;
-
-                const mergedDescription = fallback.description || venue.description || '';
-                const mergedHours = fallback.hours || venue.hours || '';
-                const mergedSpecialty = fallback.specialty || venue.specialty || '';
-
-                const mergedI18n = {
-                    ...(venue.i18n || {}),
-                    ...(fallback.i18n || {}),
-                    description: {
-                        ...(venue.i18n?.description || {}),
-                        ...(fallback.i18n?.description || {}),
-                        en: fallback.i18n?.description?.en || fallback.description || venue.i18n?.description?.en || venue.description || ''
-                    },
-                    hours: {
-                        ...(venue.i18n?.hours || {}),
-                        ...(fallback.i18n?.hours || {}),
-                        en: fallback.i18n?.hours?.en || fallback.hours || venue.i18n?.hours?.en || venue.hours || ''
-                    },
-                    specialty: {
-                        ...(venue.i18n?.specialty || {}),
-                        ...(fallback.i18n?.specialty || {}),
-                        en: fallback.i18n?.specialty?.en || fallback.specialty || venue.i18n?.specialty?.en || venue.specialty || ''
-                    }
-                };
-
-                const hasPrimarySeasonalNote = Object.prototype.hasOwnProperty.call(venue, 'seasonalNote');
-                const mergedSeasonalNote = hasPrimarySeasonalNote && venue.seasonalNote
-                    ? {
-                        ...(fallback.seasonalNote || {}),
-                        ...(venue.seasonalNote || {})
-                    }
-                    : undefined;
-
-                return {
-                    ...venue,
-                    description: mergedDescription,
-                    hours: mergedHours,
-                    specialty: mergedSpecialty,
-                    i18n: mergedI18n,
-                    seasonalNote: mergedSeasonalNote && Object.keys(mergedSeasonalNote).length
-                        ? mergedSeasonalNote
-                        : undefined
-                };
-            });
         }
 
         async function fetchVenueData(url) {
@@ -856,14 +799,7 @@
         async function loadVenues() {
             try {
                 const remoteVenues = await fetchVenueData(REMOTE_VENUES_URL);
-                let localFallback = [];
-                try {
-                    localFallback = await fetchVenueData(LOCAL_VENUES_URL);
-                } catch (err) {
-                    localFallback = [];
-                }
-                const mergedRemote = mergeVenueTranslations(remoteVenues, localFallback);
-                const normalizedRemote = normalizeVenueMedia(normalizeVenueFilters(mergedRemote));
+                const normalizedRemote = normalizeVenueMedia(normalizeVenueFilters(remoteVenues));
                 venues = normalizedRemote;
                 writeCachedVenues(normalizedRemote);
                 return;
@@ -1178,6 +1114,7 @@
         const detailModalContent = document.getElementById('detail-modal-content');
         const detailSheetGrabber = document.getElementById('detail-sheet-grabber');
         const detailPeekTitle = document.getElementById('detail-peek-title');
+        const detailHalfBand = document.getElementById('detail-half-band');
         const sidebarFavorites = document.getElementById('sidebar-favorites');
         const sidebarFavoritesLabel = document.getElementById('sidebar-favorites-label');
         const sidebarNearMe = document.getElementById('sidebar-near-me');
@@ -2532,13 +2469,14 @@
 
             // Build image slider
             let sliderHtml = '';
+            let sliderId = '';
             if (venue.images && venue.images.length > 0) {
-                const sliderId = `detail-slider-${venue.name.replace(/\s+/g, '-').toLowerCase()}`;
+                sliderId = `detail-slider-${venue.name.replace(/\s+/g, '-').toLowerCase()}`;
                 const imagesHtml = venue.images.map((img, i) =>
                     `<img src="${img}" alt="${venue.name}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" ${i === 0 ? 'fetchpriority="high"' : 'fetchpriority="low"'} width="1200" height="900">`
                 ).join('');
                 const dotsHtml = venue.images.map((_, i) =>
-                    `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`
+                    `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" data-slider-owner="${sliderId}"></span>`
                 ).join('');
 
                 sliderHtml = `
@@ -2673,6 +2611,37 @@
             `;
         }
 
+        function createDetailHalfBandContent(venue) {
+            const sliderId = venue.images && venue.images.length > 0
+                ? `detail-slider-${venue.name.replace(/\s+/g, '-').toLowerCase()}`
+                : '';
+            const isFav = isFavorite(venue.name);
+            const dotsHtml = sliderId && venue.images && venue.images.length > 1
+                ? `
+                    <div class="detail-summary-dots">
+                        ${venue.images.map((_, i) =>
+                            `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" data-slider-owner="${sliderId}"></span>`
+                        ).join('')}
+                    </div>
+                `
+                : '';
+
+            return `
+                ${dotsHtml}
+                <div class="detail-summary-head">
+                    <div class="detail-summary-copy">
+                        <h2 class="detail-summary-name">${venue.name}</h2>
+                        <p class="detail-summary-address">${venue.address}</p>
+                    </div>
+                    <button class="detail-favorite-btn detail-summary-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Add to favorites">
+                        <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }
+
         const preloadedVenueImageUrls = new Set();
 
         function preloadImageUrl(src, { eager = false } = {}) {
@@ -2761,6 +2730,10 @@
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
             if (detailPeekTitle) detailPeekTitle.textContent = venue.name;
+            if (detailHalfBand) {
+                detailHalfBand.innerHTML = createDetailHalfBandContent(venue);
+                detailHalfBand.setAttribute('aria-hidden', 'false');
+            }
             preloadVenueGalleryImages(venue);
 
             // Trigger sheet animation
@@ -2778,18 +2751,20 @@
             updateBodyScrollLock();
 
             // Attach event handlers
-            const favoriteBtn = detailModalContent.querySelector('.detail-favorite-btn');
-            if (favoriteBtn) {
+            const favoriteButtons = detailModal.querySelectorAll('.detail-favorite-btn');
+            favoriteButtons.forEach(favoriteBtn => {
                 favoriteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     const venueName = favoriteBtn.dataset.venue;
                     toggleFavorite(venueName);
                     const isFav = isFavorite(venueName);
-                    favoriteBtn.classList.toggle('active', isFav);
-                    const heartIcon = favoriteBtn.querySelector('.favorite-icon');
-                    if (heartIcon) heartIcon.classList.toggle('filled', isFav);
+                    favoriteButtons.forEach(btn => {
+                        btn.classList.toggle('active', isFav);
+                        const heartIcon = btn.querySelector('.favorite-icon');
+                        if (heartIcon) heartIcon.classList.toggle('filled', isFav);
+                    });
                 });
-            }
+            });
 
             const sliderEl = detailModalContent.querySelector('.slider-container');
             attachSliderScrollSync(sliderEl);
@@ -2819,6 +2794,10 @@
                 detailModal.setAttribute('aria-hidden', 'true');
                 if (card) card.classList.remove('closing');
                 if (detailPeekTitle) detailPeekTitle.textContent = '';
+                if (detailHalfBand) {
+                    detailHalfBand.innerHTML = '';
+                    detailHalfBand.setAttribute('aria-hidden', 'true');
+                }
 
                 // Restore body scroll
                 document.body.classList.remove('detail-open');
@@ -2936,7 +2915,7 @@
 
             const sliderContainer = slider.querySelector('.slider-container');
             const images = sliderContainer.querySelectorAll('img');
-            const dots = slider.querySelectorAll('.slider-dot');
+            const dots = document.querySelectorAll(`.slider-dot[data-slider-owner="${sliderId}"]`);
 
             if (!sliderIndices[sliderId]) {
                 sliderIndices[sliderId] = 0;
@@ -2968,7 +2947,7 @@
             const sliderId = sliderEl.closest('.venue-slider')?.id;
             if (!sliderId) return;
             sliderEl.dataset.bound = 'true';
-            const dots = sliderEl.parentElement.querySelectorAll('.slider-dot');
+            const dots = document.querySelectorAll(`.slider-dot[data-slider-owner="${sliderId}"]`);
             sliderEl.addEventListener('scroll', () => {
                 const slideWidth = sliderEl.clientWidth || 1;
                 const idx = Math.round(sliderEl.scrollLeft / slideWidth);
@@ -3244,7 +3223,7 @@
         if (suggestForm) {
             suggestForm.addEventListener('submit', (event) => {
                 event.preventDefault();
-                const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'owner';
+                const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'fan';
                 const roleField = document.createElement('input');
                 roleField.type = 'hidden';
                 roleField.name = 'role';
@@ -3565,7 +3544,7 @@
             }
             updateQuickFilterLabels();
             syncQuickFilterPills();
-            setSuggestRole('owner');
+            setSuggestRole('fan');
             updateBodyScrollLock();
 
             if (!hasTrackedInitialMapView) {

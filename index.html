@@ -22,7 +22,7 @@
 <body>
     <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true">
         <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="intro-title">
-            <button class="intro-close" type="button" id="intro-close" aria-label="Close">✕</button>
+            <button class="intro-close" type="button" id="intro-close" aria-label="Close">X</button>
             <img class="intro-icon" src="icons/icon-192.png" alt="Friendly Spaces">
             <img class="intro-wordmark" src="assets/FriendlySpaces_blue.png" alt="Friendly Spaces">
             <div class="intro-slides" id="intro-slides">
@@ -204,7 +204,7 @@
             <div class="menu-brand">
                 <img class="menu-logo" src="icons/icon-192.png" alt="Friendly Spaces">
             </div>
-            <button id="menu-close" type="button" aria-label="Close menu">✕</button>
+            <button id="menu-close" type="button" aria-label="Close menu">X</button>
         </div>
         <button class="menu-button" id="menu-suggest" type="button">
             <span class="menu-label">Suggest a venue</span>
@@ -233,23 +233,23 @@
     <section id="suggest-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="suggest-close" aria-label="Close">✕</button>
+            <button class="fullscreen-close" type="button" id="suggest-close" aria-label="Close">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="suggest-title">Suggest a space</h2>
             <p class="suggest-tagline" id="suggest-tagline">Do you know of any places that would be a great fit for friendly spaces?</p>
             <div class="suggest-options" role="group" aria-label="Your role">
-                <button type="button" class="suggest-option active" data-suggest-role="owner">
-                    <span class="suggest-illustration" aria-hidden="true">
-                        <img src="assets/icon-shop.jpg" alt="" class="suggest-icon">
-                    </span>
-                    <span class="suggest-label" data-suggest-label="owner">I work at a Friendly Space</span>
-                </button>
-                <button type="button" class="suggest-option" data-suggest-role="fan">
+                <button type="button" class="suggest-option active" data-suggest-role="fan">
                     <span class="suggest-illustration" aria-hidden="true">
                         <img src="assets/icon-family.jpg" alt="" class="suggest-icon">
                     </span>
                     <span class="suggest-label" data-suggest-label="fan">I can recommend a Friendly Space</span>
+                </button>
+                <button type="button" class="suggest-option" data-suggest-role="owner">
+                    <span class="suggest-illustration" aria-hidden="true">
+                        <img src="assets/icon-shop.jpg" alt="" class="suggest-icon">
+                    </span>
+                    <span class="suggest-label" data-suggest-label="owner">I work at a Friendly Space</span>
                 </button>
             </div>
             <form id="suggest-form" class="suggest-form" name="suggest" method="POST" data-netlify="true" netlify-honeypot="bot-field">
@@ -303,7 +303,7 @@
     <section id="about-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="about-close" aria-label="Close">✕</button>
+            <button class="fullscreen-close" type="button" id="about-close" aria-label="Close">X</button>
         </div>
         <div class="fullscreen-body">
             <img class="about-logo" src="assets/wordmark-blue.png" alt="Friendly Spaces">
@@ -344,7 +344,7 @@
     <section id="bug-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="bug-close" aria-label="Close">✕</button>
+            <button class="fullscreen-close" type="button" id="bug-close" aria-label="Close">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="bug-title">Report a bug / Give feedback</h2>
@@ -365,7 +365,7 @@
     <section id="help-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="help-close" aria-label="Close">✕</button>
+            <button class="fullscreen-close" type="button" id="help-close" aria-label="Close">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="help-title">How to use Friendly Spaces</h2>
@@ -429,6 +429,7 @@
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
+            <div class="detail-half-band" id="detail-half-band" aria-hidden="true"></div>
             <div id="detail-modal-content"></div>
         </div>
     </div>
