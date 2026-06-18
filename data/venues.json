@@ -412,5 +412,67 @@
                 "change-table"
             ]
         }
+    },
+    {
+        "name": "Bridge Zurich",
+        "address": "Eisgasse 20, 8004 Zurich",
+        "city": "Zurich",
+        "description": "Large food hall and organic marketplace near Europaallee with multiple kitchens, shared seating, and a dedicated family play area.",
+        "i18n": {
+            "description": {
+                "de": "Grosse Food Hall und Bio-Markt nahe der Europaallee mit mehreren Kuchekonzepten, gemeinschaftlichen Sitzplaetzen und einem eigenen Familien-Spielbereich.",
+                "fr": "Grande food hall et marche bio pres d'Europaallee avec plusieurs cuisines, des tables partagees et un espace de jeu dedie aux familles.",
+                "it": "Grande food hall e mercato bio vicino a Europaallee con piu cucine, tavoli condivisi e un'area gioco dedicata alle famiglie."
+            },
+            "hours": {
+                "de": "Mo-Fr: ab 07:00, Sa: ab 08:00 (Zeiten variieren je nach Kuche, Bar und Shop - Website pruefen)",
+                "fr": "Lun-ven : des 07h00, sam : des 08h00 (horaires variables selon les cuisines, le bar et la boutique - voir le site)",
+                "it": "Lun-ven: dalle 07:00, sab: dalle 08:00 (gli orari variano a seconda di cucine, bar e shop - controlla il sito)"
+            },
+            "specialty": {
+                "de": "Internationale Food-Hall-Auswahl, Bio-Shop und familienfreundliche Spielecke mit Friendly Spaces Spielkiste",
+                "fr": "Selection de food hall internationale, boutique bio et coin jeux familial avec la Spielkiste Friendly Spaces",
+                "it": "Selezione internazionale di food hall, shop bio e angolo giochi family-friendly con la Spielkiste Friendly Spaces"
+            }
+        },
+        "hours": "Mon-Fri: from 7am, Sat: from 8am (hours vary by kitchen, bar, and shop - check website)",
+        "specialty": "International food hall, organic shop, and a family play corner with the Friendly Spaces playbox",
+        "website": "https://www.bridgezurich.ch/",
+        "instagram": "https://www.instagram.com/bridgezurich/",
+        "images": [
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_01.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_02.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_03.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_04.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_05.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_06.jpg",
+            "assets/zurich/Bridge_Zurich/Bridge_Zurich_07.jpg"
+        ],
+        "fallbackCoords": [
+            47.3779,
+            8.5331
+        ],
+        "filters": {
+            "venueType": [
+                "cafe",
+                "food-hall",
+                "restaurant"
+            ],
+            "cuisineType": [
+                "international"
+            ],
+            "ageRange": [
+                "baby",
+                "toddler",
+                "small-child",
+                "kid"
+            ],
+            "amenities": [
+                "play-area",
+                "friendly-spaces",
+                "high-chair",
+                "change-table"
+            ]
+        }
     }
 ]
