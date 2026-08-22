@@ -1,5 +1,6 @@
 [
     {
+        "slug": "orangerie-elfenau",
         "name": "Orangerie Elfenau",
         "address": "Elfenauweg 92, 3006 Bern",
         "city": "Bern",
@@ -59,6 +60,7 @@
         }
     },
     {
+        "slug": "love-is-sweet",
         "name": "Love is Sweet Atelier",
         "address": "Socinstrasse 2, 4051 Basel",
         "city": "Basel",
@@ -114,6 +116,7 @@
         }
     },
     {
+        "slug": "magical-cafe-basel",
         "name": "Magical Cafe",
         "address": "Max Kämpf Platz 2, 4058 Basel",
         "city": "Basel",
@@ -173,6 +176,7 @@
         }
     },
     {
+        "slug": "klara-basel",
         "name": "Klara 13",
         "address": "Clarastrasse 13, 4058 Basel",
         "city": "Basel",
@@ -235,6 +239,7 @@
         }
     },
     {
+        "slug": "markthalle-basel",
         "name": "Markthalle Basel",
         "address": "Steinentorberg 20, 4051 Basel",
         "city": "Basel",
@@ -296,6 +301,7 @@
         }
     },
     {
+        "slug": "crafty-crew-workshops",
         "name": "Crafty Crew",
         "address": "Stube im Progr, Atelier 012, Speichergasse 4, 3011 Bern",
         "city": "Bern",
@@ -352,6 +358,7 @@
         }
     },
     {
+        "slug": "sempre-berna",
         "name": "Caffè Bar Sempre Berna",
         "address": "Schwarztorstrasse 102, 3007 Bern",
         "city": "Bern",
@@ -414,6 +421,7 @@
         }
     },
     {
+        "slug": "bridge-zurich",
         "name": "Bridge Zurich",
         "address": "Eisgasse 20, 8004 Zurich",
         "city": "Zurich",
