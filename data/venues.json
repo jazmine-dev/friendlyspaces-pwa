@@ -27,11 +27,11 @@
         "website": "https://orangerieelfenau.ch/",
         "instagram": "https://www.instagram.com/orangerie_elfenau",
         "images": [
-            "assets/bern/Orangerie_Elfenau/Orangerie_01.webp",
-            "assets/bern/Orangerie_Elfenau/Orangerie_02.webp",
-            "assets/bern/Orangerie_Elfenau/Orangerie_03.webp",
-            "assets/bern/Orangerie_Elfenau/Orangerie_04.webp",
-            "assets/bern/Orangerie_Elfenau/Orangerie_06.webp"
+            "https://app.friendlyspaces.ch/assets/bern/Orangerie_Elfenau/Orangerie_01.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Orangerie_Elfenau/Orangerie_02.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Orangerie_Elfenau/Orangerie_03.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Orangerie_Elfenau/Orangerie_04.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Orangerie_Elfenau/Orangerie_06.webp"
         ],
         "fallbackCoords": [
             46.9330368,
@@ -86,11 +86,11 @@
         "website": "https://loveissweet.ch/",
         "instagram": "https://www.instagram.com/loveissweet_ds",
         "images": [
-            "assets/basel/LIS_Atelier/LIS_Atelier_01.webp",
-            "assets/basel/LIS_Atelier/LIS_Atelier_02.webp",
-            "assets/basel/LIS_Atelier/LIS_Atelier_03.webp",
-            "assets/basel/LIS_Atelier/LIS_Atelier_04.webp",
-            "assets/basel/LIS_Atelier/LIS_Atelier_05.webp"
+            "https://app.friendlyspaces.ch/assets/basel/LIS_Atelier/LIS_Atelier_01.webp",
+            "https://app.friendlyspaces.ch/assets/basel/LIS_Atelier/LIS_Atelier_02.webp",
+            "https://app.friendlyspaces.ch/assets/basel/LIS_Atelier/LIS_Atelier_03.webp",
+            "https://app.friendlyspaces.ch/assets/basel/LIS_Atelier/LIS_Atelier_04.webp",
+            "https://app.friendlyspaces.ch/assets/basel/LIS_Atelier/LIS_Atelier_05.webp"
         ],
         "fallbackCoords": [
             47.5580748,
@@ -141,12 +141,12 @@
         "website": "https://magicalcafe.ch/",
         "instagram": "https://www.instagram.com/magicalcafebasel",
         "images": [
-            "assets/basel/Magical_Cafe/magical_cafe_01.webp",
-            "assets/basel/Magical_Cafe/magical_cafe_02.webp",
-            "assets/basel/Magical_Cafe/magical_cafe_03.webp",
-            "assets/basel/Magical_Cafe/magical_cafe_04.webp",
-            "assets/basel/Magical_Cafe/magical_cafe_05.webp",
-            "assets/basel/Magical_Cafe/magical_cafe_06.webp"
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_01.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_02.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_03.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_04.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_05.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Magical_Cafe/magical_cafe_06.webp"
         ],
         "fallbackCoords": [
             47.5699729,
@@ -200,13 +200,13 @@
         "website": "https://www.klarabasel.ch/",
         "instagram": "https://www.instagram.com/klara.basel",
         "images": [
-            "assets/basel/Klara/klara_01.webp",
-            "assets/basel/Klara/klara_02.webp",
-            "assets/basel/Klara/klara_03.webp",
-            "assets/basel/Klara/klara_04.webp",
-            "assets/basel/Klara/klara_05.webp",
-            "assets/basel/Klara/klara_06.webp",
-            "assets/basel/Klara/klara_07.webp"
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_01.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_02.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_03.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_04.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_05.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_06.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Klara/klara_07.webp"
         ],
         "fallbackCoords": [
             47.566,
@@ -262,12 +262,12 @@
         "website": "https://www.altemarkthalle.ch/",
         "instagram": "https://www.instagram.com/markthalle_basel",
         "images": [
-            "assets/basel/Markthalle/markthalle_01.webp",
-            "assets/basel/Markthalle/markthalle_02.webp",
-            "assets/basel/Markthalle/markthalle_03.webp",
-            "assets/basel/Markthalle/markthalle_04.webp",
-            "assets/basel/Markthalle/markthalle_05.webp",
-            "assets/basel/Markthalle/markthalle_06.webp"
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_01.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_02.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_03.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_04.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_05.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Markthalle/markthalle_06.webp"
         ],
         "fallbackCoords": [
             47.548,
@@ -440,13 +440,13 @@
         "website": "https://www.bridgezurich.ch/",
         "instagram": "https://www.instagram.com/bridgezurich/",
         "images": [
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_01.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_02.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_03.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_04.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_05.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_06.jpg",
-            "assets/zurich/Bridge_Zurich/Bridge_Zurich_07.jpg"
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_01.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_02.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_03.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_04.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_05.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_06.jpg",
+            "https://app.friendlyspaces.ch/assets/zurich/Bridge_Zurich/Bridge_Zurich_07.jpg"
         ],
         "fallbackCoords": [
             47.3779,
