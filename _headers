@@ -1,9 +1,7 @@
+# CORS for the native app and the website map. One rule only: on Cloudflare
+# Pages, overlapping rules are merged and would emit the header twice
+# ("*, *"), which browsers reject.
 /*
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: GET, POST, OPTIONS
-  Access-Control-Allow-Headers: Content-Type
-
-/data/*
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
   Access-Control-Allow-Headers: Content-Type
