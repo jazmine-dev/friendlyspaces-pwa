@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Friendly Spaces website forms</title><meta name="robots" content="noindex"></head>
+<body>
+  <!-- Netlify form detection for the friendlyspaces.ch website. The site posts to this host with a matching form-name. -->
+  <form name="website-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="website-contact">
+    <input name="bot-field">
+    <input name="reason"><input name="name"><input name="email"><input name="business"><input name="city">
+    <textarea name="message"></textarea>
+    <input name="page_language">
+  </form>
+  <form name="website-nominate" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="website-nominate">
+    <input name="bot-field">
+    <input name="venue"><input name="city"><input name="email">
+    <textarea name="why"></textarea>
+    <input name="page_language">
+  </form>
+  <form name="website-newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="website-newsletter">
+    <input name="bot-field">
+    <input name="email"><input name="language"><input name="page_language">
+  </form>
+</body>
+</html>
