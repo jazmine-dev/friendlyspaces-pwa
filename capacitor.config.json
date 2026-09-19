@@ -1,5 +1,22 @@
 {
   "appId": "ch.friendlyspaces.app",
   "appName": "Friendly Spaces",
-  "webDir": "www"
+  "webDir": "www",
+  "experimental": {
+    "ios": {
+      "spm": {
+        "swiftToolsVersion": "6.1",
+        "packageTraits": {
+          "@capacitor-firebase/analytics": [
+            "AnalyticsWithoutAdIdSupport"
+          ]
+        },
+        "packageOptions": {
+          "@capacitor-firebase/analytics": {
+            "symlink": true
+          }
+        }
+      }
+    }
+  }
 }

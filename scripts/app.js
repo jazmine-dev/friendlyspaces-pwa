@@ -108,6 +108,7 @@
                     options: {
                         venueType: {
                             cafe: "Café",
+                            shop: "Laden",
                             restaurant: "Restaurant",
                             "craft-atelier": "Kreativ-Atelier",
                             "food-hall": "Food Hall"
@@ -259,6 +260,7 @@
                     options: {
                         venueType: {
                             cafe: "Café",
+                            shop: "Boutique",
                             restaurant: "Restaurant",
                             "craft-atelier": "Atelier créatif",
                             "food-hall": "Food Hall"
@@ -410,6 +412,7 @@
                     options: {
                         venueType: {
                             cafe: "Caffè",
+                            shop: "Negozio",
                             restaurant: "Ristorante",
                             "craft-atelier": "Atelier creativo",
                             "food-hall": "Food Hall"
@@ -561,6 +564,7 @@
                     options: {
                         venueType: {
                             cafe: "Cafe",
+                            shop: "Shop",
                             restaurant: "Restaurant",
                             "craft-atelier": "Creative Atelier",
                             "food-hall": "Food Hall"
@@ -712,10 +716,14 @@
         let venues = [];
         const REMOTE_APP_ORIGIN = 'https://app.friendlyspaces.ch/';
         const REMOTE_VENUES_URL = new URL('data/venues.json', REMOTE_APP_ORIGIN).toString();
+        const REMOTE_FILTERS_URL = new URL('data/filters.json', REMOTE_APP_ORIGIN).toString();
         const REMOTE_FORM_SUBMIT_URL = REMOTE_APP_ORIGIN;
         const LOCAL_VENUES_URL = 'data/venues.json';
+        const LOCAL_FILTERS_URL = 'data/filters.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
+        const FILTERS_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
+        const FILTERS_CACHE_KEY = 'friendlyspaces_filters_cache_v1';
 
         function normalizeVenueFilters(list) {
             if (!Array.isArray(list)) return [];
@@ -773,6 +781,24 @@
             }
         }
 
+        async function fetchFilterData(url) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), FILTERS_FETCH_TIMEOUT_MS);
+            try {
+                const response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                return validateFilterData(data);
+            } finally {
+                clearTimeout(timeout);
+            }
+        }
+
         function readCachedVenues() {
             try {
                 const raw = localStorage.getItem(VENUES_CACHE_KEY);
@@ -790,6 +816,28 @@
                 localStorage.setItem(VENUES_CACHE_KEY, JSON.stringify({
                     updatedAt: Date.now(),
                     venues: nextVenues
+                }));
+            } catch (err) {
+                // Ignore storage quota/private mode issues.
+            }
+        }
+
+        function readCachedFilters() {
+            try {
+                const raw = localStorage.getItem(FILTERS_CACHE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                return validateFilterData(parsed?.filters);
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function writeCachedFilters(nextFilters) {
+            try {
+                localStorage.setItem(FILTERS_CACHE_KEY, JSON.stringify({
+                    updatedAt: Date.now(),
+                    filters: nextFilters
                 }));
             } catch (err) {
                 // Ignore storage quota/private mode issues.
@@ -822,9 +870,10 @@
         }
 
         // Filter definitions
-        const filterDefinitions = {
+        const fallbackFilterDefinitions = {
             venueType: [
                 { id: "cafe", label: "Cafe" },
+                { id: "shop", label: "Shop" },
                 { id: "restaurant", label: "Restaurant" },
                 { id: "craft-atelier", label: "Creative Atelier" },
                 { id: "food-hall", label: "Food Hall" }
@@ -852,6 +901,92 @@
                 { id: "arts-crafts", label: "Arts & Crafts" }
             ]
         };
+        let filterDefinitions = { ...fallbackFilterDefinitions };
+        let loadedFilterVocabulary = null;
+
+        function validateFilterData(data) {
+            if (!data || !Array.isArray(data.categories)) {
+                throw new Error('Invalid filters payload');
+            }
+            data.categories.forEach(category => {
+                if (!category?.id || !Array.isArray(category.options)) {
+                    throw new Error('Invalid filters payload');
+                }
+            });
+            return data;
+        }
+
+        function buildFilterDefinitionsFromPayload(data) {
+            return data.categories.reduce((definitions, category) => {
+                definitions[category.id] = category.options
+                    .filter(option => option?.id)
+                    .map(option => ({
+                        id: option.id,
+                        label: option.label?.en || option.id
+                    }));
+                return definitions;
+            }, {});
+        }
+
+        function applyFilterVocabulary(data) {
+            loadedFilterVocabulary = validateFilterData(data);
+            filterDefinitions = buildFilterDefinitionsFromPayload(loadedFilterVocabulary);
+            ensureActiveFilterCategories();
+        }
+
+        async function loadFilters() {
+            try {
+                const remoteFilters = await fetchFilterData(REMOTE_FILTERS_URL);
+                applyFilterVocabulary(remoteFilters);
+                writeCachedFilters(remoteFilters);
+                return;
+            } catch (err) {
+                // Fall back to cached or bundled filters when offline or remote fetch fails.
+            }
+
+            const cachedFilters = readCachedFilters();
+            if (cachedFilters) {
+                applyFilterVocabulary(cachedFilters);
+                return;
+            }
+
+            try {
+                const localFilters = await fetchFilterData(LOCAL_FILTERS_URL);
+                applyFilterVocabulary(localFilters);
+                writeCachedFilters(localFilters);
+            } catch (err) {
+                filterDefinitions = { ...fallbackFilterDefinitions };
+                loadedFilterVocabulary = null;
+                ensureActiveFilterCategories();
+            }
+        }
+
+        function getLoadedFilterCategory(category) {
+            return loadedFilterVocabulary?.categories?.find(item => item.id === category);
+        }
+
+        function getLoadedFilterOption(category, id) {
+            return getLoadedFilterCategory(category)?.options?.find(item => item.id === id);
+        }
+
+        function getLocalizedFilterLabel(label, id) {
+            if (!label || typeof label !== 'object') return null;
+            return label[currentLang] || label.de || label.en || id;
+        }
+
+        function filterOptionLabel(category, id) {
+            const loadedLabel = getLocalizedFilterLabel(getLoadedFilterOption(category, id)?.label, id);
+            if (loadedLabel) return loadedLabel;
+            const translated = translate(`filters.options.${category}.${id}`, id);
+            return typeof translated === 'function' ? translated() : translated;
+        }
+
+        function filterCategoryLabel(category) {
+            const loadedLabel = getLocalizedFilterLabel(getLoadedFilterCategory(category)?.label, category);
+            if (loadedLabel) return loadedLabel;
+            const translated = translate(`filters.categories.${category}`, category);
+            return typeof translated === 'function' ? translated() : translated;
+        }
 
         // Initialize map with zoom controls in bottom right
         // Center on Switzerland initially
@@ -897,7 +1032,14 @@
         };
         locateControl.addTo(map);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        // Generated by build:web from the local CARTO configuration.
+        const cartoBasemapKey = window.FriendlySpacesMap?.cartoApiKey;
+        if (!cartoBasemapKey) {
+            throw new Error('Missing CARTO map configuration. Run npm run build:web before opening the app.');
+        }
+        map.attributionControl.setPrefix(false);
+        map.attributionControl.setPosition('bottomleft');
+        L.tileLayer(`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoBasemapKey)}`, {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 20
@@ -1076,6 +1218,13 @@
             ageRange: [],
             amenities: []
         };
+        function ensureActiveFilterCategories() {
+            Object.keys(filterDefinitions).forEach(category => {
+                if (!Array.isArray(activeFilters[category])) {
+                    activeFilters[category] = [];
+                }
+            });
+        }
         let searchQuery = '';
         let isInitialLoad = true;
         const viewStateKey = 'friendlyspaces_active_view';
@@ -1102,6 +1251,7 @@
         let favoritesReturnView = lastPrimaryView;
         const favoritesKey = 'friendlyspaces_favorites';
         let favorites = new Set();
+        let selectedCity = '';
         const sidebar = document.getElementById('sidebar');
         const filtersContainer = document.getElementById('filters-container');
         const sheetBackdrop = document.getElementById('sheet-backdrop');
@@ -1459,15 +1609,131 @@
             document.body.style.overflow = shouldLock ? 'hidden' : 'auto';
         }
 
+        // Stable partner_id slug per venue — matches the slugs already used for
+        // Instagram venue matching in the analytics dashboard. Falls back to a
+        // derived slug so tracking still works if the hosted venues.json
+        // (app.friendlyspaces.ch) hasn't been given a "slug" field yet.
+        function slugify(value) {
+            return String(value || '')
+                .normalize('NFKD')
+                .replace(/[̀-ͯ]/g, '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        // Keep production analytics stable while the hosted venues.json is
+        // being updated with explicit slug values. A few partner IDs are not
+        // a direct slugification of their display name.
+        const partnerIdByName = {
+            'Orangerie Elfenau': 'orangerie-elfenau',
+            'Love is Sweet Atelier': 'love-is-sweet',
+            'Magical Cafe': 'magical-cafe-basel',
+            'Klara 13': 'klara-basel',
+            'Markthalle Basel': 'markthalle-basel',
+            'Crafty Crew': 'crafty-crew-workshops',
+            'Caffè Bar Sempre Berna': 'sempre-berna',
+            'Bridge Zurich': 'bridge-zurich'
+        };
+
+        function getPartnerId(venue) {
+            if (venue && venue.slug) return venue.slug;
+            if (venue && partnerIdByName[venue.name]) return partnerIdByName[venue.name];
+            if (venue && venue.name) return slugify(venue.name);
+            return undefined;
+        }
+
+        function getPlatform() {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            return isNative && typeof cap?.getPlatform === 'function' ? cap.getPlatform() : 'web';
+        }
+
+        function getSurface() {
+            const platform = getPlatform();
+            if (platform === 'ios') return 'ios_app';
+            if (platform === 'android') return 'android_app';
+            return 'pwa_web';
+        }
+
+        function getPartnerCategory(venue) {
+            const categories = venue?.filters?.venueType;
+            return Array.isArray(categories) && categories.length ? categories[0] : 'unknown';
+        }
+
+        function getPartnerAnalyticsParams(venue) {
+            return {
+                partner_id: getPartnerId(venue) || 'unknown',
+                partner_city: venue?.city || 'unknown',
+                partner_category: getPartnerCategory(venue)
+            };
+        }
+
+        function cleanAnalyticsParams(params) {
+            return Object.fromEntries(
+                Object.entries(params).filter(([, value]) =>
+                    value !== undefined && value !== null && value !== ''
+                )
+            );
+        }
+
+        function getNativeAnalyticsPlugin() {
+            return window.Capacitor?.Plugins?.FirebaseAnalytics;
+        }
+
         function trackEvent(name, params = {}) {
             if (!analyticsEnabled) return;
-            if (typeof gtag === 'function') {
-                gtag('event', name, {
-                    app_domain: APP_DOMAIN,
-                    ...params
-                });
+
+            const eventParams = cleanAnalyticsParams({
+                app_domain: APP_DOMAIN,
+                surface: getSurface(),
+                ...params
+            });
+
+            if (getPlatform() !== 'web') {
+                const firebaseAnalytics = getNativeAnalyticsPlugin();
+                if (firebaseAnalytics?.logEvent) {
+                    void firebaseAnalytics.logEvent({ name, params: eventParams }).catch((err) => {
+                        console.warn(`Firebase Analytics event failed: ${name}`, err);
+                    });
+                } else {
+                    console.warn(`Firebase Analytics is unavailable for native event: ${name}`);
+                }
+                return;
+            }
+
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', name, eventParams);
             }
         }
+
+        function trackScreen(screenName) {
+            if (!analyticsEnabled || getPlatform() === 'web') return;
+            const firebaseAnalytics = getNativeAnalyticsPlugin();
+            if (!firebaseAnalytics?.setCurrentScreen) return;
+            void firebaseAnalytics.setCurrentScreen({
+                screenName,
+                screenClassOverride: 'FriendlySpacesWebView'
+            }).catch((err) => console.warn(`Firebase Analytics screen failed: ${screenName}`, err));
+        }
+
+        function trackFilterChange(category, value, enabled, source) {
+            trackEvent(enabled ? 'filter_apply' : 'filter_remove', {
+                filter_type: category,
+                filter_value: value,
+                filter_source: source,
+                results_count: getVisibleVenues().length,
+                language: currentLang
+            });
+        }
+
+        const LINK_EVENT_NAMES = {
+            directions: 'directions_click',
+            'apple-maps': 'directions_click',
+            phone: 'call_click',
+            website: 'website_click',
+            instagram: 'instagram_click'
+        };
 
         function loadFavorites() {
             try {
@@ -1488,7 +1754,8 @@
         }
 
         function toggleFavorite(venueName) {
-            if (favorites.has(venueName)) {
+            const wasFavorite = favorites.has(venueName);
+            if (wasFavorite) {
                 favorites.delete(venueName);
             } else {
                 favorites.add(venueName);
@@ -1497,6 +1764,14 @@
             updateFavoritesBadge();
             updateMap();
             updateListView();
+
+            const venue = venues.find(item => item.name === venueName);
+            if (venue) {
+                trackEvent(wasFavorite ? 'venue_unsave' : 'venue_save', {
+                    ...getPartnerAnalyticsParams(venue),
+                    language: currentLang
+                });
+            }
         }
 
         function updateFavoritesBadge() {
@@ -1514,10 +1789,16 @@
             if (sidebarTitle) sidebarTitle.textContent = translate('ui.sidebarTitle', sidebarTitle.textContent);
 
             const searchInputEl = document.getElementById('search-input');
-            if (searchInputEl) searchInputEl.placeholder = translate('ui.searchPlaceholder', searchInputEl.placeholder);
+            if (searchInputEl) {
+                searchInputEl.placeholder = translate('ui.searchPlaceholder', searchInputEl.placeholder);
+                searchInputEl.setAttribute('aria-label', searchInputEl.placeholder);
+            }
 
             const topSearchInputEl = document.getElementById('top-search-input');
-            if (topSearchInputEl) topSearchInputEl.placeholder = translate('ui.searchPlaceholder', topSearchInputEl.placeholder);
+            if (topSearchInputEl) {
+                topSearchInputEl.placeholder = translate('ui.searchPlaceholder', topSearchInputEl.placeholder);
+                topSearchInputEl.setAttribute('aria-label', topSearchInputEl.placeholder);
+            }
 
             if (resetFiltersButton) {
                 resetFiltersButton.textContent = translate('ui.clearFilters', 'Reset all filters');
@@ -1538,6 +1819,7 @@
                 if (listSpan) listSpan.textContent = translate('ui.listTab', listSpan.textContent);
             }
 
+            document.getElementById('pill-favorites')?.setAttribute('aria-label', translate('ui.favoritesTab', 'Favorites'));
             const favoritesTab = document.getElementById('bottom-tab-favorites-label');
             if (favoritesTab) favoritesTab.textContent = translate('ui.favoritesTab', favoritesTab.textContent);
             if (sidebarFavoritesLabel) {
@@ -1677,7 +1959,7 @@
 
             document.querySelectorAll('[data-category-heading]').forEach(heading => {
                 const cat = heading.getAttribute('data-category-heading');
-                heading.textContent = translate(`filters.categories.${cat}`, heading.textContent);
+                heading.textContent = filterCategoryLabel(cat);
             });
 
             renderCountWrappers();
@@ -1686,13 +1968,20 @@
         function openMenu() {
             if (!menuDrawer || !menuBackdrop) return;
             menuDrawer.classList.add('open');
+            menuDrawer.inert = false;
+            menuToggle?.setAttribute('aria-expanded', 'true');
+            menuClose?.focus({ preventScroll: true });
             menuBackdrop.classList.add('visible');
             updateBodyScrollLock();
         }
 
         function closeMenu() {
             if (!menuDrawer || !menuBackdrop) return;
+            const hadFocus = menuDrawer.contains(document.activeElement);
             menuDrawer.classList.remove('open');
+            if (hadFocus) menuToggle?.focus({ preventScroll: true });
+            menuDrawer.inert = true;
+            menuToggle?.setAttribute('aria-expanded', 'false');
             menuBackdrop.classList.remove('visible');
             updateBodyScrollLock();
         }
@@ -1731,6 +2020,16 @@
             if (newsletter) {
                 newsletter.style.display = role === 'owner' ? 'none' : 'flex';
             }
+            const optIn = document.getElementById('suggest-newsletter-input');
+            const emailInput = document.getElementById('fan-email');
+            if (optIn) {
+                optIn.disabled = role === 'owner';
+                if (optIn.disabled) optIn.checked = false;
+            }
+            if (emailInput) {
+                emailInput.disabled = role === 'owner';
+                emailInput.required = Boolean(optIn?.checked);
+            }
             if (ownerFields) {
                 const isOwner = role === 'owner';
                 ownerFields.style.display = isOwner ? 'block' : 'none';
@@ -1768,6 +2067,7 @@
             applyTranslations();
             updateLanguageToggleActive();
             createFilterButtons();
+            updateQuickFilterLabels();
             updateFilterCount();
             updateMap();
             updateListView();
@@ -1889,6 +2189,7 @@
 
         // Create filter buttons
         function createFilterButtons() {
+            ensureActiveFilterCategories();
             Object.keys(filterDefinitions).forEach(category => {
                 const container = document.getElementById(`${category}-filters`);
                 if (!container) return;
@@ -1896,19 +2197,10 @@
 
                 const heading = document.querySelector(`[data-category-heading="${category}"]`);
                 if (heading) {
-                    heading.textContent = translate(`filters.categories.${category}`, heading.textContent);
+                    heading.textContent = filterCategoryLabel(category);
                 }
 
-                const filters = [...filterDefinitions[category]];
-                if (category === 'amenities') {
-                    filters.sort((a, b) => {
-                        if (a.id === 'friendly-spaces') return 1;
-                        if (b.id === 'friendly-spaces') return -1;
-                        return 0;
-                    });
-                }
-
-                filters.forEach(filter => {
+                filterDefinitions[category].forEach(filter => {
                     const count = countVenuesWithFilter(category, filter.id);
 
                     const button = document.createElement('button');
@@ -1916,12 +2208,12 @@
                     if (activeFilters[category].includes(filter.id)) {
                         button.classList.add('active');
                     }
+                    button.setAttribute('aria-pressed', String(activeFilters[category].includes(filter.id)));
                     button.dataset.category = category;
                     button.dataset.value = filter.id;
 
                     const labelSpan = document.createElement('span');
-                    const labelText = translate(`filters.options.${category}.${filter.id}`, filter.label || filter.id);
-                    labelSpan.textContent = typeof labelText === 'function' ? labelText() : labelText;
+                    labelSpan.textContent = filterOptionLabel(category, filter.id);
 
                     const countSpan = document.createElement('span');
                     countSpan.className = 'count';
@@ -1939,7 +2231,9 @@
 
         // Handle filter button clicks
         function handleFilterClick(button, category, value) {
+            ensureActiveFilterCategories();
             button.classList.toggle('active');
+            button.setAttribute('aria-pressed', String(button.classList.contains('active')));
 
             if (button.classList.contains('active')) {
                 activeFilters[category].push(value);
@@ -1949,6 +2243,8 @@
 
             updateMap();
             updateFilterCount();
+            syncQuickFilterPills();
+            trackFilterChange(category, value, button.classList.contains('active'), 'filter_panel');
         }
 
         // Search functionality with dropdown
@@ -2138,22 +2434,30 @@
         });
 
         function resetAllFilters() {
-            activeFilters = {
-                venueType: [],
-                cuisineType: [],
-                ageRange: [],
-                amenities: []
-            };
+            selectedCity = '';
+            updateCityFilter();
+            const clearedFilterCount = Object.values(activeFilters).flat().length + (nearMeActive ? 1 : 0);
+            activeFilters = Object.keys(filterDefinitions).reduce((nextFilters, category) => {
+                nextFilters[category] = [];
+                return nextFilters;
+            }, {});
             nearMeActive = false;
             searchQuery = '';
             if (searchInput) searchInput.value = '';
             if (topSearchInput) topSearchInput.value = '';
-            setActiveView('map');
+            setActiveView(activeTab === 'favorites' ? favoritesReturnView : activeTab);
             createFilterButtons();
             updateFilterCount();
             isInitialLoad = true;
             updateMap();
             updateListView();
+            if (clearedFilterCount > 0) {
+                trackEvent('filter_clear_all', {
+                    cleared_filter_count: clearedFilterCount,
+                    results_count: getVisibleVenues().length,
+                    language: currentLang
+                });
+            }
         }
 
         // Clear filters (legacy button removed; keep safe guard)
@@ -2166,7 +2470,7 @@
         function updateFilterCount() {
             const total = Object.values(activeFilters).flat().length;
             if (applyFiltersButton) {
-                const label = total > 0
+                const label = total > 0 || searchQuery || nearMeActive || selectedCity
                     ? `${translate('ui.showSpaces', 'Show')} ${getVisibleVenues().length} ${translate('ui.spacesLabel', 'spaces')}`
                     : translate('ui.showAllSpaces', 'Show all spaces');
                 applyFiltersButton.textContent = label;
@@ -2185,6 +2489,7 @@
         }
 
         function venueMatchesBaseFilters(venue) {
+            if (selectedCity && venue.city !== selectedCity) return false;
             if (activeTab === 'favorites' && !isFavorite(venue.name)) {
                 return false;
             }
@@ -2285,9 +2590,7 @@
             const tagsByCategory = Object.entries(venue.filters)
                 .map(([category, values]) => {
                     const tags = values.map(v => {
-                        const def = filterDefinitions[category].find(f => f.id === v);
-                        const translated = translate(`filters.options.${category}.${v}`, def?.label || v);
-                        const label = typeof translated === 'function' ? translated() : translated;
+                        const label = filterOptionLabel(category, v);
                         return `<span class="venue-tag" style="background: ${popupTagColor}; color: white;">${label}</span>`;
                     }).join('');
                     return tags;
@@ -2357,7 +2660,7 @@
                     return;
                 }
                 const coords = venue.fallbackCoords;
-                const marker = L.marker(coords, { icon: markerIcon });
+                const marker = L.marker(coords, { icon: markerIcon, title: venue.name, alt: venue.name });
                 marker.on('click', () => {
                     selectedVenueName = venue.name;
                     applySelectedMarkerStyle();
@@ -2390,6 +2693,7 @@
             }
             applySelectedMarkerStyle();
             updateListView();
+            updateFilterCount();
         }
 
         function renderVenueCard(venue) {
@@ -2398,9 +2702,7 @@
             const isFav = isFavorite(venue.name);
             const tags = venue.filters?.venueType || [];
             const tagHtml = tags.map(tag => {
-                const def = filterDefinitions.venueType.find(item => item.id === tag);
-                const translated = translate(`filters.options.venueType.${tag}`, def?.label || tag);
-                const label = typeof translated === 'function' ? translated() : translated;
+                const label = filterOptionLabel('venueType', tag);
                 return `<span class="venue-card-tag">${label}</span>`;
             }).join('');
 
@@ -2410,8 +2712,8 @@
                         ? `<img class="venue-card-image" src="${image}" alt="${venue.name}" loading="lazy" decoding="async">`
                         : `<div class="venue-card-image" aria-hidden="true"></div>`}
                     <div class="venue-card-header">
-                        <h3 class="venue-card-title">${venue.name}</h3>
-                        <button class="venue-card-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Save venue">
+                        <h3 class="venue-card-title"><button type="button" class="venue-card-open">${escapeHtml(venue.name)}</button></h3>
+                        <button class="venue-card-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-pressed="${isFav}" aria-label="${escapeHtml(translate('ui.favoritesTab', 'Favorites') + ': ' + venue.name)}">
                             <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
                             </svg>
@@ -2494,9 +2796,7 @@
                 .filter(([_, values]) => values.length > 0)
                 .map(([category, values]) => {
                     return values.map(v => {
-                        const def = filterDefinitions[category].find(f => f.id === v);
-                        const translated = translate(`filters.options.${category}.${v}`, def?.label || v);
-                        let label = typeof translated === 'function' ? translated() : translated;
+                        let label = filterOptionLabel(category, v);
                         // Strip any leading Unicode symbols/bullets
                         label = label.replace(/^[\s○•△★□◇◈◎◊◆►▸▪▫●◦‣⁃※✦✧⬥⬦♦♢☆✶✴✵✷✸❖⚬⬡⬢]+/, '').trim();
                         return `<span class="detail-tag">${label}</span>`;
@@ -2568,7 +2868,7 @@
                             <h2 class="detail-hero-name">${venue.name}</h2>
                             <p class="detail-hero-address">${venue.address}</p>
                         </div>
-                        <button class="detail-favorite-btn ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Add to favorites">
+                        <button class="detail-favorite-btn ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-pressed="${isFav}" aria-label="${escapeHtml(translate('ui.favoritesTab', 'Favorites') + ': ' + venue.name)}">
                             <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
                             </svg>
@@ -2633,7 +2933,7 @@
                         <h2 class="detail-summary-name">${venue.name}</h2>
                         <p class="detail-summary-address">${venue.address}</p>
                     </div>
-                    <button class="detail-favorite-btn detail-summary-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-label="Add to favorites">
+                    <button class="detail-favorite-btn detail-summary-favorite ${isFav ? 'active' : ''}" data-venue="${venue.name}" type="button" aria-pressed="${isFav}" aria-label="${escapeHtml(translate('ui.favoritesTab', 'Favorites') + ': ' + venue.name)}">
                         <svg class="favorite-icon ${isFav ? 'filled' : ''}" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
                         </svg>
@@ -2716,17 +3016,19 @@
             setDetailSnap(order[next]);
         }
 
+        let detailReturnFocus = null;
         function openDetailModal(venue, source = 'unknown') {
             if (!detailModal || !detailModalContent) return;
 
-            trackEvent('venue_click', {
-                venue_name: venue.name,
-                venue_city: venue.city,
+            trackEvent('venue_profile_open', {
+                ...getPartnerAnalyticsParams(venue),
                 source: source,
                 language: currentLang,
                 app_version: APP_VERSION
             });
+            trackScreen('venue_profile');
 
+            detailReturnFocus = document.activeElement;
             // Generate content
             detailModalContent.innerHTML = createDetailProfileContent(venue);
             if (detailPeekTitle) detailPeekTitle.textContent = venue.name;
@@ -2760,6 +3062,7 @@
                     const isFav = isFavorite(venueName);
                     favoriteButtons.forEach(btn => {
                         btn.classList.toggle('active', isFav);
+                        btn.setAttribute('aria-pressed', String(isFav));
                         const heartIcon = btn.querySelector('.favorite-icon');
                         if (heartIcon) heartIcon.classList.toggle('filled', isFav);
                     });
@@ -2772,11 +3075,11 @@
             detailModalContent.querySelectorAll('a[data-analytics-link="true"]').forEach(link => {
                 link.addEventListener('click', () => {
                     const linkType = link.dataset.linkType || 'unknown';
-                    trackEvent('outbound_click', {
-                        venue_name: venue.name,
-                        venue_city: venue.city,
+                    const eventName = LINK_EVENT_NAMES[linkType] || 'outbound_partner_click';
+                    trackEvent(eventName, {
+                        ...getPartnerAnalyticsParams(venue),
                         link_type: linkType,
-                        url: link.href,
+                        source: source,
                         language: currentLang,
                         app_version: APP_VERSION
                     });
@@ -2785,11 +3088,14 @@
         }
 
         function closeDetailModal() {
-            if (!detailModal) return;
+            if (!detailModal || !detailModal.classList.contains('active')) return;
             const card = detailModal.querySelector('.detail-modal-card');
             if (card) card.classList.add('closing');
 
             setTimeout(() => {
+                if (detailModal.contains(document.activeElement)) {
+                    (detailReturnFocus?.isConnected ? detailReturnFocus : document.getElementById('bottom-tab-list'))?.focus({ preventScroll: true });
+                }
                 detailModal.classList.remove('active');
                 detailModal.setAttribute('aria-hidden', 'true');
                 if (card) card.classList.remove('closing');
@@ -2819,6 +3125,7 @@
             }
             bottomTabs.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
+                btn.setAttribute('aria-pressed', String(btn.dataset.view === view));
             });
             if (sidebarFavorites) {
                 sidebarFavorites.classList.toggle('active', view === 'favorites');
@@ -2828,12 +3135,8 @@
             if (listPanel) listPanel.classList.toggle('hidden', showMap);
             if (showMap) {
                 setTimeout(() => map.invalidateSize(), 100);
-                trackEvent('map_view', {
-                    view_source: 'tab',
-                    language: currentLang,
-                    app_version: APP_VERSION
-                });
             }
+            if (previousTab !== view) trackScreen(view);
             closeDetailModal();
             updateBodyScrollLock();
             updateMap();
@@ -3050,7 +3353,7 @@
                 window.open(PRIVACY_POLICY_URL, '_blank', 'noopener,noreferrer');
             });
         }
-        const SHARE_URL = 'https://www.friendlyspaces.ch/map';
+        const SHARE_URL = 'https://friendlyspaces.ch/app';
 
         if (menuShare) {
             menuShare.addEventListener('click', async () => {
@@ -3173,15 +3476,31 @@
                 };
             }
 
-            // Native app/webview builds need to post directly to the Netlify site.
-            // `no-cors` avoids the response being blocked while still sending the form.
             return {
                 url: REMOTE_FORM_SUBMIT_URL,
                 options: {
-                    mode: 'no-cors',
                     credentials: 'omit'
                 }
             };
+        }
+
+        async function postNetlifyForm(encodedData) {
+            const cap = window.Capacitor;
+            const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+            if (cap?.isNativePlatform?.()) {
+                const response = await cap.Plugins.CapacitorHttp.request({
+                    url: REMOTE_FORM_SUBMIT_URL, method: 'POST', headers,
+                    data: encodedData, responseType: 'text',
+                    connectTimeout: 15000, readTimeout: 15000
+                });
+                if (response.status < 200 || response.status >= 300) throw new Error('Form submission rejected');
+                return;
+            }
+            const config = getFormSubmitConfig();
+            const response = await fetch(config.url, {
+                method: 'POST', headers, body: encodedData, ...config.options
+            });
+            if (!response.ok) throw new Error('Form submission rejected');
         }
 
         function handleNetlifySubmit(form, statusEl, successKey, errorKey) {
@@ -3193,13 +3512,7 @@
             }
             if (submitBtn) submitBtn.disabled = true;
 
-            const submitConfig = getFormSubmitConfig();
-            fetch(submitConfig.url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: encodeFormData(form),
-                ...submitConfig.options
-            })
+            postNetlifyForm(encodeFormData(form))
                 .then(() => {
                     if (statusEl) {
                         statusEl.textContent = translate(successKey, 'Thanks! Sent.');
@@ -3207,6 +3520,7 @@
                         statusEl.classList.remove('is-pending', 'is-error');
                     }
                     form.reset();
+                    if (form === suggestForm) document.getElementById('fan-email').required = false;
                 })
                 .catch(() => {
                     if (statusEl) {
@@ -3221,6 +3535,9 @@
         }
 
         if (suggestForm) {
+            document.getElementById('suggest-newsletter-input')?.addEventListener('change', (event) => {
+                document.getElementById('fan-email').required = event.target.checked;
+            });
             suggestForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const role = Array.from(suggestRoleButtons).find(btn => btn.classList.contains('active'))?.dataset.suggestRole || 'fan';
@@ -3253,6 +3570,8 @@
                     event.stopPropagation();
                     const venueName = favoriteButton.dataset.venue;
                     toggleFavorite(venueName);
+                    const replacement = Array.from(listCards.querySelectorAll('.venue-card-favorite')).find(btn => btn.dataset.venue === venueName);
+                    (replacement || document.getElementById('pill-favorites'))?.focus({ preventScroll: true });
                     return;
                 }
 
@@ -3260,7 +3579,10 @@
                 if (!card) return;
                 const venueName = card.dataset.venue;
                 const venue = venues.find(v => v.name === venueName);
-                if (venue) openDetailModal(venue, 'list_card');
+                if (venue) {
+                    openDetailModal(venue, 'list_card');
+                    if (event.detail === 0) document.getElementById('detail-modal-close')?.focus({ preventScroll: true });
+                }
             });
         }
 
@@ -3270,11 +3592,12 @@
         }
 
         let detailDragStartY = 0;
+        let detailDragStartX = 0;
         let detailDragging = false;
         let detailDragFromContent = false;
         function handleDetailSheetDrag(deltaY) {
-            const upwardThreshold = isNativeIOSPlatform() ? -36 : -44;
-            const downwardThreshold = isNativeIOSPlatform() ? 32 : 44;
+            const upwardThreshold = -24;
+            const downwardThreshold = 24;
             if (deltaY < upwardThreshold) {
                 stepDetailSnap(1);
                 return true;
@@ -3304,21 +3627,12 @@
                         return;
                     }
                 }
-                // Let image carousels handle their own gestures in full mode without sheet interference.
-                if (
-                    fromContent &&
-                    currentDetailSnap === 'full' &&
-                    event.target instanceof Element &&
-                    event.target.closest('.venue-slider')
-                ) {
-                    detailDragging = false;
-                    return;
-                }
                 if (fromContent && currentDetailSnap === 'full' && detailModalContent && detailModalContent.scrollTop > 0) {
                     detailDragging = false;
                     return;
                 }
                 detailDragStartY = event.touches[0].clientY;
+                detailDragStartX = event.touches[0].clientX;
                 detailDragFromContent = fromContent;
                 detailDragging = true;
             }, { passive: true });
@@ -3326,7 +3640,12 @@
             target.addEventListener('touchmove', (event) => {
                 if (!isMobile() || !detailDragging) return;
                 const deltaY = event.touches[0].clientY - detailDragStartY;
-                if (Math.abs(deltaY) < 16) return;
+                const deltaX = event.touches[0].clientX - detailDragStartX;
+                if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    detailDragging = false;
+                    return;
+                }
+                if (Math.abs(deltaY) < 10) return;
 
                 const pullingFromTop =
                     !detailDragFromContent ||
@@ -3342,22 +3661,25 @@
                 if (!isMobile() || !detailDragging) return;
                 const endY = event.changedTouches[0].clientY;
                 const deltaY = endY - detailDragStartY;
+                const deltaX = event.changedTouches[0].clientX - detailDragStartX;
                 detailDragging = false;
+                if (Math.abs(deltaY) <= Math.abs(deltaX)) return;
                 if (!fromContent) {
-                    if (deltaY > 30) {
+                    if (deltaY > 24) {
                         closeDetailModal();
                         return;
                     }
-                    if (deltaY < -30) {
+                    if (deltaY < -24) {
                         setDetailSnap('full');
                         return;
                     }
                 }
                 handleDetailSheetDrag(deltaY);
             }, { passive: true });
+            target.addEventListener('touchcancel', () => { detailDragging = false; }, { passive: true });
         }
 
-        bindDetailSwipeTarget(detailSheetGrabber, false);
+        bindDetailSwipeTarget(document.querySelector('.detail-modal-card'), false, true);
         bindDetailSwipeTarget(detailModalContent, true);
 
         if (detailModal) {
@@ -3367,8 +3689,26 @@
         }
 
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeDetailModal();
+            if (event.key === 'Tab' && detailModal?.classList.contains('active') && detailModal.contains(document.activeElement)) {
+                const items = Array.from(detailModal.querySelectorAll('button, a[href]')).filter(el => !el.disabled && el.getClientRects().length);
+                const first = items[0], last = items[items.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+            }
+            if (menuDrawer?.classList.contains('open')) {
+                if (event.key === 'Escape') { event.preventDefault(); closeMenu(); return; }
+                if (event.key === 'Tab') {
+                    const items = Array.from(menuDrawer.querySelectorAll('button, a[href], input')).filter(el => !el.disabled && el.getClientRects().length);
+                    const first = items[0], last = items[items.length - 1];
+                    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+                }
+            } else if (event.key === 'Escape') {
+                const panel = document.querySelector('.fullscreen-panel.open');
+                if (panel) closePanel(panel);
+                else if (introOverlay && !introOverlay.classList.contains('hidden')) closeIntro();
+                else if (sidebar?.classList.contains('show')) closeFilterSheet(true);
+                else closeDetailModal();
             }
         });
 
@@ -3390,20 +3730,22 @@
         function updateQuickFilterLabels() {
             document.querySelectorAll('[data-pill-label]').forEach(label => {
                 const key = label.dataset.pillLabel;
-                if (key === 'filters') {
+                if (key === 'favorites') {
+                    label.textContent = translate('ui.favoritesTab', 'Favorites');
+                } else if (key === 'filters') {
                     label.textContent = translate('ui.filtersLabel', 'Filters');
                 } else if (key === 'cafe') {
-                    label.textContent = translate('filters.options.venueType.cafe', 'Cafe');
+                    label.textContent = filterOptionLabel('venueType', 'cafe');
                 } else if (key === 'restaurant') {
-                    label.textContent = translate('filters.options.venueType.restaurant', 'Restaurant');
+                    label.textContent = filterOptionLabel('venueType', 'restaurant');
                 } else if (key === 'baby') {
-                    label.textContent = translate('filters.options.ageRange.baby', 'Baby');
+                    label.textContent = filterOptionLabel('ageRange', 'baby');
                 } else if (key === 'toddler') {
-                    label.textContent = translate('filters.options.ageRange.toddler', 'Toddler');
+                    label.textContent = filterOptionLabel('ageRange', 'toddler');
                 } else if (key === 'small-child') {
-                    label.textContent = translate('filters.options.ageRange.small-child', 'Small Child');
+                    label.textContent = filterOptionLabel('ageRange', 'small-child');
                 } else if (key === 'play-area') {
-                    label.textContent = translate('filters.options.amenities.play-area', 'Play Area');
+                    label.textContent = filterOptionLabel('amenities', 'play-area');
                 }
             });
         }
@@ -3415,17 +3757,120 @@
                 const value = pill.dataset.filterValue;
                 const isActive = activeFilters[category].includes(value);
                 pill.classList.toggle('active', isActive);
+                pill.setAttribute('aria-pressed', String(isActive));
             });
 
             // Update favorites pill active state
             if (pillFavorites) {
                 pillFavorites.classList.toggle('active', activeTab === 'favorites');
+                pillFavorites.setAttribute('aria-pressed', String(activeTab === 'favorites'));
             }
             if (sidebarNearMe) sidebarNearMe.classList.toggle('active', nearMeActive);
         }
 
+        function getCityFilterCopy() {
+            return {
+                de: ['Stadt', 'Alle Städte'], fr: ['Ville', 'Toutes les villes'],
+                it: ['Città', 'Tutte le città'], en: ['City', 'All cities']
+            }[currentLang] || ['City', 'All cities'];
+        }
+
+        function closeCityFilterMenu({ restoreFocus = false } = {}) {
+            const button = document.getElementById('city-filter-button');
+            const menu = document.getElementById('city-filter-menu');
+            if (!button || !menu || menu.hidden) return;
+            menu.hidden = true;
+            button.setAttribute('aria-expanded', 'false');
+            if (restoreFocus) button.focus({ preventScroll: true });
+        }
+
+        function positionCityFilterMenu() {
+            const button = document.getElementById('city-filter-button');
+            const menu = document.getElementById('city-filter-menu');
+            if (!button || !menu || menu.hidden) return;
+            const rect = button.getBoundingClientRect();
+            const gap = 6;
+            const viewportPadding = 12;
+            menu.style.minWidth = `${Math.max(176, Math.round(rect.width))}px`;
+            menu.style.top = `${Math.round(rect.bottom + gap)}px`;
+            menu.style.left = `${Math.max(viewportPadding, Math.min(Math.round(rect.left), window.innerWidth - menu.offsetWidth - viewportPadding))}px`;
+        }
+
+        function updateCityFilter() {
+            const button = document.getElementById('city-filter-button');
+            const valueLabel = document.getElementById('city-filter-value');
+            const menu = document.getElementById('city-filter-menu');
+            if (!button || !valueLabel || !menu) return;
+            const copy = getCityFilterCopy();
+            const cities = [...new Set(venues.map(venue => venue.city).filter(Boolean))]
+                .sort((a, b) => a.localeCompare(b, currentLang));
+            valueLabel.textContent = selectedCity || copy[1];
+            button.setAttribute('aria-label', `${copy[0]}: ${selectedCity || copy[1]}`);
+            button.classList.toggle('active', Boolean(selectedCity));
+            menu.setAttribute('aria-label', copy[0]);
+            menu.replaceChildren(...[['', copy[1]], ...cities.map(city => [city, city])].map(([value, label]) => {
+                const option = document.createElement('button');
+                const checked = value === selectedCity;
+                option.type = 'button';
+                option.className = 'city-filter-option';
+                option.dataset.city = value;
+                option.setAttribute('role', 'menuitemradio');
+                option.setAttribute('aria-checked', String(checked));
+                option.innerHTML = `<span>${label}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-9"></path></svg>`;
+                return option;
+            }));
+        }
+
+        document.getElementById('city-filter-button')?.addEventListener('click', () => {
+            const menu = document.getElementById('city-filter-menu');
+            const button = document.getElementById('city-filter-button');
+            if (!menu || !button) return;
+            if (!menu.hidden) {
+                closeCityFilterMenu();
+                return;
+            }
+            menu.hidden = false;
+            button.setAttribute('aria-expanded', 'true');
+            positionCityFilterMenu();
+            menu.querySelector('[aria-checked="true"]')?.focus({ preventScroll: true });
+        });
+
+        document.getElementById('city-filter-menu')?.addEventListener('click', event => {
+            const option = event.target.closest('.city-filter-option');
+            if (!option) return;
+            selectedCity = option.dataset.city;
+            nearMeActive = false;
+            isInitialLoad = true;
+            closeCityFilterMenu({ restoreFocus: true });
+            updateCityFilter();
+            updateMap();
+            syncQuickFilterPills();
+            trackFilterChange('city', selectedCity || 'all', Boolean(selectedCity), 'city_picker');
+        });
+
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.quick-filter-city') && !event.target.closest('#city-filter-menu')) closeCityFilterMenu();
+        });
+
+        document.getElementById('city-filter-menu')?.addEventListener('keydown', event => {
+            const options = [...event.currentTarget.querySelectorAll('.city-filter-option')];
+            const current = options.indexOf(document.activeElement);
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeCityFilterMenu({ restoreFocus: true });
+            } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const direction = event.key === 'ArrowDown' ? 1 : -1;
+                options[(current + direction + options.length) % options.length]?.focus();
+            }
+        });
+
+        window.addEventListener('resize', closeCityFilterMenu);
+        document.getElementById('quick-filters-row')?.addEventListener('scroll', closeCityFilterMenu, { passive: true });
+
         // Toggle a quick filter
         function toggleQuickFilter(category, value) {
+            ensureActiveFilterCategories();
             const index = activeFilters[category].indexOf(value);
             if (index === -1) {
                 activeFilters[category].push(value);
@@ -3437,11 +3882,13 @@
             const sidebarBtn = document.querySelector(`.filter-button[data-category="${category}"][data-value="${value}"]`);
             if (sidebarBtn) {
                 sidebarBtn.classList.toggle('active', activeFilters[category].includes(value));
+                sidebarBtn.setAttribute('aria-pressed', String(activeFilters[category].includes(value)));
             }
 
             updateMap();
             updateFilterCount();
             syncQuickFilterPills();
+            trackFilterChange(category, value, activeFilters[category].includes(value), 'quick_filter');
         }
 
         // Filters pill - opens sidebar/sheet
@@ -3480,6 +3927,7 @@
             updateMap();
             updateFilterCount();
             syncQuickFilterPills();
+            trackFilterChange('location', 'near_me', nearMeActive, 'filter_panel');
         };
 
         if (sidebarNearMe) {
@@ -3507,6 +3955,7 @@
         const originalSetLanguage = setLanguage;
         setLanguage = function(lang, options) {
             originalSetLanguage(lang, options);
+            updateCityFilter();
             updateQuickFilterLabels();
             syncQuickFilterPills();
         };
@@ -3548,11 +3997,7 @@
             updateBodyScrollLock();
 
             if (!hasTrackedInitialMapView) {
-                trackEvent('map_view', {
-                    view_source: 'load',
-                    language: currentLang,
-                    app_version: APP_VERSION
-                });
+                trackScreen('map');
                 hasTrackedInitialMapView = true;
             }
 
@@ -3563,7 +4008,7 @@
             }
         }
 
-        loadVenues().finally(startApp);
+        Promise.all([loadFilters(), loadVenues()]).finally(startApp);
 
         // Show intro after initial render
         showIntroIfNeeded();

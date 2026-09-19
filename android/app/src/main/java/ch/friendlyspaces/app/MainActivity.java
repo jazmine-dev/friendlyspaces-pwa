@@ -6,8 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
-import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
@@ -48,11 +48,11 @@ public class MainActivity extends BridgeActivity {
 
     private void enforceEdgeToEdgeChrome() {
         Window window = getWindow();
-        WindowCompat.setDecorFitsSystemWindows(window, false);
+        EdgeToEdge.enable(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.setNavigationBarContrastEnforced(false);
         }
-        WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(window, window.getDecorView());
+        WindowInsetsControllerCompat controller = new WindowInsetsControllerCompat(window, window.getDecorView());
         if (controller != null) {
             controller.setAppearanceLightStatusBars(false);
             controller.setAppearanceLightNavigationBars(false);

@@ -1,9 +1,18 @@
 # Local Netlify folder
 .netlify
 .env.local
+map-config.local.json
+scripts/map-config.js
 node_modules
 www
+ios/App/CapApp-SPM/symlinks/
 
 # Keep only optimized Crafty Crew assets in git
 assets/bern/Crafty_Crew/*.jpg
 assets/bern/Sempre_Berna/*.jpg
+
+# Build artifacts and Firebase client config (the repo root is published as the web app)
+*.aab
+*-mapping.txt
+android/app/google-services.json
+ios/App/App/GoogleService-Info.plist

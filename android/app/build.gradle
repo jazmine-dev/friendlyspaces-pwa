@@ -14,12 +14,12 @@ def hasValidReleaseSigning = keystorePropertiesFile.exists()
         && !keystoreProperties['keyPassword'].toString().startsWith('REPLACE_WITH_')
 def appVersionName = (project.findProperty("appVersionName")
         ?: System.getenv("APP_VERSION_NAME")
-        ?: "1.0.9").toString()
+        ?: "1.0.14").toString()
 def explicitVersionCode = project.findProperty("appVersionCode")
         ?: System.getenv("APP_VERSION_CODE")
 def appVersionCode = explicitVersionCode
         ? explicitVersionCode.toString().toInteger()
-        : 12
+        : 17
 
 android {
     namespace = "ch.friendlyspaces.app"
@@ -52,8 +52,9 @@ android {
             if (hasValidReleaseSigning) {
                 signingConfig signingConfigs.release
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }

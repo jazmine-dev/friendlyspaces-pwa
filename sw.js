@@ -1,11 +1,13 @@
-const CACHE_VERSION = 'friendlyspaces-pwa-v21';
+const CACHE_VERSION = 'friendlyspaces-pwa-v26';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
   './styles/app.css',
   './scripts/app.js',
+  './scripts/map-config.js',
   './data/venues.json',
+  './data/filters.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './assets/logo-friendly.png',

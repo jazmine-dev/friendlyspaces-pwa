@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Capacitor reads plugin permission metadata and callbacks through reflection.
+# Preserve annotation members and the handle storing them under R8 full mode.
+-keepattributes RuntimeVisibleAnnotations,RuntimeVisibleParameterAnnotations,AnnotationDefault
+-keep @interface com.getcapacitor.annotation.** { *; }
+-keep @interface com.getcapacitor.PluginMethod { *; }
+-keep @interface com.getcapacitor.NativePlugin { *; }
+-keep class com.getcapacitor.PluginHandle { *; }

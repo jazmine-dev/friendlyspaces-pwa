@@ -7,12 +7,24 @@
     <meta name="theme-color" content="#1E52BA">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-23RW5YZHCW"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-23RW5YZHCW');
+        // The PWA uses the GA4 web stream. Native builds send through the
+        // Firebase SDK instead, so their WebView must not also report as web.
+        (() => {
+            const cap = window.Capacitor;
+            const isNative = typeof cap?.isNativePlatform === 'function' && cap.isNativePlatform();
+            if (isNative) return;
+
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-23RW5YZHCW');
+
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-23RW5YZHCW';
+            document.head.appendChild(script);
+        })();
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
@@ -66,7 +78,7 @@
             </span>
             <h1 id="app-title">Friendly Spaces</h1>
         </div>
-        <button id="menu-toggle" type="button" aria-label="Open menu">
+        <button id="menu-toggle" type="button" aria-controls="menu-drawer" aria-expanded="false" aria-label="Open menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="4" y1="6" x2="20" y2="6"></line>
                 <line x1="4" y1="12" x2="20" y2="12"></line>
@@ -88,6 +100,16 @@
             </div>
         </div>
         <div id="quick-filters-row">
+            <div class="quick-filter-city">
+                <button class="quick-filter-pill city-filter-button" id="city-filter-button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="city-filter-menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"></path>
+                        <circle cx="12" cy="10" r="2.5"></circle>
+                    </svg>
+                    <span id="city-filter-value">All cities</span>
+                    <span class="city-filter-chevron" aria-hidden="true">▾</span>
+                </button>
+            </div>
             <button class="quick-filter-pill" id="pill-filters" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="6" x2="20" y2="6"></line>
@@ -103,6 +125,7 @@
                 <svg class="quick-filter-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M20.8 6.6c-1.4-1.4-3.8-1.4-5.2 0L12 10.2 8.4 6.6C7 5.2 4.6 5.2 3.2 6.6c-1.4 1.4-1.4 3.8 0 5.2L12 21l8.8-9.2c1.4-1.4 1.4-3.8 0-5.2z"></path>
                 </svg>
+                <span data-pill-label="favorites">Favorites</span>
             </button>
             <button class="quick-filter-pill" id="pill-cafe" data-filter-category="venueType" data-filter-value="cafe" type="button">
                 <span data-pill-label="cafe">Cafe</span>
@@ -123,6 +146,7 @@
                 <span data-pill-label="play-area">Play Area</span>
             </button>
         </div>
+        <div id="city-filter-menu" class="city-filter-menu" role="menu" aria-label="Choose a city" hidden></div>
     </div>
     <div id="sheet-backdrop"></div>
     <div id="container">
@@ -194,12 +218,12 @@
             <div id="map" class="view-panel"></div>
             <div id="list-view" class="view-panel hidden">
                 <div id="list-cards" class="venue-list"></div>
-                <div id="list-empty" class="list-empty" hidden>No venues found.</div>
+                <div id="list-empty" class="list-empty" role="status" hidden>No venues found.</div>
             </div>
         </div>
     </div>
     <div id="menu-backdrop" aria-hidden="true"></div>
-    <aside id="menu-drawer" aria-label="App menu">
+    <aside id="menu-drawer" inert aria-label="App menu">
         <div id="menu-header">
             <div class="menu-brand">
                 <img class="menu-logo" src="icons/icon-192.png" alt="Friendly Spaces">
@@ -226,6 +250,7 @@
             <button type="button" data-lang="en">EN</button>
         </div>
         <div class="menu-footer">
+            <a class="menu-link menu-linktree" href="https://linktr.ee/friendlyspaces" target="_blank" rel="noopener noreferrer">Linktree ↗</a>
             <button class="menu-link" id="menu-bug" type="button">Report a bug</button>
             <button class="menu-link" id="menu-privacy" type="button">Privacy Policy</button>
         </div>
@@ -448,6 +473,8 @@
         <input name="ownerEmail">
         <input name="ownerPhone">
         <input name="role">
+        <input name="fanEmail">
+        <input name="newsletterOptIn">
     </form>
     <form name="bug" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="hidden">
         <input type="hidden" name="form-name" value="bug">
@@ -459,6 +486,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="scripts/map-config.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>

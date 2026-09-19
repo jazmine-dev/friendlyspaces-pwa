@@ -5,9 +5,10 @@
   "main": "sw.js",
   "scripts": {
     "build:web": "node scripts/build-web.cjs",
-    "cap:sync": "npm run build:web && npx cap sync",
+    "cap:sync": "npm run build:web && npx cap sync && node scripts/fix-ios-spm-paths.cjs",
     "cap:android": "npm run build:web && npx cap open android",
-    "cap:ios": "npm run build:web && npx cap open ios",
+    "prepare:ios": "npm run build:web && npx cap sync ios && node scripts/fix-ios-spm-paths.cjs",
+    "cap:ios": "npm run prepare:ios && npx cap open ios",
     "android:aab": "npm run cap:sync && cd android && ./gradlew bundleRelease",
     "android:apk": "npm run cap:sync && cd android && ./gradlew assembleRelease",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,11 +25,13 @@
   },
   "homepage": "https://github.com/jazmine-dev/friendlyspaces-pwa#readme",
   "dependencies": {
-    "@capacitor/android": "^8.1.0",
-    "@capacitor/cli": "^8.1.0",
-    "@capacitor/core": "^8.1.0",
-    "@capacitor/geolocation": "^8.1.0",
-    "@capacitor/ios": "^8.1.0",
-    "@capacitor/share": "^8.0.1"
+    "@capacitor-firebase/analytics": "^8.4.0",
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/cli": "8.4.2",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/geolocation": "^8.2.2",
+    "@capacitor/ios": "^8.5.0",
+    "@capacitor/share": "^8.0.1",
+    "firebase": "^12.6.0"
   }
 }
