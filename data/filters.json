@@ -1,0 +1,238 @@
+{
+    "version": 1,
+    "categories": [
+        {
+            "id": "venueType",
+            "label": {
+                "de": "Ortstyp",
+                "fr": "Type de lieu",
+                "it": "Tipo di luogo",
+                "en": "Venue Type"
+            },
+            "options": [
+                {
+                    "id": "cafe",
+                    "label": {
+                        "de": "Café",
+                        "fr": "Café",
+                        "it": "Caffè",
+                        "en": "Cafe"
+                    }
+                },
+                {
+                    "id": "shop",
+                    "label": {
+                        "de": "Laden",
+                        "fr": "Boutique",
+                        "it": "Negozio",
+                        "en": "Shop"
+                    }
+                },
+                {
+                    "id": "restaurant",
+                    "label": {
+                        "de": "Restaurant",
+                        "fr": "Restaurant",
+                        "it": "Ristorante",
+                        "en": "Restaurant"
+                    }
+                },
+                {
+                    "id": "craft-atelier",
+                    "label": {
+                        "de": "Kreativ-Atelier",
+                        "fr": "Atelier créatif",
+                        "it": "Atelier creativo",
+                        "en": "Creative Atelier"
+                    }
+                },
+                {
+                    "id": "food-hall",
+                    "label": {
+                        "de": "Food Hall",
+                        "fr": "Food Hall",
+                        "it": "Food Hall",
+                        "en": "Food Hall"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "cuisineType",
+            "label": {
+                "de": "Küche",
+                "fr": "Type de cuisine",
+                "it": "Tipo di cucina",
+                "en": "Cuisine Type"
+            },
+            "options": [
+                {
+                    "id": "vegan",
+                    "label": {
+                        "de": "Vegan",
+                        "fr": "Végane",
+                        "it": "Vegano",
+                        "en": "Vegan"
+                    }
+                },
+                {
+                    "id": "bistro",
+                    "label": {
+                        "de": "Bistro",
+                        "fr": "Bistrot",
+                        "it": "Bistrò",
+                        "en": "Bistro"
+                    }
+                },
+                {
+                    "id": "patisserie",
+                    "label": {
+                        "de": "Patisserie",
+                        "fr": "Pâtisserie",
+                        "it": "Pasticceria",
+                        "en": "Patisserie"
+                    }
+                },
+                {
+                    "id": "international",
+                    "label": {
+                        "de": "International",
+                        "fr": "Cuisine internationale",
+                        "it": "Internazionale",
+                        "en": "International"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "ageRange",
+            "label": {
+                "de": "Altersgruppe",
+                "fr": "Tranche d'âge",
+                "it": "Fascia d'età",
+                "en": "Age Range"
+            },
+            "options": [
+                {
+                    "id": "baby",
+                    "label": {
+                        "de": "Baby (0-1)",
+                        "fr": "Bébé (0-1)",
+                        "it": "Neonato (0-1)",
+                        "en": "Baby (0-1)"
+                    }
+                },
+                {
+                    "id": "toddler",
+                    "label": {
+                        "de": "Kleinkind (2-3)",
+                        "fr": "Tout-petit (2-3)",
+                        "it": "Prima infanzia (2-3)",
+                        "en": "Toddler (2-3)"
+                    }
+                },
+                {
+                    "id": "small-child",
+                    "label": {
+                        "de": "Kind (4-6)",
+                        "fr": "Jeune enfant (4-6)",
+                        "it": "Bambino piccolo (4-6)",
+                        "en": "Small Child (4-6)"
+                    }
+                },
+                {
+                    "id": "kid",
+                    "label": {
+                        "de": "Schulkind (7-12)",
+                        "fr": "Enfant (7-12)",
+                        "it": "Bambino (7-12)",
+                        "en": "Kid (7-12)"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "amenities",
+            "label": {
+                "de": "Ausstattung",
+                "fr": "Équipements",
+                "it": "Servizi",
+                "en": "Amenities"
+            },
+            "options": [
+                {
+                    "id": "playground",
+                    "label": {
+                        "de": "Spielplatz",
+                        "fr": "Terrain de jeu",
+                        "it": "Parco giochi",
+                        "en": "Playground"
+                    }
+                },
+                {
+                    "id": "outdoor-seating",
+                    "label": {
+                        "de": "Aussensitzplätze",
+                        "fr": "Terrasse extérieure",
+                        "it": "Posti all'aperto",
+                        "en": "Outdoor Seating"
+                    }
+                },
+                {
+                    "id": "play-area",
+                    "label": {
+                        "de": "Spielbereich",
+                        "fr": "Aire de jeux",
+                        "it": "Area giochi",
+                        "en": "Play Area"
+                    }
+                },
+                {
+                    "id": "friendly-spaces",
+                    "label": {
+                        "de": "Playbox Friendly Spaces",
+                        "fr": "Playbox Friendly Spaces",
+                        "it": "Playbox Friendly Spaces",
+                        "en": "Friendly Spaces Playbox"
+                    }
+                },
+                {
+                    "id": "high-chair",
+                    "label": {
+                        "de": "Kinderstuhl",
+                        "fr": "Chaise haute",
+                        "it": "Seggiolone",
+                        "en": "High Chair"
+                    }
+                },
+                {
+                    "id": "change-table",
+                    "label": {
+                        "de": "Wickeltisch",
+                        "fr": "Table à langer",
+                        "it": "Fasciatoio",
+                        "en": "Change Table"
+                    }
+                },
+                {
+                    "id": "games-room",
+                    "label": {
+                        "de": "Spielzimmer",
+                        "fr": "Salle de jeux",
+                        "it": "Sala giochi",
+                        "en": "Games Room"
+                    }
+                },
+                {
+                    "id": "arts-crafts",
+                    "label": {
+                        "de": "Kunst und Basteln",
+                        "fr": "Arts et bricolage",
+                        "it": "Arte e lavoretti",
+                        "en": "Arts & Crafts"
+                    }
+                }
+            ]
+        }
+    ]
+}
