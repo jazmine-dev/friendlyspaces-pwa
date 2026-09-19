@@ -482,5 +482,126 @@
                 "change-table"
             ]
         }
+    },
+    {
+        "slug": "jules-unique-basel",
+        "name": "Jules Unique Basel",
+        "address": "Feldbergstrasse 39, 4057 Basel",
+        "city": "Basel",
+        "description": "Family concept store in Kleinbasel with fair fashion and curated secondhand clothing for kids and adults, a small cafe corner, play area, nursing corner and a quiet backyard",
+        "i18n": {
+            "description": {
+                "de": "Familien-Concept-Store im Kleinbasel mit fairer Mode und ausgewählter Secondhand-Kleidung für Kinder und Erwachsene, kleiner Café-Ecke, Spielecke, Stillecke und ruhigem Hinterhof",
+                "fr": "Concept store familial au Kleinbasel avec mode équitable et vêtements seconde main sélectionnés pour enfants et adultes, petit coin café, coin jeux, coin allaitement et arrière-cour tranquille",
+                "it": "Concept store per famiglie nel Kleinbasel con moda equa e abbigliamento second hand selezionato per bambini e adulti, angolo caffè, area giochi, angolo allattamento e un tranquillo cortile interno"
+            },
+            "hours": {
+                "de": "Mo-Fr: 9-12 & 13-18 Uhr, Sa: 10-16 Uhr, So geschlossen",
+                "fr": "Lun-ven : 9h-12h et 13h-18h, sam : 10h-16h, dim fermé",
+                "it": "Lun-ven: 9-12 e 13-18, sab: 10-16, dom chiuso"
+            },
+            "specialty": {
+                "de": "Faire Mode, Kinder-Secondhand und Kaffee im Hinterhof",
+                "fr": "Mode équitable, seconde main enfants et café dans la cour",
+                "it": "Moda equa, second hand per bambini e caffè in cortile"
+            }
+        },
+        "hours": "Mon-Fri: 9am-12pm & 1-6pm, Sat: 10am-4pm, Sun closed",
+        "specialty": "Fair fashion, kids' secondhand and coffee in the backyard",
+        "phone": "+41 79 943 51 50",
+        "website": "https://julesunique.ch/",
+        "instagram": "https://www.instagram.com/jules.unique",
+        "images": [
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_01.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_02.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_03.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_04.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_05.webp",
+            "https://app.friendlyspaces.ch/assets/basel/Jules_Unique/jules_unique_basel_06.webp"
+        ],
+        "fallbackCoords": [
+            47.5662307,
+            7.5903827
+        ],
+        "filters": {
+            "venueType": [
+                "shop",
+                "cafe"
+            ],
+            "cuisineType": [],
+            "ageRange": [
+                "baby",
+                "toddler",
+                "small-child",
+                "kid"
+            ],
+            "amenities": [
+                "play-area",
+                "outdoor-seating",
+                "high-chair",
+                "change-table"
+            ]
+        }
+    },
+    {
+        "slug": "jules-unique-bern",
+        "name": "Jules Unique Bern",
+        "address": "Helvetiastrasse 7, 3005 Bern",
+        "city": "Bern",
+        "description": "Family concept store over four rooms in the Kirchenfeld quarter with fair fashion and curated secondhand clothing for kids and adults, a play area, nursing and changing corner and a small cafe room at the back",
+        "i18n": {
+            "description": {
+                "de": "Familien-Concept-Store in vier Räumen im Kirchenfeld mit fairer Mode und ausgewählter Secondhand-Kleidung für Kinder und Erwachsene, Spielecke, Still- und Wickelecke und kleinem Café-Raum im hinteren Teil",
+                "fr": "Concept store familial sur quatre pièces dans le quartier du Kirchenfeld avec mode équitable et vêtements seconde main sélectionnés pour enfants et adultes, coin jeux, coin allaitement et change, et petite salle café à l'arrière",
+                "it": "Concept store per famiglie su quattro stanze nel quartiere Kirchenfeld con moda equa e abbigliamento second hand selezionato per bambini e adulti, area giochi, angolo allattamento e fasciatoio e una piccola sala caffè sul retro"
+            },
+            "hours": {
+                "de": "Mo-Fr: 9-12 & 13-18 Uhr, Sa: 10-16 Uhr, So geschlossen",
+                "fr": "Lun-ven : 9h-12h et 13h-18h, sam : 10h-16h, dim fermé",
+                "it": "Lun-ven: 9-12 e 13-18, sab: 10-16, dom chiuso"
+            },
+            "specialty": {
+                "de": "Faire Mode, Kinder-Secondhand und ein Café-Raum zum Stillen und Spielen",
+                "fr": "Mode équitable, seconde main enfants et une salle café pour allaiter et jouer",
+                "it": "Moda equa, second hand per bambini e una sala caffè per allattare e giocare"
+            }
+        },
+        "hours": "Mon-Fri: 9am-12pm & 1-6pm, Sat: 10am-4pm, Sun closed",
+        "specialty": "Fair fashion, kids' secondhand and a cafe room for nursing and play",
+        "phone": "+41 79 943 51 50",
+        "website": "https://julesunique.ch/",
+        "instagram": "https://www.instagram.com/jules.unique",
+        "images": [
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_01.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_02.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_03.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_04.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_05.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_06.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_07.webp",
+            "https://app.friendlyspaces.ch/assets/bern/Jules_Unique/jules_unique_bern_08.webp"
+        ],
+        "fallbackCoords": [
+            46.9428179,
+            7.4504673
+        ],
+        "filters": {
+            "venueType": [
+                "shop",
+                "cafe"
+            ],
+            "cuisineType": [],
+            "ageRange": [
+                "baby",
+                "toddler",
+                "small-child",
+                "kid"
+            ],
+            "amenities": [
+                "play-area",
+                "high-chair",
+                "change-table"
+            ]
+        }
     }
 ]
