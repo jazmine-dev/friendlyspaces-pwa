@@ -631,7 +631,7 @@
             const browser = (navigator.language || navigator.userLanguage || '').slice(0, 2).toLowerCase();
             if (supportedLanguages.includes(browser)) return browser;
 
-            return 'de'; // default to German
+            return 'en'; // default to English
         }
 
         document.documentElement.lang = currentLang;
@@ -640,6 +640,7 @@
             const segments = path.split('.');
             const value =
                 segments.reduce((obj, key) => obj?.[key], translations[currentLang]) ??
+                segments.reduce((obj, key) => obj?.[key], translations['en']) ??
                 segments.reduce((obj, key) => obj?.[key], translations['de']);
             return value !== undefined ? value : fallback;
         }
@@ -891,7 +892,7 @@
         function localizedContentLabel(label, fallback = '') {
             if (typeof label === 'string') return label;
             if (!label || typeof label !== 'object') return fallback;
-            return label[currentLang] || label.de || label.en || fallback;
+            return label[currentLang] || label.en || label.de || fallback;
         }
 
         function getContentLink(key, fallback = '') {
@@ -1134,7 +1135,7 @@
 
         function getLocalizedFilterLabel(label, id) {
             if (!label || typeof label !== 'object') return null;
-            return label[currentLang] || label.de || label.en || humanizeFilterId(id);
+            return label[currentLang] || label.en || label.de || humanizeFilterId(id);
         }
 
         function humanizeFilterId(id) {
