@@ -93,6 +93,7 @@ async function build() {
 
   await copyFileRelative(path.join('data', 'venues.json'));
   await copyFileRelative(path.join('data', 'filters.json'));
+  await copyFileRelative(path.join('data', 'content.json'));
   await copyAssetsRelative();
 }
 

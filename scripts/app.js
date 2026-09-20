@@ -644,6 +644,17 @@
             return value !== undefined ? value : fallback;
         }
 
+        function formatCountTranslation(key, count, fallback) {
+            const template = translate(`ui.${key}${count === 1 ? 'One' : 'Many'}`, null);
+            if (typeof template === 'string') {
+                return template.replace('{count}', count);
+            }
+            const legacy = translate(`ui.${key}`, null);
+            if (typeof legacy === 'function') return legacy(count);
+            if (typeof legacy === 'string') return legacy.replace('{count}', count);
+            return typeof fallback === 'function' ? fallback(count) : fallback;
+        }
+
         function formatPhoneHref(phone) {
             if (!phone) return null;
             if (/contact via website/i.test(phone)) return null;
@@ -667,12 +678,13 @@
 
         function getAppleMapsUrl(venue) {
             const destination = encodeURIComponent(venue.address);
-            return `https://maps.apple.com/?daddr=${destination}`;
+            return `${getContentLink('appleMaps', fallbackContentLinks.appleMaps)}?daddr=${destination}`;
         }
 
         function getGoogleMapsUrl(venue) {
             const destination = encodeURIComponent(venue.address);
-            return `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+            const baseUrl = getContentLink('googleMaps', fallbackContentLinks.googleMaps);
+            return `${baseUrl}?api=1&destination=${destination}`;
         }
 
         function getDirectionsUrl(venue) {
@@ -717,13 +729,43 @@
         const REMOTE_APP_ORIGIN = 'https://app.friendlyspaces.ch/';
         const REMOTE_VENUES_URL = new URL('data/venues.json', REMOTE_APP_ORIGIN).toString();
         const REMOTE_FILTERS_URL = new URL('data/filters.json', REMOTE_APP_ORIGIN).toString();
+        const REMOTE_CONTENT_URL = new URL('data/content.json', REMOTE_APP_ORIGIN).toString();
         const REMOTE_FORM_SUBMIT_URL = REMOTE_APP_ORIGIN;
         const LOCAL_VENUES_URL = 'data/venues.json';
         const LOCAL_FILTERS_URL = 'data/filters.json';
+        const LOCAL_CONTENT_URL = 'data/content.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
         const FILTERS_FETCH_TIMEOUT_MS = 6000;
+        const CONTENT_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
         const FILTERS_CACHE_KEY = 'friendlyspaces_filters_cache_v1';
+        const CONTENT_CACHE_KEY = 'friendlyspaces_content_cache_v1';
+        const fallbackContentLinks = {
+            website: 'https://www.friendlyspaces.ch/',
+            instagram: 'https://www.instagram.com/friendly.spaces/',
+            tiktok: 'https://www.tiktok.com/@friendlyspaces',
+            linkedin: 'https://www.linkedin.com/company/friendly-spaces/',
+            linktree: 'https://linktr.ee/friendlyspaces',
+            privacy: 'https://www.friendlyspaces.ch/privacy-policy',
+            partnerEmail: 'mailto:hello@friendlyspaces.ch',
+            share: 'https://friendlyspaces.ch/app',
+            openStreetMap: 'https://www.openstreetmap.org/copyright',
+            carto: 'https://carto.com/attributions',
+            appleMaps: 'https://maps.apple.com/',
+            googleMaps: 'https://www.google.com/maps/dir/',
+            appStore: '',
+            playStore: ''
+        };
+        const fallbackAboutSocials = [
+            { id: 'instagram', link: 'instagram', label: { de: 'Instagram', fr: 'Instagram', it: 'Instagram', en: 'Instagram' } },
+            { id: 'tiktok', link: 'tiktok', label: { de: 'TikTok', fr: 'TikTok', it: 'TikTok', en: 'TikTok' } },
+            { id: 'website', link: 'website', label: { de: 'Website', fr: 'Site web', it: 'Sito web', en: 'Website' } },
+            { id: 'linkedin', link: 'linkedin', label: { de: 'LinkedIn', fr: 'LinkedIn', it: 'LinkedIn', en: 'LinkedIn' } }
+        ];
+        let appContent = {
+            links: { ...fallbackContentLinks },
+            about: { socials: fallbackAboutSocials }
+        };
 
         function normalizeVenueFilters(list) {
             if (!Array.isArray(list)) return [];
@@ -799,6 +841,80 @@
             }
         }
 
+        function validateContentData(data) {
+            if (!data || typeof data !== 'object' || !data.strings || typeof data.strings !== 'object') {
+                throw new Error('Invalid content payload');
+            }
+            const hasUiStrings = Object.values(data.strings).some(lang =>
+                lang && typeof lang === 'object' && lang.ui && typeof lang.ui === 'object'
+            );
+            if (!hasUiStrings) {
+                throw new Error('Invalid content payload');
+            }
+            return data;
+        }
+
+        async function fetchContentData(url) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), CONTENT_FETCH_TIMEOUT_MS);
+            try {
+                const response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return validateContentData(await response.json());
+            } finally {
+                clearTimeout(timeout);
+            }
+        }
+
+        function mergePlainObject(target, source) {
+            if (!source || typeof source !== 'object') return target;
+            Object.entries(source).forEach(([key, value]) => {
+                if (value && typeof value === 'object' && !Array.isArray(value)) {
+                    target[key] = mergePlainObject(
+                        target[key] && typeof target[key] === 'object' && !Array.isArray(target[key])
+                            ? target[key]
+                            : {},
+                        value
+                    );
+                } else {
+                    target[key] = value;
+                }
+            });
+            return target;
+        }
+
+        function localizedContentLabel(label, fallback = '') {
+            if (typeof label === 'string') return label;
+            if (!label || typeof label !== 'object') return fallback;
+            return label[currentLang] || label.de || label.en || fallback;
+        }
+
+        function getContentLink(key, fallback = '') {
+            const value = appContent?.links?.[key] || fallbackContentLinks[key] || fallback;
+            return typeof value === 'string' ? value : fallback;
+        }
+
+        function applyContentData(data) {
+            const content = validateContentData(data);
+            supportedLanguages.forEach(lang => {
+                if (!translations[lang]) translations[lang] = {};
+                mergePlainObject(translations[lang], content.strings?.[lang]);
+            });
+            appContent = {
+                links: { ...fallbackContentLinks, ...(content.links || {}) },
+                about: {
+                    ...(content.about || {}),
+                    socials: Array.isArray(content.about?.socials) ? content.about.socials : fallbackAboutSocials
+                }
+            };
+            return content;
+        }
+
         function readCachedVenues() {
             try {
                 const raw = localStorage.getItem(VENUES_CACHE_KEY);
@@ -838,6 +954,28 @@
                 localStorage.setItem(FILTERS_CACHE_KEY, JSON.stringify({
                     updatedAt: Date.now(),
                     filters: nextFilters
+                }));
+            } catch (err) {
+                // Ignore storage quota/private mode issues.
+            }
+        }
+
+        function readCachedContent() {
+            try {
+                const raw = localStorage.getItem(CONTENT_CACHE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                return validateContentData(parsed?.content);
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function writeCachedContent(nextContent) {
+            try {
+                localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify({
+                    updatedAt: Date.now(),
+                    content: nextContent
                 }));
             } catch (err) {
                 // Ignore storage quota/private mode issues.
@@ -961,6 +1099,31 @@
             }
         }
 
+        async function loadContent() {
+            try {
+                const remoteContent = await fetchContentData(REMOTE_CONTENT_URL);
+                applyContentData(remoteContent);
+                writeCachedContent(remoteContent);
+                return;
+            } catch (err) {
+                // Fall back to cached or bundled content when offline or remote fetch fails.
+            }
+
+            const cachedContent = readCachedContent();
+            if (cachedContent) {
+                applyContentData(cachedContent);
+                return;
+            }
+
+            try {
+                const localContent = await fetchContentData(LOCAL_CONTENT_URL);
+                applyContentData(localContent);
+                writeCachedContent(localContent);
+            } catch (err) {
+                // Keep the hardcoded translation and link fallbacks.
+            }
+        }
+
         function getLoadedFilterCategory(category) {
             return loadedFilterVocabulary?.categories?.find(item => item.id === category);
         }
@@ -1050,8 +1213,11 @@
         }
         map.attributionControl.setPrefix(false);
         map.attributionControl.setPosition('bottomleft');
-        L.tileLayer(`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoBasemapKey)}`, {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        function getMapAttributionHtml() {
+            return `&copy; <a href="${escapeHtml(getContentLink('openStreetMap', fallbackContentLinks.openStreetMap))}">OpenStreetMap</a> contributors &copy; <a href="${escapeHtml(getContentLink('carto', fallbackContentLinks.carto))}">CARTO</a>`;
+        }
+        const basemapLayer = L.tileLayer(`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoBasemapKey)}`, {
+            attribution: getMapAttributionHtml(),
             subdomains: 'abcd',
             maxZoom: 20
         }).addTo(map);
@@ -1343,7 +1509,6 @@
         };
         const APP_VERSION = 'pwa-1.1';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
-        const PRIVACY_POLICY_URL = 'https://www.friendlyspaces.ch/privacy-policy';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
 
@@ -1792,8 +1957,85 @@
 
         function renderCountWrappers() {}
 
+        const socialIconTemplates = {
+            instagram: '<span class="icon-circle"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>',
+            tiktok: '<span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4c1 2 3 4 5 4"/></svg></span>',
+            website: '<span class="icon-circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>',
+            linkedin: '<span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg></span>'
+        };
+
+        function renderAboutSocials() {
+            const container = document.querySelector('.about-socials');
+            if (!container) return;
+            const socials = Array.isArray(appContent.about?.socials) ? appContent.about.socials : fallbackAboutSocials;
+            const fragment = document.createDocumentFragment();
+            socials.forEach(social => {
+                const href = getContentLink(social.link, '');
+                if (!href) return;
+                const anchor = document.createElement('a');
+                anchor.className = 'detail-icon-btn';
+                anchor.href = href;
+                anchor.target = '_blank';
+                anchor.rel = 'noopener noreferrer';
+                anchor.innerHTML = `${socialIconTemplates[social.id] || socialIconTemplates.website}<span class="icon-label"></span>`;
+                anchor.querySelector('.icon-label').textContent = localizedContentLabel(social.label, social.id);
+                fragment.appendChild(anchor);
+            });
+            container.replaceChildren(fragment);
+        }
+
+        function renderMapAttributionText() {
+            document.querySelectorAll('[data-map-attribution]').forEach(element => {
+                const link = document.createElement('a');
+                link.href = getContentLink('openStreetMap', fallbackContentLinks.openStreetMap);
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.textContent = 'OpenStreetMap';
+                element.replaceChildren(
+                    document.createTextNode(translate('ui.osmAttributionPrefix', 'Map data © ')),
+                    link,
+                    document.createTextNode(translate('ui.osmAttributionSuffix', ' contributors'))
+                );
+            });
+        }
+
+        function applyContentLinks() {
+            document.querySelectorAll('[data-link-key]').forEach(element => {
+                const href = getContentLink(element.dataset.linkKey, element.getAttribute('href') || '');
+                if (href) element.setAttribute('href', href);
+            });
+            const menuPrivacy = document.getElementById('menu-privacy');
+            if (menuPrivacy) menuPrivacy.dataset.href = getContentLink('privacy', fallbackContentLinks.privacy);
+            renderAboutSocials();
+            renderMapAttributionText();
+            if (basemapLayer?.options) {
+                const nextAttribution = getMapAttributionHtml();
+                const previousAttribution = basemapLayer.options.attribution;
+                if (previousAttribution !== nextAttribution) {
+                    map.attributionControl.removeAttribution(previousAttribution);
+                    basemapLayer.options.attribution = nextAttribution;
+                    map.attributionControl.addAttribution(nextAttribution);
+                }
+            }
+        }
+
         function applyTranslations() {
             document.title = translate('ui.title', document.title);
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translate(key, element.textContent);
+            });
+            document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+                const key = element.getAttribute('data-i18n-aria-label');
+                element.setAttribute('aria-label', translate(key, element.getAttribute('aria-label') || ''));
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                const value = translate(key, element.getAttribute('placeholder') || '');
+                element.setAttribute('placeholder', value);
+                element.setAttribute('aria-label', value);
+            });
+            applyContentLinks();
             const appTitle = document.getElementById('app-title');
             if (appTitle) appTitle.textContent = translate('ui.title', appTitle.textContent);
             const sidebarTitle = document.getElementById('sidebar-title');
@@ -2280,11 +2522,10 @@
             Object.keys(cityCoordinates).forEach(city => {
                 if (city.toLowerCase().includes(query)) {
                     const venueCount = venues.filter(v => v.city.toLowerCase() === city.toLowerCase()).length;
-                    const countLabel = translate('ui.cityCount', `${venueCount} venues`);
                     suggestions.push({
                         type: 'city',
                         name: city.charAt(0).toUpperCase() + city.slice(1),
-                        count: typeof countLabel === 'function' ? countLabel(venueCount) : countLabel
+                        count: formatCountTranslation('cityCount', venueCount, count => `${count} venues`)
                     });
                 }
             });
@@ -3361,17 +3602,16 @@
         if (menuPrivacy) {
             menuPrivacy.addEventListener('click', () => {
                 closeMenu();
-                window.open(PRIVACY_POLICY_URL, '_blank', 'noopener,noreferrer');
+                window.open(getContentLink('privacy', fallbackContentLinks.privacy), '_blank', 'noopener,noreferrer');
             });
         }
-        const SHARE_URL = 'https://friendlyspaces.ch/app';
 
         if (menuShare) {
             menuShare.addEventListener('click', async () => {
-                const shareUrl = SHARE_URL || `${window.location.origin}${window.location.pathname}`;
+                const shareUrl = getContentLink('share', `${window.location.origin}${window.location.pathname}`);
                 const shareData = {
-                    title: 'Friendly Spaces',
-                    text: 'Find family-friendly venues in Switzerland.',
+                    title: translate('ui.shareTitle', 'Friendly Spaces'),
+                    text: translate('ui.shareText', 'Find family-friendly venues in Switzerland.'),
                     url: shareUrl
                 };
                 try {
@@ -3397,8 +3637,9 @@
         if (aboutPartner) {
             aboutPartner.addEventListener('click', () => {
                 const subject = encodeURIComponent(translate('ui.partnerSubject', 'Partnership Inquiry'));
-                const to = 'hello@friendlyspaces.ch';
-                window.location.href = `mailto:${to}?subject=${subject}`;
+                const target = getContentLink('partnerEmail', fallbackContentLinks.partnerEmail);
+                const separator = target.includes('?') ? '&' : '?';
+                window.location.href = `${target}${separator}subject=${subject}`;
             });
         }
 
@@ -3780,10 +4021,10 @@
         }
 
         function getCityFilterCopy() {
-            return {
-                de: ['Stadt', 'Alle Städte'], fr: ['Ville', 'Toutes les villes'],
-                it: ['Città', 'Tutte le città'], en: ['City', 'All cities']
-            }[currentLang] || ['City', 'All cities'];
+            return [
+                translate('ui.cityLabel', 'City'),
+                translate('ui.allCities', 'All cities')
+            ];
         }
 
         function closeCityFilterMenu({ restoreFocus = false } = {}) {
@@ -4006,6 +4247,7 @@
             syncQuickFilterPills();
             setSuggestRole('fan');
             updateBodyScrollLock();
+            showIntroIfNeeded();
 
             if (!hasTrackedInitialMapView) {
                 trackScreen('map');
@@ -4019,7 +4261,4 @@
             }
         }
 
-        Promise.all([loadFilters(), loadVenues()]).finally(startApp);
-
-        // Show intro after initial render
-        showIntroIfNeeded();
+        Promise.all([loadFilters(), loadVenues(), loadContent()]).finally(startApp);

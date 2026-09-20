@@ -34,7 +34,7 @@
 <body>
     <div id="intro-overlay" class="intro-overlay hidden" aria-hidden="true">
         <div class="intro-card" role="dialog" aria-modal="true" aria-labelledby="intro-title">
-            <button class="intro-close" type="button" id="intro-close" aria-label="Close">X</button>
+            <button class="intro-close" type="button" id="intro-close" aria-label="Close" data-i18n-aria-label="ui.menuClose">X</button>
             <img class="intro-icon" src="icons/icon-192.png" alt="Friendly Spaces">
             <img class="intro-wordmark" src="assets/FriendlySpaces_blue.png" alt="Friendly Spaces">
             <div class="intro-slides" id="intro-slides">
@@ -56,10 +56,10 @@
                 </section>
             </div>
             <div class="intro-dots" role="tablist" aria-label="Onboarding slides">
-                <button class="intro-dot active" type="button" data-intro-dot="0" aria-label="Slide 1"></button>
-                <button class="intro-dot" type="button" data-intro-dot="1" aria-label="Slide 2"></button>
-                <button class="intro-dot" type="button" data-intro-dot="2" aria-label="Slide 3"></button>
-                <button class="intro-dot" type="button" data-intro-dot="3" aria-label="Slide 4"></button>
+                <button class="intro-dot active" type="button" data-intro-dot="0" aria-label="Slide 1" data-i18n-aria-label="ui.introSlide1"></button>
+                <button class="intro-dot" type="button" data-intro-dot="1" aria-label="Slide 2" data-i18n-aria-label="ui.introSlide2"></button>
+                <button class="intro-dot" type="button" data-intro-dot="2" aria-label="Slide 3" data-i18n-aria-label="ui.introSlide3"></button>
+                <button class="intro-dot" type="button" data-intro-dot="3" aria-label="Slide 4" data-i18n-aria-label="ui.introSlide4"></button>
             </div>
             <div class="intro-actions">
                 <button class="intro-nav" type="button" id="intro-prev">Back</button>
@@ -78,7 +78,7 @@
             </span>
             <h1 id="app-title">Friendly Spaces</h1>
         </div>
-        <button id="menu-toggle" type="button" aria-controls="menu-drawer" aria-expanded="false" aria-label="Open menu">
+        <button id="menu-toggle" type="button" aria-controls="menu-drawer" aria-expanded="false" aria-label="Open menu" data-i18n-aria-label="ui.menuOpen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="4" y1="6" x2="20" y2="6"></line>
                 <line x1="4" y1="12" x2="20" y2="12"></line>
@@ -89,7 +89,7 @@
     <div id="top-tools">
         <div id="top-search-bar">
             <div id="top-search-container">
-                <input type="text" id="top-search-input" placeholder="Search by name, city, or address...">
+                <input type="text" id="top-search-input" placeholder="Search by name, city, or address..." data-i18n-placeholder="ui.searchPlaceholder">
                 <span id="top-search-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="7"></circle>
@@ -106,7 +106,7 @@
                         <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"></path>
                         <circle cx="12" cy="10" r="2.5"></circle>
                     </svg>
-                    <span id="city-filter-value">All cities</span>
+                    <span id="city-filter-value" data-i18n="ui.allCities">All cities</span>
                     <span class="city-filter-chevron" aria-hidden="true">▾</span>
                 </button>
             </div>
@@ -146,7 +146,7 @@
                 <span data-pill-label="play-area">Play Area</span>
             </button>
         </div>
-        <div id="city-filter-menu" class="city-filter-menu" role="menu" aria-label="Choose a city" hidden></div>
+        <div id="city-filter-menu" class="city-filter-menu" role="menu" aria-label="Choose a city" data-i18n-aria-label="ui.chooseCity" hidden></div>
     </div>
     <div id="sheet-backdrop"></div>
     <div id="container">
@@ -155,7 +155,7 @@
             <div id="sidebar-header">
                 <h2 id="sidebar-title">Find a Friendly Space</h2>
                 <div id="search-container">
-                    <input type="text" id="search-input" placeholder="Search by name, city, or address...">
+                    <input type="text" id="search-input" placeholder="Search by name, city, or address..." data-i18n-placeholder="ui.searchPlaceholder">
                     <span id="search-icon" aria-hidden="true">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E52BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="7"></circle>
@@ -218,7 +218,7 @@
             <div id="map" class="view-panel"></div>
             <div id="list-view" class="view-panel hidden">
                 <div id="list-cards" class="venue-list"></div>
-                <div id="list-empty" class="list-empty" role="status" hidden>No venues found.</div>
+                <div id="list-empty" class="list-empty" role="status" hidden data-i18n="ui.noVenuesTitle">No venues found.</div>
             </div>
         </div>
     </div>
@@ -228,19 +228,19 @@
             <div class="menu-brand">
                 <img class="menu-logo" src="icons/icon-192.png" alt="Friendly Spaces">
             </div>
-            <button id="menu-close" type="button" aria-label="Close menu">X</button>
+            <button id="menu-close" type="button" aria-label="Close menu" data-i18n-aria-label="ui.menuClose">X</button>
         </div>
         <button class="menu-button" id="menu-suggest" type="button">
-            <span class="menu-label">Suggest a venue</span>
+            <span class="menu-label" data-i18n="ui.menuSuggest">Suggest a venue</span>
         </button>
         <button class="menu-button" id="menu-share" type="button">
-            <span class="menu-label">Share the app</span>
+            <span class="menu-label" data-i18n="ui.menuShare">Share the app</span>
         </button>
         <button class="menu-button" id="menu-about" type="button">
-            <span class="menu-label">About us</span>
+            <span class="menu-label" data-i18n="ui.menuAbout">About us</span>
         </button>
         <button class="menu-button" id="menu-help" type="button">
-            <span class="menu-label">How to use app</span>
+            <span class="menu-label" data-i18n="ui.menuHelp">How to use app</span>
         </button>
         <p class="menu-section-title" id="menu-language-title">Language</p>
         <div id="language-toggle" aria-label="Language switcher">
@@ -250,7 +250,7 @@
             <button type="button" data-lang="en">EN</button>
         </div>
         <div class="menu-footer">
-            <a class="menu-link menu-linktree" href="https://linktr.ee/friendlyspaces" target="_blank" rel="noopener noreferrer">Linktree ↗</a>
+            <a class="menu-link menu-linktree" href="https://linktr.ee/friendlyspaces" target="_blank" rel="noopener noreferrer" data-link-key="linktree" data-i18n="ui.linktreeLabel">Linktree ↗</a>
             <button class="menu-link" id="menu-bug" type="button">Report a bug</button>
             <button class="menu-link" id="menu-privacy" type="button">Privacy Policy</button>
         </div>
@@ -258,7 +258,7 @@
     <section id="suggest-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="suggest-close" aria-label="Close">X</button>
+            <button class="fullscreen-close" type="button" id="suggest-close" aria-label="Close" data-i18n-aria-label="ui.menuClose">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="suggest-title">Suggest a space</h2>
@@ -291,7 +291,7 @@
                     <input id="venue-city" name="venueCity" required>
                 </div>
                 <div id="suggest-message">
-                    <label for="venue-message">Message (optional)</label>
+                    <label for="venue-message" id="suggest-message-label" data-i18n="ui.suggestMessageLabel">Message (optional)</label>
                     <textarea id="venue-message" name="venueMessage"></textarea>
                 </div>
                 <div id="suggest-why">
@@ -328,32 +328,32 @@
     <section id="about-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="about-close" aria-label="Close">X</button>
+            <button class="fullscreen-close" type="button" id="about-close" aria-label="Close" data-i18n-aria-label="ui.menuClose">X</button>
         </div>
         <div class="fullscreen-body">
             <img class="about-logo" src="assets/wordmark-blue.png" alt="Friendly Spaces">
             <p id="about-body">Friendly Spaces is Switzerland's first family-friendly certification label, helping parents find the best cafés, restaurants, shops, and cultural spaces for families with young children. Through our rigorous on-site audits, we ensure every certified venue truly welcomes and accommodates your little ones.</p>
             <p class="about-section-title about-section-spacer" id="about-keep-title"><strong>Keep in Touch</strong></p>
             <div class="about-socials">
-                <a class="detail-icon-btn" href="https://www.instagram.com/friendly.spaces/" target="_blank" rel="noopener noreferrer">
+                <a class="detail-icon-btn" href="https://www.instagram.com/friendly.spaces/" target="_blank" rel="noopener noreferrer" data-link-key="instagram">
                     <span class="icon-circle">
                         <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                     </span>
                     <span class="icon-label">Instagram</span>
                 </a>
-                <a class="detail-icon-btn" href="https://www.tiktok.com/@friendlyspaces" target="_blank" rel="noopener noreferrer">
+                <a class="detail-icon-btn" href="https://www.tiktok.com/@friendlyspaces" target="_blank" rel="noopener noreferrer" data-link-key="tiktok">
                     <span class="icon-circle">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4c1 2 3 4 5 4"/></svg>
                     </span>
                     <span class="icon-label">TikTok</span>
                 </a>
-                <a class="detail-icon-btn" href="https://www.friendlyspaces.ch/" target="_blank" rel="noopener noreferrer">
+                <a class="detail-icon-btn" href="https://www.friendlyspaces.ch/" target="_blank" rel="noopener noreferrer" data-link-key="website">
                     <span class="icon-circle">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
                     </span>
                     <span class="icon-label">Website</span>
                 </a>
-                <a class="detail-icon-btn" href="https://www.linkedin.com/company/friendly-spaces/" target="_blank" rel="noopener noreferrer">
+                <a class="detail-icon-btn" href="https://www.linkedin.com/company/friendly-spaces/" target="_blank" rel="noopener noreferrer" data-link-key="linkedin">
                     <span class="icon-circle">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/></svg>
                     </span>
@@ -363,13 +363,13 @@
             <p class="about-section-title about-section-spacer" id="about-partner-title"><strong>Partner With Us</strong></p>
             <p id="about-partner-body">Support Switzerland's growing family-friendly movement. Friendly Spaces offers sponsorship and advertising opportunities to brands and organizations who share our mission of making Swiss cities more welcoming for families. Reach engaged parents across Switzerland.</p>
             <button class="suggest-submit about-cta" type="button" id="about-partner">Inquire about partnerships</button>
-            <p class="map-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
+            <p class="map-attribution" data-map-attribution>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" data-link-key="openStreetMap">OpenStreetMap</a> contributors</p>
         </div>
     </section>
     <section id="bug-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="bug-close" aria-label="Close">X</button>
+            <button class="fullscreen-close" type="button" id="bug-close" aria-label="Close" data-i18n-aria-label="ui.menuClose">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="bug-title">Report a bug / Give feedback</h2>
@@ -390,7 +390,7 @@
     <section id="help-view" class="fullscreen-panel" aria-hidden="true">
         <div class="fullscreen-header suggest-header">
             <img class="suggest-header-logo" src="assets/logo-friendly.png" alt="Friendly Spaces">
-            <button class="fullscreen-close" type="button" id="help-close" aria-label="Close">X</button>
+            <button class="fullscreen-close" type="button" id="help-close" aria-label="Close" data-i18n-aria-label="ui.menuClose">X</button>
         </div>
         <div class="fullscreen-body">
             <h2 class="suggest-title" id="help-title">How to use Friendly Spaces</h2>
@@ -423,7 +423,7 @@
     </section>
     <nav id="bottom-tabs" aria-label="Primary">
         <button class="bottom-tab-button active" data-view="map" id="bottom-tab-map" type="button">
-            <span>Map</span>
+            <span data-i18n="ui.mapTab">Map</span>
             <svg class="bottom-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polygon points="1 6 8 3 16 6 23 3 23 18 16 21 8 18 1 21"></polygon>
                 <line x1="8" y1="3" x2="8" y2="18"></line>
@@ -431,7 +431,7 @@
             </svg>
         </button>
         <button class="bottom-tab-button" data-view="list" id="bottom-tab-list" type="button">
-            <span>List</span>
+            <span data-i18n="ui.listTab">List</span>
             <svg class="bottom-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="8" y1="6" x2="21" y2="6"></line>
                 <line x1="8" y1="12" x2="21" y2="12"></line>
