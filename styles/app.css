@@ -174,6 +174,48 @@
             line-height: 1.5;
         }
 
+        /* Intro slide 2: the two kinds of pins */
+        .intro-pins {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 0 0 12px;
+            text-align: left;
+        }
+
+        .intro-pin-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .intro-pin {
+            width: 26px;
+            height: 39px;
+            flex: 0 0 auto;
+        }
+
+        .intro-pin-row strong {
+            display: block;
+            font-size: 14px;
+            color: #1E52BA;
+        }
+
+        .intro-pin-row.is-tip strong {
+            color: #3c4454;
+        }
+
+        .intro-pin-row span {
+            display: block;
+            margin-top: 2px;
+            font-size: 13px;
+            line-height: 1.45;
+            color: #2d3588;
+        }
+
         .intro-slides {
             min-height: 158px;
         }

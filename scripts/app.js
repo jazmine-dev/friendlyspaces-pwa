@@ -45,6 +45,12 @@
                     partnerSubject: "Partnerschaftsanfrage",
                     introTitle: "Was ist Friendly Spaces?",
                     introText: "Entdecke zertifizierte familienfreundliche Cafés, Restaurants, Geschäfte und Kulturorte in der ganzen Schweiz. Jeder Ort wird auf Spielbereiche, Wickelmöglichkeiten, Kinderwagenzugang und eine einladende Atmosphäre geprüft.",
+                    introPinsTitle: "Zwei Arten von Pins",
+                    introPinsText: "Auf der Karte siehst du Orte, die wir geprüft haben, und Orte, die andere Eltern empfehlen.",
+                    introPinsPartner: "Friendly Spaces Partner",
+                    introPinsPartnerText: "Von unserem Team vor Ort geprüft. Die Filter durchsuchen diese Orte.",
+                    introPinsTip: "Community-Tipp",
+                    introPinsTipText: "Von anderen Eltern empfohlen. Noch nicht von uns geprüft.",
                     introMapTitle: "Orte entdecken",
                     introMapText: "Wechsle zwischen Kartenansicht, um Städte und Orte in deiner Nähe zu entdecken, und Listenansicht für einen schnellen Vergleich. Tippe auf einen Ort, um alle Details und Ausstattungen zu sehen.",
                     introSuggestTitle: "Finde deinen passenden Ort",
@@ -197,6 +203,12 @@
                     partnerSubject: "Demande de partenariat",
                     introTitle: "Qu’est-ce que Friendly Spaces ?",
                     introText: "Découvrez des cafés, restaurants, boutiques et lieux culturels certifiés family-friendly dans toute la Suisse. Chaque lieu est audité pour les espaces de jeu, les équipements de change, l’accès poussette et une ambiance accueillante.",
+                    introPinsTitle: "Deux types de repères",
+                    introPinsText: "La carte montre les lieux que nous avons vérifiés et ceux que d’autres parents recommandent.",
+                    introPinsPartner: "Partenaire Friendly Spaces",
+                    introPinsPartnerText: "Vérifié sur place par notre équipe. Les filtres portent sur ces lieux.",
+                    introPinsTip: "Conseil de la communauté",
+                    introPinsTipText: "Recommandé par d’autres parents. Pas encore vérifié par nous.",
                     introMapTitle: "Explorez les lieux",
                     introMapText: "Basculez entre la vue Carte pour explorer les villes et découvrir des lieux près de vous, et la vue Liste pour comparer rapidement les lieux. Touchez un lieu pour voir tous les détails et équipements.",
                     introSuggestTitle: "Trouvez votre lieu idéal",
@@ -349,6 +361,12 @@
                     partnerSubject: "Richiesta di partnership",
                     introTitle: "Cos'è Friendly Spaces?",
                     introText: "Scopri caffè, ristoranti, negozi e luoghi culturali certificati family-friendly in tutta la Svizzera. Ogni luogo viene valutato per aree gioco, fasciatoi, accesso con passeggino e un'atmosfera accogliente.",
+                    introPinsTitle: "Due tipi di segnaposto",
+                    introPinsText: "La mappa mostra i luoghi che abbiamo verificato e quelli consigliati da altri genitori.",
+                    introPinsPartner: "Partner Friendly Spaces",
+                    introPinsPartnerText: "Verificato di persona dal nostro team. I filtri cercano tra questi luoghi.",
+                    introPinsTip: "Consiglio della community",
+                    introPinsTipText: "Consigliato da altri genitori. Non ancora verificato da noi.",
                     introMapTitle: "Esplora i luoghi",
                     introMapText: "Passa dalla vista Mappa per esplorare le città e trovare luoghi vicino a te, alla vista Elenco per un confronto rapido. Tocca un luogo per vedere tutti i dettagli e i servizi.",
                     introSuggestTitle: "Trova il luogo perfetto",
@@ -501,6 +519,12 @@
                     partnerSubject: "Partnership Inquiry",
                     introTitle: "What is Friendly Spaces?",
                     introText: "Discover certified family-friendly cafés, restaurants, shops, and cultural venues across Switzerland. Every location is audited for play areas, changing facilities, stroller access, and a welcoming atmosphere.",
+                    introPinsTitle: "Two kinds of pins",
+                    introPinsText: "The map shows places we have checked and places other parents recommend.",
+                    introPinsPartner: "Friendly Spaces partner",
+                    introPinsPartnerText: "Checked in person by our team. Filters search these places.",
+                    introPinsTip: "Community tip",
+                    introPinsTipText: "Recommended by other parents. Not checked by us yet.",
                     introMapTitle: "Explore locations",
                     introMapText: "Toggle between Map view to explore cities and discover places near you, or List view for a quick comparison of locations. Tap any venue to see full details and amenities.",
                     introSuggestTitle: "Find your perfect spot",
@@ -2161,6 +2185,17 @@
             if (introTitle) introTitle.textContent = translate('ui.introTitle', introTitle.textContent);
             const introText = document.getElementById('intro-text');
             if (introText) introText.textContent = translate('ui.introText', introText.textContent);
+            [
+                ['intro-pins-title', 'ui.introPinsTitle'],
+                ['intro-pins-text', 'ui.introPinsText'],
+                ['intro-pins-partner', 'ui.introPinsPartner'],
+                ['intro-pins-partner-text', 'ui.introPinsPartnerText'],
+                ['intro-pins-tip', 'ui.introPinsTip'],
+                ['intro-pins-tip-text', 'ui.introPinsTipText']
+            ].forEach(([id, key]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = translate(key, el.textContent);
+            });
             const introMapTitle = document.getElementById('intro-map-title');
             if (introMapTitle) introMapTitle.textContent = translate('ui.introMapTitle', introMapTitle.textContent);
             const introMapText = document.getElementById('intro-map-text');
