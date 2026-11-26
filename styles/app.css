@@ -3275,10 +3275,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 .map-key {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 8px 10px;
-    border-radius: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px 10px;
+    box-sizing: border-box;
+    max-width: calc(100vw - 20px);
+    padding: 6px 10px;
+    border-radius: 15px;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     font-size: 12px;
@@ -3293,7 +3298,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .map-key-row {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 5px;
     white-space: nowrap;
 }
 
