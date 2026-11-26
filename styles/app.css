@@ -3136,3 +3136,168 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ===== Community tips: listing pill, tip profile and map key ===== */
+.listing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 6px 12px 6px 9px;
+    border-radius: 999px;
+    background: #eef2fb;
+    color: #1E52BA;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.listing-badge svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.listing-badge.is-tip {
+    margin-top: 0;
+    background: #f1f2f5;
+    color: #3c4454;
+}
+
+.detail-modal-card.is-tip {
+    border-top: 4px solid #5B6475;
+}
+
+.detail-modal-card.is-tip .detail-half-band,
+.detail-modal-card.is-tip .detail-peek-title {
+    display: none !important;
+}
+
+.detail-modal-card.is-tip .detail-sheet-handle {
+    background: #c9ced8;
+}
+
+.detail-modal-card.is-tip .detail-close-button {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.detail-modal-card.is-tip .detail-close-button svg {
+    stroke: #3c4454;
+}
+
+.tip-sheet {
+    padding: 28px 20px calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+.tip-sheet-name {
+    margin: 8px 56px 4px 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #15171A;
+}
+
+.tip-sheet-address {
+    margin: 0;
+    font-size: 13.5px;
+    color: #666;
+}
+
+.tip-sheet .detail-icon-buttons {
+    padding-top: 12px;
+}
+
+.tip-sheet .detail-icon-btn .icon-circle {
+    background: #f1f2f5;
+}
+
+.tip-sheet .detail-icon-btn .icon-circle svg {
+    stroke: #4B5260;
+}
+
+.tip-sheet-note {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: #f1f2f5;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #3c4454;
+}
+
+.tip-sheet-note p {
+    margin: 0;
+}
+
+.tip-sheet-note p + p {
+    margin-top: 4px;
+}
+
+.tip-sheet-owner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e6e8ed;
+    text-decoration: none;
+}
+
+.tip-sheet-owner-question {
+    display: block;
+    font-size: 12.5px;
+    color: #666;
+}
+
+.tip-sheet-owner-link {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1E52BA;
+}
+
+.tip-sheet-owner svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: #1E52BA;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.map-key {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 12px;
+    line-height: 1.2;
+    color: #2b2f3a;
+}
+
+.map-key[hidden] {
+    display: none;
+}
+
+.map-key-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.map-key-row img {
+    display: block;
+    flex: 0 0 auto;
+}

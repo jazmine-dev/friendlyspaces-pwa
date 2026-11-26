@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'friendlyspaces-pwa-v28';
+const CACHE_VERSION = 'friendlyspaces-pwa-v29';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const APP_SHELL = [
   './scripts/app.js',
   './scripts/map-config.js',
   './data/venues.json',
+  './data/community-tips.json',
   './data/filters.json',
   './data/content.json',
   './icons/icon-192.png',

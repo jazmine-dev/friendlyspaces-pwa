@@ -61,6 +61,13 @@
                     introNext: "Weiter",
                     introDone: "Fertig",
                     introSkip: "Nicht mehr anzeigen",
+                    listingPartner: "Friendly Spaces Partner",
+                    listingCommunity: "Community-Tipp",
+                    mapKey: "Kartenlegende",
+                    tipSuggested: "Von der Friendly Spaces Community vorgeschlagen.",
+                    tipNotPartner: "Dieser Ort ist derzeit kein Friendly Spaces Partner.",
+                    tipOwnerQuestion: "Ist das dein Lokal?",
+                    tipOwnerLink: "Melde dich bei Friendly Spaces",
                     helpTitle: "So nutzt du Friendly Spaces",
                     helpTagline: "Kurze Tipps für die wichtigsten Funktionen.",
                     helpFindTitle: "Orte schnell finden",
@@ -219,6 +226,13 @@
                     introNext: "Suivant",
                     introDone: "Terminer",
                     introSkip: "Ne plus afficher",
+                    listingPartner: "Partenaire Friendly Spaces",
+                    listingCommunity: "Conseil de la communauté",
+                    mapKey: "Légende de la carte",
+                    tipSuggested: "Suggéré par la communauté Friendly Spaces.",
+                    tipNotPartner: "Ce lieu n’est pas encore partenaire Friendly Spaces.",
+                    tipOwnerQuestion: "C’est votre établissement ?",
+                    tipOwnerLink: "Contactez Friendly Spaces",
                     helpTitle: "Comment utiliser Friendly Spaces",
                     helpTagline: "Conseils rapides pour bien utiliser l'app.",
                     helpFindTitle: "Trouver des lieux rapidement",
@@ -377,6 +391,13 @@
                     introNext: "Avanti",
                     introDone: "Fine",
                     introSkip: "Non mostrare più",
+                    listingPartner: "Partner Friendly Spaces",
+                    listingCommunity: "Consiglio della community",
+                    mapKey: "Legenda della mappa",
+                    tipSuggested: "Suggerito dalla community di Friendly Spaces.",
+                    tipNotPartner: "Questo luogo non è attualmente partner di Friendly Spaces.",
+                    tipOwnerQuestion: "È il tuo locale?",
+                    tipOwnerLink: "Contatta Friendly Spaces",
                     helpTitle: "Come usare Friendly Spaces",
                     helpTagline: "Suggerimenti rapidi per ottenere il massimo dall'app.",
                     helpFindTitle: "Trova luoghi rapidamente",
@@ -535,6 +556,13 @@
                     introNext: "Next",
                     introDone: "Done",
                     introSkip: "Do not show again",
+                    listingPartner: "Friendly Spaces partner",
+                    listingCommunity: "Community tip",
+                    mapKey: "Map key",
+                    tipSuggested: "Suggested by the Friendly Spaces community.",
+                    tipNotPartner: "This venue is not currently a Friendly Spaces partner.",
+                    tipOwnerQuestion: "Is this your venue?",
+                    tipOwnerLink: "Get in touch with Friendly Spaces",
                     helpTitle: "How to use Friendly Spaces",
                     helpTagline: "Quick tips to get the most from the app.",
                     helpFindTitle: "Find places quickly",
@@ -757,12 +785,17 @@
         const REMOTE_CONTENT_URL = new URL('data/content.json', REMOTE_APP_ORIGIN).toString();
         const REMOTE_FORM_SUBMIT_URL = REMOTE_APP_ORIGIN;
         const LOCAL_VENUES_URL = 'data/venues.json';
+        // Community tips (grey pins) live in their own file next to venues.json, so
+        // releases that predate them never show a tip as a partner.
+        const REMOTE_COMMUNITY_TIPS_URL = new URL('data/community-tips.json', REMOTE_APP_ORIGIN).toString();
+        const LOCAL_COMMUNITY_TIPS_URL = 'data/community-tips.json';
         const LOCAL_FILTERS_URL = 'data/filters.json';
         const LOCAL_CONTENT_URL = 'data/content.json';
         const VENUES_FETCH_TIMEOUT_MS = 6000;
         const FILTERS_FETCH_TIMEOUT_MS = 6000;
         const CONTENT_FETCH_TIMEOUT_MS = 6000;
         const VENUES_CACHE_KEY = 'friendlyspaces_venues_cache_v4';
+        const COMMUNITY_TIPS_CACHE_KEY = 'friendlyspaces_community_tips_cache_v1';
         const FILTERS_CACHE_KEY = 'friendlyspaces_filters_cache_v1';
         const CONTENT_CACHE_KEY = 'friendlyspaces_content_cache_v1';
         const fallbackContentLinks = {
@@ -1029,6 +1062,53 @@
                 writeCachedVenues(venues);
             } catch (err) {
                 venues = [];
+            }
+        }
+
+        // Community tips are kept apart from `venues`, so the list view, favourites,
+        // city menu and filters keep working on Friendly Spaces partners only.
+        let communityTips = [];
+
+        function isCommunityTip(venue) {
+            return venue?.listing === 'community';
+        }
+
+        function normalizeCommunityTips(data) {
+            if (!Array.isArray(data)) return [];
+            const partnerIds = new Set(venues.map(getPartnerId));
+            const partnerNames = new Set(venues.map(venue => venue.name));
+            return data
+                .filter(tip => tip && tip.name && Array.isArray(tip.fallbackCoords) && tip.fallbackCoords.length >= 2)
+                .map(tip => ({ ...tip, listing: 'community', filters: {} }))
+                .filter(tip => !partnerIds.has(getPartnerId(tip)) && !partnerNames.has(tip.name));
+        }
+
+        async function loadCommunityTips() {
+            try {
+                const remoteTips = await fetchVenueData(REMOTE_COMMUNITY_TIPS_URL);
+                communityTips = remoteTips;
+                try {
+                    localStorage.setItem(COMMUNITY_TIPS_CACHE_KEY, JSON.stringify({ updatedAt: Date.now(), tips: remoteTips }));
+                } catch (err) {
+                    // Ignore storage quota/private mode issues.
+                }
+                return;
+            } catch (err) {
+                // Fall back to cached or bundled tips when offline or the remote fetch fails.
+            }
+            try {
+                const cached = JSON.parse(localStorage.getItem(COMMUNITY_TIPS_CACHE_KEY) || 'null');
+                if (Array.isArray(cached?.tips)) {
+                    communityTips = cached.tips;
+                    return;
+                }
+            } catch (err) {
+                // Ignore storage errors.
+            }
+            try {
+                communityTips = await fetchVenueData(LOCAL_COMMUNITY_TIPS_URL);
+            } catch (err) {
+                communityTips = [];
             }
         }
 
@@ -1349,7 +1429,8 @@
                 </defs>
                 <g filter="url(#pinShadow)">
                     <path fill="url(#pinGrad)" d="M16 0c-7.18 0-13 5.82-13 13 0 9.75 8.9 18.9 12.1 21.83.5.46 1.3.46 1.8 0C20.1 31.9 29 22.75 29 13 29 5.82 23.18 0 16 0Z"/>
-                    <circle cx="16" cy="13" r="5" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="16" cy="13" r="8" fill="#fff"/>
+                    <path d="M12 13.3l2.8 2.8 5.3-5.5" fill="none" stroke="#1E52BA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
             </svg>
         `;
@@ -1373,7 +1454,8 @@
                 </defs>
                 <g filter="url(#pinShadowSelected)">
                     <path fill="url(#pinGradSelected)" d="M16 0c-7.18 0-13 5.82-13 13 0 9.75 8.9 18.9 12.1 21.83.5.46 1.3.46 1.8 0C20.1 31.9 29 22.75 29 13 29 5.82 23.18 0 16 0Z"/>
-                    <circle cx="16" cy="13" r="5" fill="rgba(255,255,255,0.95)"/>
+                    <circle cx="16" cy="13" r="8" fill="#fff"/>
+                    <path d="M12 13.3l2.8 2.8 5.3-5.5" fill="none" stroke="#1E52BA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
             </svg>
         `;
@@ -1383,6 +1465,58 @@
             iconAnchor: [16, 46],
             popupAnchor: [0, -42]
         });
+
+        // Community tip pins: the same shape in slate grey with a speech bubble; selected
+        // tips use the same lilac as selected partners.
+        function buildTipPinSvg(id, top, bottom) {
+            return `
+            <svg width="32" height="48" viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="${id}Grad" x1="50%" y1="0%" x2="50%" y2="100%">
+                        <stop offset="0%" stop-color="${top}"/>
+                        <stop offset="100%" stop-color="${bottom}"/>
+                    </linearGradient>
+                    <filter id="${id}Shadow" x="-20%" y="-10%" width="140%" height="130%">
+                        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.25)"/>
+                    </filter>
+                </defs>
+                <g filter="url(#${id}Shadow)">
+                    <path fill="url(#${id}Grad)" d="M16 0c-7.18 0-13 5.82-13 13 0 9.75 8.9 18.9 12.1 21.83.5.46 1.3.46 1.8 0C20.1 31.9 29 22.75 29 13 29 5.82 23.18 0 16 0Z"/>
+                    <circle cx="16" cy="13" r="8" fill="#fff"/>
+                    <path transform="translate(10.5 7.5) scale(0.46)" d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" fill="none" stroke="#5B6475" stroke-width="3.6" stroke-linejoin="round"/>
+                </g>
+            </svg>`;
+        }
+        const tipMarkerIcon = L.icon({
+            iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(buildTipPinSvg('tipPin', '#7A8396', '#5B6475')),
+            iconSize: [32, 48],
+            iconAnchor: [16, 46],
+            popupAnchor: [0, -42]
+        });
+        const tipMarkerIconSelected = L.icon({
+            iconUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(buildTipPinSvg('tipPinSelected', '#F5DEFF', '#D7A6F3')),
+            iconSize: [32, 48],
+            iconAnchor: [16, 46],
+            popupAnchor: [0, -42]
+        });
+
+        // Small map key, top right; shown once there are community tips.
+        const mapKeyPin = fill => 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg width="32" height="48" viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg"><path fill="${fill}" d="M16 0c-7.18 0-13 5.82-13 13 0 9.75 8.9 18.9 12.1 21.83.5.46 1.3.46 1.8 0C20.1 31.9 29 22.75 29 13 29 5.82 23.18 0 16 0Z"/><circle cx="16" cy="13" r="7" fill="#fff"/></svg>`);
+        const mapKey = L.DomUtil.create('aside', 'map-key');
+        mapKey.hidden = true;
+        L.DomEvent.disableClickPropagation(mapKey);
+        L.DomEvent.disableScrollPropagation(mapKey);
+        const MapKeyControl = L.Control.extend({ options: { position: 'topright' }, onAdd: () => mapKey });
+        new MapKeyControl().addTo(map);
+
+        function renderMapKey() {
+            mapKey.hidden = communityTips.length === 0;
+            if (mapKey.hidden) return;
+            mapKey.setAttribute('aria-label', translate('ui.mapKey', 'Map key'));
+            mapKey.innerHTML = [['#1E52BA', 'ui.listingPartner', 'Friendly Spaces partner'], ['#5B6475', 'ui.listingCommunity', 'Community tip']]
+                .map(([fill, key, fallback]) => `<span class="map-key-row"><img src="${mapKeyPin(fill)}" alt="" width="12" height="18">${escapeHtml(translate(key, fallback))}</span>`)
+                .join('');
+        }
 
         // Add click event to zoom into clusters
         markerClusterGroup.on('clusterclick', function (a) {
@@ -1413,6 +1547,7 @@
 
         // State
         let markers = [];
+        let tipMarkers = [];
         let selectedVenueName = null;
         let activeFilters = {
             venueType: [],
@@ -2858,6 +2993,22 @@
             markers.forEach(({ venue, marker }) => {
                 marker.setIcon(venue.name === selectedVenueName ? markerIconSelected : markerIcon);
             });
+            tipMarkers.forEach(({ tip, marker }) => {
+                marker.setIcon(tip.name === selectedVenueName ? tipMarkerIconSelected : tipMarkerIcon);
+            });
+        }
+
+        // Tips show on the map with search and the city menu, and step aside as soon as a
+        // filter, Near me or Favourites is on: filters only cover Friendly Spaces partners.
+        function communityTipVisible(tip) {
+            if (activeTab === 'favorites' || nearMeActive) return false;
+            if (Object.values(activeFilters).some(list => Array.isArray(list) && list.length > 0)) return false;
+            if (selectedCity && tip.city !== selectedCity) return false;
+            if (searchQuery) {
+                const haystack = `${tip.name} ${tip.address || ''} ${tip.city || ''}`.toLowerCase();
+                if (!haystack.includes(searchQuery)) return false;
+            }
+            return true;
         }
 
         const popupTagColor = '#1E52BA';
@@ -2964,6 +3115,22 @@
                 bounds.extend(coords);
                 visibleCount++;
             });
+
+            tipMarkers = [];
+            communityTips.filter(communityTipVisible).forEach(tip => {
+                const coords = tip.fallbackCoords;
+                const marker = L.marker(coords, { icon: tipMarkerIcon, title: tip.name, alt: tip.name });
+                marker.on('click', () => {
+                    selectedVenueName = tip.name;
+                    applySelectedMarkerStyle();
+                    openDetailModal(tip, 'map_pin');
+                    centerPinAboveSheet(coords, 'half');
+                    setTimeout(() => centerPinAboveSheet(coords, 'half'), 320);
+                });
+                markerClusterGroup.addLayer(marker);
+                tipMarkers.push({ tip, marker, coords });
+            });
+            renderMapKey();
 
             // Update count
             // Only auto-zoom on initial load
@@ -3168,6 +3335,7 @@
                         <h2 class="detail-summary-name">${venue.name}</h2>
                         <p class="detail-summary-address">${venue.address}</p>
                     </div>
+                    <span class="listing-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></svg>${escapeHtml(translate('ui.listingPartner', 'Friendly Spaces partner'))}</span>
                     ${iconButtonsHtml}
 
                     <div class="detail-section">
@@ -3195,6 +3363,55 @@
                         <h3 class="detail-section-title">${translate('popup.features', 'Features')}</h3>
                         <div class="detail-tags">${tagsHtml}</div>
                     </div>
+                </div>
+            `;
+        }
+
+        // Community tip profile: limited information, as in the approved mockup.
+        function createTipProfileContent(tip) {
+            const navigateSvg = `<svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z" fill="none"/></svg>`;
+            const callSvg = `<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
+            const websiteSvg = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`;
+            const useAppleMaps = isApplePlatform();
+            const phoneHref = formatPhoneHref(tip.phone);
+            const actions = [
+                `<a class="detail-icon-btn" href="${escapeHtml(useAppleMaps ? getAppleMapsUrl(tip) : getDirectionsUrl(tip))}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="${useAppleMaps ? 'apple-maps' : 'directions'}">
+                    <span class="icon-circle">${navigateSvg}</span>
+                    <span class="icon-label">${escapeHtml(translate(useAppleMaps ? 'popup.appleMaps' : 'popup.navigate', useAppleMaps ? 'Apple Maps' : 'Navigate'))}</span>
+                </a>`
+            ];
+            if (tip.website) {
+                actions.push(`<a class="detail-icon-btn" href="${escapeHtml(tip.website)}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="website">
+                    <span class="icon-circle">${websiteSvg}</span>
+                    <span class="icon-label">${escapeHtml(translate('popup.website', 'Website'))}</span>
+                </a>`);
+            }
+            if (phoneHref) {
+                actions.push(`<a class="detail-icon-btn" href="${escapeHtml(phoneHref)}" data-analytics-link="true" data-link-type="phone">
+                    <span class="icon-circle">${callSvg}</span>
+                    <span class="icon-label">${escapeHtml(translate('popup.call', 'Call'))}</span>
+                </a>`);
+            }
+            const contactPath = currentLang === 'de' || currentLang === 'fr' ? `${currentLang}/contact` : 'contact';
+            const contactUrl = new URL(contactPath, getContentLink('website', 'https://www.friendlyspaces.ch/')).toString();
+
+            return `
+                <div class="tip-sheet">
+                    <span class="listing-badge is-tip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9a2 2 0 01-2 2H6l-4 4V4a2 2 0 012-2h8a2 2 0 012 2z"/><path d="M18 9h2a2 2 0 012 2v11l-4-4h-6a2 2 0 01-2-2v-1"/></svg>${escapeHtml(translate('ui.listingCommunity', 'Community tip'))}</span>
+                    <h2 class="tip-sheet-name">${escapeHtml(tip.name)}</h2>
+                    ${tip.address ? `<p class="tip-sheet-address">${escapeHtml(tip.address)}</p>` : ''}
+                    <div class="detail-icon-buttons">${actions.join('')}</div>
+                    <div class="tip-sheet-note">
+                        <p>${escapeHtml(translate('ui.tipSuggested', 'Suggested by the Friendly Spaces community.'))}</p>
+                        <p>${escapeHtml(translate('ui.tipNotPartner', 'This venue is not currently a Friendly Spaces partner.'))}</p>
+                    </div>
+                    <a class="tip-sheet-owner" href="${escapeHtml(contactUrl)}" target="_blank" rel="noopener noreferrer" data-analytics-link="true" data-link-type="tip-owner-contact">
+                        <span>
+                            <span class="tip-sheet-owner-question">${escapeHtml(translate('ui.tipOwnerQuestion', 'Is this your venue?'))}</span>
+                            <span class="tip-sheet-owner-link">${escapeHtml(translate('ui.tipOwnerLink', 'Get in touch with Friendly Spaces'))}</span>
+                        </span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
                 </div>
             `;
         }
@@ -3308,23 +3525,27 @@
         function openDetailModal(venue, source = 'unknown') {
             if (!detailModal || !detailModalContent) return;
 
+            const isTip = isCommunityTip(venue);
             trackEvent('venue_profile_open', {
                 ...getPartnerAnalyticsParams(venue),
+                ...(isTip ? { listing_type: 'community' } : {}),
                 source: source,
                 language: currentLang,
                 app_version: APP_VERSION
             });
-            trackScreen('venue_profile');
+            trackScreen(isTip ? 'community_tip' : 'venue_profile');
 
             detailReturnFocus = document.activeElement;
             // Generate content
-            detailModalContent.innerHTML = createDetailProfileContent(venue);
+            detailModalContent.innerHTML = isTip ? createTipProfileContent(venue) : createDetailProfileContent(venue);
             if (detailPeekTitle) detailPeekTitle.textContent = venue.name;
             if (detailHalfBand) {
-                detailHalfBand.innerHTML = createDetailHalfBandContent(venue);
-                detailHalfBand.setAttribute('aria-hidden', 'false');
+                detailHalfBand.innerHTML = isTip ? '' : createDetailHalfBandContent(venue);
+                detailHalfBand.setAttribute('aria-hidden', isTip ? 'true' : 'false');
             }
-            preloadVenueGalleryImages(venue);
+            const detailCard = detailModal.querySelector('.detail-modal-card');
+            if (detailCard) detailCard.classList.toggle('is-tip', isTip);
+            if (!isTip) preloadVenueGalleryImages(venue);
 
             // Trigger sheet animation
             detailModal.setAttribute('aria-hidden', 'false');
@@ -4297,4 +4518,8 @@
             }
         }
 
-        Promise.all([loadFilters(), loadVenues(), loadContent()]).finally(startApp);
+        Promise.all([loadFilters(), loadVenues(), loadContent(), loadCommunityTips()])
+            .finally(() => {
+                communityTips = normalizeCommunityTips(communityTips);
+                startApp();
+            });
