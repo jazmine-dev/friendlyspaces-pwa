@@ -1069,5 +1069,17 @@
     ],
     "filters": {},
     "website": "https://www.luigia.ch/en/"
+  },
+  {
+    "slug": "tip-le-v-restaurant-verdaine",
+    "listing": "community",
+    "name": "Le V. – Restaurant Verdaine",
+    "address": "Rue Verdaine 9, 1204 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.201362,
+      6.1502852
+    ],
+    "filters": {}
   }
 ]
