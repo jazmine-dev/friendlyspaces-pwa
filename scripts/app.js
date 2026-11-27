@@ -1667,7 +1667,7 @@
             const isIOS = typeof cap?.getPlatform === 'function' && cap.getPlatform() === 'ios';
             return isNative && isIOS;
         };
-        const APP_VERSION = 'pwa-1.1';
+        const APP_VERSION = 'pwa-1.2';
         const APP_DOMAIN = 'app.friendlyspaces.ch';
         const analyticsEnabled = true;
         let hasTrackedInitialMapView = false;
