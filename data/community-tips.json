@@ -394,9 +394,9 @@
     "website": "https://www.woffood.ch/"
   },
   {
-    "slug": "tip-bach-et-buck",
+    "slug": "tip-bach-et-buck-neuchatel",
     "listing": "community",
-    "name": "Bach et Buck",
+    "name": "Bach et Buck Neuchâtel",
     "address": "Avenue du Premier-Mars 22, 2000 Neuchâtel",
     "city": "Neuchâtel",
     "fallbackCoords": [
@@ -549,9 +549,9 @@
     "filters": {}
   },
   {
-    "slug": "tip-tibits",
+    "slug": "tip-tibits-bern-bahnhof",
     "listing": "community",
-    "name": "tibits",
+    "name": "tibits Bern Bahnhof",
     "address": "Bahnhofplatz 10, 3011 Bern",
     "city": "Bern",
     "fallbackCoords": [
@@ -665,5 +665,409 @@
     "filters": {},
     "phone": "+41 91 835 52 54",
     "website": "https://museoinerba.com/"
+  },
+  {
+    "slug": "tip-comme-a-la-maison-calm",
+    "listing": "community",
+    "name": "Comme à la Maison (CALM)",
+    "address": "Rue Abram-Louis-Breguet 13, 2000 Neuchâtel",
+    "city": "Neuchâtel",
+    "fallbackCoords": [
+      46.9939886,
+      6.9403272
+    ],
+    "filters": {}
+  },
+  {
+    "slug": "tip-bach-et-buck-bienne",
+    "listing": "community",
+    "name": "Bach et Buck Bienne",
+    "address": "Burggasse 17, 2502 Biel/Bienne",
+    "city": "Biel/Bienne",
+    "fallbackCoords": [
+      47.1408943,
+      7.2450913
+    ],
+    "filters": {},
+    "phone": "+41 32 322 21 00",
+    "website": "https://www.bachetbuck.ch/"
+  },
+  {
+    "slug": "tip-becanto-west",
+    "listing": "community",
+    "name": "Becanto West",
+    "address": "Murtenstrasse 26, 3008 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.9492742,
+      7.4265379
+    ],
+    "filters": {},
+    "website": "https://www.becanto.ch/"
+  },
+  {
+    "slug": "tip-becanto-nord",
+    "listing": "community",
+    "name": "Becanto Nord",
+    "address": "Rütlistrasse 2, 3014 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.9587906,
+      7.4572151
+    ],
+    "filters": {},
+    "website": "https://www.becanto.ch/"
+  },
+  {
+    "slug": "tip-altes-pfarrhaus-kaffeebar",
+    "listing": "community",
+    "name": "Altes Pfarrhaus Kaffeebar",
+    "address": "Thunstrasse 96, 3074 Muri bei Bern",
+    "city": "Muri bei Bern",
+    "fallbackCoords": [
+      46.9295096,
+      7.4879709
+    ],
+    "filters": {},
+    "website": "https://www.altespfarrhaus.ch/kaffeebar"
+  },
+  {
+    "slug": "tip-restaurant-schongrun",
+    "listing": "community",
+    "name": "Restaurant Schöngrün",
+    "address": "Monument im Fruchtland 1, 3006 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.9500392,
+      7.4738815
+    ],
+    "filters": {},
+    "website": "https://www.restaurant-schoengruen.ch/"
+  },
+  {
+    "slug": "tip-schroeter-kaffee",
+    "listing": "community",
+    "name": "Schroeter Kaffee",
+    "address": "Breitenrainstrasse 10, 3013 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.9584733,
+      7.4535569
+    ],
+    "filters": {}
+  },
+  {
+    "slug": "tip-restaurant-zent",
+    "listing": "community",
+    "name": "Restaurant Zent",
+    "address": "Zentweg 1a, 3006 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.9587159,
+      7.4725662
+    ],
+    "filters": {},
+    "website": "https://restaurant-zent.ch/"
+  },
+  {
+    "slug": "tip-bubbles-club",
+    "listing": "community",
+    "name": "Bubbles Club",
+    "address": "Rue du Nant 3, 1207 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.2020135,
+      6.1596263
+    ],
+    "filters": {},
+    "phone": "+41 22 774 55 55",
+    "website": "https://bubblesclub.ch/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-helvetique",
+    "listing": "community",
+    "name": "Le Pain Quotidien Helvétique",
+    "address": "Boulevard Helvétique 21, 1207 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.2010627,
+      6.1541915
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-champel",
+    "listing": "community",
+    "name": "Le Pain Quotidien Champel",
+    "address": "Avenue Alfred-Bertrand 1, 1206 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.1930901,
+      6.1545753
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-favon",
+    "listing": "community",
+    "name": "Le Pain Quotidien Favon",
+    "address": "Boulevard Georges-Favon 32, 1204 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.2016072,
+      6.1400942
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-plainpalais",
+    "listing": "community",
+    "name": "Le Pain Quotidien Plainpalais",
+    "address": "Boulevard Georges-Favon 45, 1205 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.1983868,
+      6.1425273
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-moillebeau",
+    "listing": "community",
+    "name": "Le Pain Quotidien Moillebeau",
+    "address": "Rue de Moillebeau 37, 1209 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.2206013,
+      6.1289807
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-theodore-weber",
+    "listing": "community",
+    "name": "Le Pain Quotidien Théodore-Weber",
+    "address": "Avenue Théodore-Weber 34, 1208 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.1973158,
+      6.1636123
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-le-pain-quotidien-balexert",
+    "listing": "community",
+    "name": "Le Pain Quotidien Balexert",
+    "address": "Avenue Louis-Casaï 27, 1219 Vernier",
+    "city": "Vernier",
+    "fallbackCoords": [
+      46.21804,
+      6.1149938
+    ],
+    "filters": {},
+    "website": "https://www.lepainquotidien.com/ch/en/locations/"
+  },
+  {
+    "slug": "tip-tibits-aarau",
+    "listing": "community",
+    "name": "tibits Aarau",
+    "address": "Bahnhofstrasse 43, 5000 Aarau",
+    "city": "Aarau",
+    "fallbackCoords": [
+      47.3917961,
+      8.047842
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-basel-steinen",
+    "listing": "community",
+    "name": "tibits Basel Steinen",
+    "address": "Stänzlergasse 4, 4051 Basel",
+    "city": "Basel",
+    "fallbackCoords": [
+      47.5526293,
+      7.5889925
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-basel-gundeli",
+    "listing": "community",
+    "name": "tibits Basel Gundeli",
+    "address": "Meret Oppenheim-Platz 1, 4053 Basel",
+    "city": "Basel",
+    "fallbackCoords": [
+      47.5460858,
+      7.586948
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-bern-gurtengasse",
+    "listing": "community",
+    "name": "tibits Bern Gurtengasse",
+    "address": "Gurtengasse 3, 3011 Bern",
+    "city": "Bern",
+    "fallbackCoords": [
+      46.947,
+      7.44202
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-lausanne",
+    "listing": "community",
+    "name": "tibits Lausanne",
+    "address": "Place de la Gare 11, 1003 Lausanne",
+    "city": "Lausanne",
+    "fallbackCoords": [
+      46.5172601,
+      6.6278285
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-luzern",
+    "listing": "community",
+    "name": "tibits Luzern",
+    "address": "Zentralstrasse 1, 6003 Luzern",
+    "city": "Luzern",
+    "fallbackCoords": [
+      47.0500253,
+      8.3097745
+    ],
+    "filters": {},
+    "phone": "+41 41 226 18 88",
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-st-gallen",
+    "listing": "community",
+    "name": "tibits St. Gallen",
+    "address": "Bahnhofplatz 1a, 9000 St. Gallen",
+    "city": "St. Gallen",
+    "fallbackCoords": [
+      47.422895,
+      9.3711269
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-winterthur",
+    "listing": "community",
+    "name": "tibits Winterthur",
+    "address": "Oberer Graben 48, 8400 Winterthur",
+    "city": "Winterthur",
+    "fallbackCoords": [
+      47.5000502,
+      8.7312632
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-zug",
+    "listing": "community",
+    "name": "tibits Zug",
+    "address": "Baarerstrasse 30, 6300 Zug",
+    "city": "Zug",
+    "fallbackCoords": [
+      47.1737401,
+      8.5171375
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-zurich-seefeld",
+    "listing": "community",
+    "name": "tibits Zürich Seefeld",
+    "address": "Seefeldstrasse 2, 8008 Zürich",
+    "city": "Zürich",
+    "fallbackCoords": [
+      47.3649202,
+      8.5479501
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-bistro-zurich",
+    "listing": "community",
+    "name": "tibits Bistro Zürich",
+    "address": "Falkenstrasse 12, 8008 Zürich",
+    "city": "Zürich",
+    "fallbackCoords": [
+      47.364717,
+      8.5476488
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-tibits-zurich-oerlikon",
+    "listing": "community",
+    "name": "tibits Zürich Oerlikon",
+    "address": "Tramstrasse 2, 8050 Zürich",
+    "city": "Zürich",
+    "fallbackCoords": [
+      47.4090704,
+      8.5467094
+    ],
+    "filters": {},
+    "website": "https://www.tibits.ch/"
+  },
+  {
+    "slug": "tip-luigia-zurich",
+    "listing": "community",
+    "name": "Luigia Zürich",
+    "address": "Talstrasse 61, 8001 Zürich",
+    "city": "Zürich",
+    "fallbackCoords": [
+      47.370326,
+      8.5354854
+    ],
+    "filters": {},
+    "website": "https://www.luigia.ch/en/"
+  },
+  {
+    "slug": "tip-luigia-rive-gauche",
+    "listing": "community",
+    "name": "Luigia Rive Gauche",
+    "address": "Rue Adrien-Lachenal 24a, 1207 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.1992013,
+      6.1559225
+    ],
+    "filters": {},
+    "website": "https://www.luigia.ch/en/"
+  },
+  {
+    "slug": "tip-luigia-rive-droite",
+    "listing": "community",
+    "name": "Luigia Rive Droite",
+    "address": "Chemin de la Tourelle 2, 1209 Genève",
+    "city": "Genève",
+    "fallbackCoords": [
+      46.2246005,
+      6.1262783
+    ],
+    "filters": {},
+    "website": "https://www.luigia.ch/en/"
   }
 ]
