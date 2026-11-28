@@ -68,6 +68,7 @@
                     tipNotPartner: "Dieser Ort ist derzeit kein Friendly Spaces Partner.",
                     tipOwnerQuestion: "Ist das dein Lokal?",
                     tipOwnerLink: "Melde dich bei Friendly Spaces",
+                    tipParentsSay: "Das sagen Eltern",
                     helpTitle: "So nutzt du Friendly Spaces",
                     helpTagline: "Kurze Tipps für die wichtigsten Funktionen.",
                     helpFindTitle: "Orte schnell finden",
@@ -233,6 +234,7 @@
                     tipNotPartner: "Ce lieu n’est pas encore partenaire Friendly Spaces.",
                     tipOwnerQuestion: "C’est votre établissement ?",
                     tipOwnerLink: "Contactez Friendly Spaces",
+                    tipParentsSay: "Ce qu’en disent les parents",
                     helpTitle: "Comment utiliser Friendly Spaces",
                     helpTagline: "Conseils rapides pour bien utiliser l'app.",
                     helpFindTitle: "Trouver des lieux rapidement",
@@ -398,6 +400,7 @@
                     tipNotPartner: "Questo luogo non è attualmente partner di Friendly Spaces.",
                     tipOwnerQuestion: "È il tuo locale?",
                     tipOwnerLink: "Contatta Friendly Spaces",
+                    tipParentsSay: "Cosa dicono i genitori",
                     helpTitle: "Come usare Friendly Spaces",
                     helpTagline: "Suggerimenti rapidi per ottenere il massimo dall'app.",
                     helpFindTitle: "Trova luoghi rapidamente",
@@ -563,6 +566,7 @@
                     tipNotPartner: "This venue is not currently a Friendly Spaces partner.",
                     tipOwnerQuestion: "Is this your venue?",
                     tipOwnerLink: "Get in touch with Friendly Spaces",
+                    tipParentsSay: "What parents say",
                     helpTitle: "How to use Friendly Spaces",
                     helpTagline: "Quick tips to get the most from the app.",
                     helpFindTitle: "Find places quickly",
@@ -3392,6 +3396,8 @@
                     <span class="icon-label">${escapeHtml(translate('popup.call', 'Call'))}</span>
                 </a>`);
             }
+            // Optional "tip" field: what the recommending parents said (i18n.tip if present).
+            const tipText = getVenueText(tip, 'tip');
             const contactPath = currentLang === 'de' || currentLang === 'fr' ? `${currentLang}/contact` : 'contact';
             const contactUrl = new URL(contactPath, getContentLink('website', 'https://www.friendlyspaces.ch/')).toString();
 
@@ -3401,6 +3407,7 @@
                     <h2 class="tip-sheet-name">${escapeHtml(tip.name)}</h2>
                     ${tip.address ? `<p class="tip-sheet-address">${escapeHtml(tip.address)}</p>` : ''}
                     <div class="detail-icon-buttons">${actions.join('')}</div>
+                    ${tipText ? `<div class="tip-sheet-said"><h3 class="tip-sheet-said-title">${escapeHtml(translate('ui.tipParentsSay', 'What parents say'))}</h3><p>${escapeHtml(tipText)}</p></div>` : ''}
                     <div class="tip-sheet-note">
                         <p>${escapeHtml(translate('ui.tipSuggested', 'Suggested by the Friendly Spaces community.'))}</p>
                         <p>${escapeHtml(translate('ui.tipNotPartner', 'This venue is not currently a Friendly Spaces partner.'))}</p>

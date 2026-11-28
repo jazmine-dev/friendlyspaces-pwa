@@ -3219,6 +3219,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     stroke: #4B5260;
 }
 
+.tip-sheet-said {
+    margin-top: 12px;
+}
+
+.tip-sheet-said-title {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #6b7280;
+}
+
+.tip-sheet-said p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #333;
+}
+
 .tip-sheet-note {
     margin-top: 12px;
     padding: 10px 14px;

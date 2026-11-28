@@ -49,7 +49,9 @@ A tip entry:
   "website": "https://olympiabern.ch/", "phone": "+41 31 529 29 10" }
 ```
 
-`website` and `phone` are optional. `filters` stays empty so filters return partners only.
+`website`, `phone` and `tip` are optional. `tip` is what the recommending parents said
+(their words, no names; `i18n.tip` can hold translations); it shows as "What parents say"
+on the tip profile, and tips without it show no block. 26 of 83 have one so far. `filters` stays empty so filters return partners only.
 A tip whose slug or name matches a partner is skipped.
 
 **Adding a tip:** add an entry to `data/community-tips.json` on `master` and push. The

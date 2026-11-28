@@ -11,6 +11,7 @@ Branch: `community-tips-app`. Web bundle version tag: `pwa-1.2`.
 - Tip sheet: Community tip pill, name, address, Navigate / Website / Call, the
   "not currently a Friendly Spaces partner" note and "Is this your venue?" linking to
   the website's contact page.
+- Tips with a recommendation show it as "What parents say" (optional `tip` field).
 - Partner profile: unchanged apart from a "Friendly Spaces partner" pill.
 - Small map key, top right, one line.
 - Filters, Near me and Favourites show partners only; the list view shows partners only.
