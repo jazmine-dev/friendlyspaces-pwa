@@ -242,6 +242,7 @@
       6.637083
     ],
     "filters": {},
+    "tip": "They have a cinema for kids inside.",
     "phone": "+41 21 552 03 03",
     "website": "https://www.luigia.ch/"
   },
@@ -256,6 +257,7 @@
       6.7733443
     ],
     "filters": {},
+    "tip": "A good outing with children.",
     "phone": "+41 21 903 16 71",
     "website": "https://www.zoo-servion.ch/"
   },
@@ -270,6 +272,7 @@
       6.686897
     ],
     "filters": {},
+    "tip": "Children play while parents have coffee.",
     "website": "https://ozarts.ch/"
   },
   {
@@ -283,6 +286,7 @@
       6.9259892
     ],
     "filters": {},
+    "tip": "Friendly welcome and an indoor play area.",
     "phone": "+41 26 660 30 30",
     "website": "https://lajessicotte.ch/"
   },
@@ -297,6 +301,7 @@
       6.1263178
     ],
     "filters": {},
+    "tip": "Child-friendly meals and a large rope play area.",
     "phone": "+41 22 959 89 89",
     "website": "https://www.rotisseriedelaferme.ch/"
   },
@@ -339,6 +344,7 @@
       7.4554698
     ],
     "filters": {},
+    "tip": "Friendly team, good food and a toy box the children enjoy.",
     "phone": "+41 31 529 29 10",
     "website": "https://olympiabern.ch/"
   },
@@ -353,6 +359,7 @@
       7.361205
     ],
     "filters": {},
+    "tip": "Recommended especially for summer.",
     "website": "https://www.aeme.cafe/"
   },
   {
@@ -366,6 +373,7 @@
       7.0545907
     ],
     "filters": {},
+    "tip": "Small play and book area, terrace and playground.",
     "website": "https://annexe-cafe.ch/"
   },
   {
@@ -378,7 +386,8 @@
       47.1407119,
       7.2459648
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "Coffee, and a babyccino for the children."
   },
   {
     "slug": "tip-wff-world-f-fresh-food",
@@ -404,6 +413,7 @@
       6.9373815
     ],
     "filters": {},
+    "tip": "Crêpes and a terrace next to a shaded small playground.",
     "phone": "+41 32 725 63 53",
     "website": "https://www.bachetbuck.ch/"
   },
@@ -431,6 +441,7 @@
       6.131435
     ],
     "filters": {},
+    "tip": "Brunch and a children's menu.",
     "website": "https://thebaristalab.com/"
   },
   {
@@ -444,6 +455,7 @@
       8.6658415
     ],
     "filters": {},
+    "tip": "Car-free village, family rooms, pool, children's menus and play areas.",
     "phone": "+41 41 817 44 44",
     "website": "https://stoos-hotels.ch/"
   },
@@ -472,6 +484,7 @@
       8.8481377
     ],
     "filters": {},
+    "tip": "It's a kids friendly cafe, with lots of play areas, healthy food for children and their families. We love this place.",
     "website": "https://montelino.ch/"
   },
   {
@@ -496,7 +509,8 @@
       46.5223186,
       6.632938
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "Zone de jeu et coin lecture à l'étage."
   },
   {
     "slug": "tip-cafe-des-avenues",
@@ -508,7 +522,8 @@
       46.5112215,
       6.6368592
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "Coin jeux, jeux de société, lecture, canapé."
   },
   {
     "slug": "tip-khaus",
@@ -534,6 +549,7 @@
       7.4352462
     ],
     "filters": {},
+    "tip": "Thursday morning Parents and Tots meetup group.",
     "website": "https://esp-bern.ch/"
   },
   {
@@ -546,7 +562,8 @@
       46.9498828,
       7.4407976
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "Playroom and changing table."
   },
   {
     "slug": "tip-tibits-bern-bahnhof",
@@ -559,6 +576,7 @@
       7.4403364
     ],
     "filters": {},
+    "tip": "Play corner and changing facilities.",
     "website": "https://www.tibits.ch/"
   },
   {
@@ -572,6 +590,7 @@
       7.6305302
     ],
     "filters": {},
+    "tip": "Play area.",
     "website": "https://www.zumbuntenhund.ch/"
   },
   {
@@ -585,6 +604,7 @@
       6.6217845
     ],
     "filters": {},
+    "tip": "Pièce séparée avec jeux pour enfants, place de jeux publique à l'extérieur.",
     "phone": "+41 21 648 22 22",
     "website": "https://histoiresansfaim.ch/"
   },
@@ -599,6 +619,7 @@
       6.4988286
     ],
     "filters": {},
+    "tip": "Food breaks with children and meeting people through yoga.",
     "phone": "+41 21 801 20 25"
   },
   {
@@ -611,7 +632,8 @@
       46.7978824,
       7.1493365
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "Large indoor play area."
   },
   {
     "slug": "tip-tierpark-jeuss",
@@ -624,6 +646,7 @@
       7.1665988
     ],
     "filters": {},
+    "tip": "A free small zoo at a care home.",
     "phone": "+41 26 674 96 00",
     "website": "https://tierpark-jeuss.ch/"
   },
@@ -638,6 +661,7 @@
       8.9621682
     ],
     "filters": {},
+    "tip": "A local favourite right on the lake. Many families go because there are lots of toys and kids' books on site, and it's close to the city's most beautiful park and outdoor playground.",
     "phone": "+41 91 972 88 88"
   },
   {
@@ -650,7 +674,8 @@
       46.0083184,
       8.9754524
     ],
-    "filters": {}
+    "filters": {},
+    "tip": "A very nice outdoor playground."
   },
   {
     "slug": "tip-museo-in-erba",
@@ -663,6 +688,7 @@
       8.9480516
     ],
     "filters": {},
+    "tip": "The kids' museum in Lugano, with many activities and workshops for children of different ages.",
     "phone": "+41 91 835 52 54",
     "website": "https://museoinerba.com/"
   },
